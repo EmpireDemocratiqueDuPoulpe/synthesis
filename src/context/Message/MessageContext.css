@@ -1,0 +1,15 @@
+/* ---- Message context ------------------------- */
+/* -- Wrapper */
+.message-context-wrapper {
+	width: 100%;
+	height: 100%;
+}
+
+/* -- Messages */
+.message-context {
+	display: flex;
+	flex-direction: column;
+	z-index: 20000;
+}
+
+.message-context .alert { position: relative; }

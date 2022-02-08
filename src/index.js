@@ -1,6 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
+import { MessageProvider } from "./context/Message/MessageContext.js";
 import App from "./pages/App/App.js";
 // import reportWebVitals from "./reportWebVitals.js";
 import "normalize.css";
@@ -9,7 +10,9 @@ import "./index.css";
 ReactDOM.render(
 	<React.StrictMode>
 		<Router>
-			<App/>
+			<MessageProvider>
+				<App/>
+			</MessageProvider>
 		</Router>
 	</React.StrictMode>,
 	document.getElementById("root")
