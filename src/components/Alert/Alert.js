@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useClassName from "../../hooks/ClassName/useClassName.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { regular } from "@fortawesome/fontawesome-svg-core/import.macro.js";
 import { clickOnEnter } from "../../global/Functions.js";
 import "./Alert.css";
 
@@ -51,7 +53,7 @@ function Alert({ type, message, onRetry, onClose }) {
 			</span>
 
 			<span className="alert-close" onClick={handleClose} onKeyPress={e => clickOnEnter(e, handleClose)} role="button" tabIndex={0}>
-				[ICÔNE DE CROIX]
+				<FontAwesomeIcon icon={regular("window-minimize")} size="xs" pull="right" spin/>
 			</span>
 		</div>
 	);
