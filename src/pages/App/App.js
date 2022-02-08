@@ -3,6 +3,7 @@ import Login from "../Login/Login.js";
 import "./App.css";
 
 function App() {
+	/* ---- Page content ---------------------------- */
 	return (
 		<div className="App">
 			<Routes>

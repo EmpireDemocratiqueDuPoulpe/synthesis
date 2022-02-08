@@ -1,0 +1,21 @@
+.collapsible-title {
+	box-sizing: border-box;
+	display: block;
+	width: 100%;
+	padding: 18px;
+	background-color: #777777;
+	color: white;
+	border: none;
+	cursor: pointer;
+}
+
+.collapsible-title:hover { background-color: #555555; }
+
+.collapsible-content {
+	display: none;
+	padding: 0 18px;
+	background-color: #f1f1f1;
+	overflow: hidden;
+}
+.collapsible.show .collapsible-content{ display: block; }
+.collapsible.hide .collapsible-content{ display: none; }
