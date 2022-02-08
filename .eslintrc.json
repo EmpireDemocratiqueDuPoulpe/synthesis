@@ -23,6 +23,11 @@
         "linebreak-style": [ "error", "windows" ],
         "quotes": [ "error", "double" ],
         "semi": [ "error", "always" ],
-        "react/react-in-jsx-scope": "off"
+        "react/react-in-jsx-scope": "off",
+        "react-hooks/exhaustive-deps": [
+            "warn", {
+                "additionalHooks": "useClassName"
+            }
+        ]
     }
 }
