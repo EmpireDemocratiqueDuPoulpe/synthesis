@@ -53,7 +53,7 @@ function Alert({ type, message, onRetry, onClose }) {
 			</span>
 
 			<span className="alert-close" onClick={handleClose} onKeyPress={e => clickOnEnter(e, handleClose)} role="button" tabIndex={0}>
-				<FontAwesomeIcon icon={regular("window-minimize")} size="xs" pull="right" spin/>
+				<FontAwesomeIcon icon={regular("window-minimize")} size="xs" pull="right"/>
 			</span>
 		</div>
 	);
