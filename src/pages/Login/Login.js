@@ -1,10 +1,12 @@
 import { useState } from "react";
 import useMessage from "../../context/Message/MessageContext.js";
+import useAuth, { states } from "../../context/Auth/AuthContext.js";
 
 function Login() {
 	/* ---- States ---------------------------------- */
 	const [user, setUser] = useState({ email: "siredward.weakass@caramail.co.uk", password: "Mot De P4sse" });
 	const messages = useMessage();
+	const auth = useAuth();
 
 	/* ---- Functions ------------------------------- */
 	const handleChange = (event) => {
@@ -64,27 +66,40 @@ function Login() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<>
-			<h1>Connexion</h1>
+			{(auth && auth.status === states.CONNECTED) ? (
+				<>
+					<h1>Auth state: {states[auth.status]}</h1>
 
-			<form onSubmit={handleLogin}>
-				<fieldset>
-					<legend>yo</legend>
+					<p>User:</p>
+					{Object.entries(auth.user).map(([k, v]) => <p key={k} style={{ margin: "0 0 3px 10px", fontSize: "0.8em" }}>{k}: {JSON.stringify(v)}</p>)}
+					<p>Errors: {JSON.stringify(auth.error)}</p>
 
-					<label>
-						<span>E-mail</span>
-						<input type="email" name="email" value={user.email} onChange={handleChange}/>
-					</label>
+					<button onClick={handleTest}>Tester la connexion</button>
+					<button onClick={auth.setDisconnected}>Déconnexion</button>
+				</>
+			) : (
+				<>
+					<h1>Connexion</h1>
 
-					<label>
-						<span>Mot de passe</span>
-						<input type="password" name="password" value={user.password} onChange={handleChange}/>
-					</label>
+					<form onSubmit={handleLogin}>
+						<fieldset>
+							<legend>yo</legend>
 
-					<input type="submit" value="Se connecter"/>
-				</fieldset>
-			</form>
+							<label>
+								<span>E-mail</span>
+								<input type="email" name="email" value={user.email} onChange={handleChange}/>
+							</label>
 
-			<button onClick={handleTest}>Tester la connexion</button>
+							<label>
+								<span>Mot de passe</span>
+								<input type="password" name="password" value={user.password} onChange={handleChange}/>
+							</label>
+
+							<input type="submit" value="Se connecter"/>
+						</fieldset>
+					</form>
+				</>
+			)}
 		</>
 	);
 }
