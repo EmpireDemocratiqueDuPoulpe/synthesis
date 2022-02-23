@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { isArray, isInteger } from "lodash-es";
+import isFirstRender from "../../hooks/isFirstRender/isFirstRender.js";
 import Alert from "../../components/Alert/Alert.js";
 import "./MessageContext.css";
 
@@ -18,13 +19,15 @@ const MessageContext = createContext(null);
 export function MessageProvider({ filters: defaultFilters, limit: defaultLimit, children }) {
 	/* ---- States ---------------------------------- */
 	const location = useLocation();
+	const firstRender = isFirstRender();
 	const [messages, setMessages] = useState([]);
 	const [filters, setFilters] = useState(defaultFilters ?? []);
 	const [limit, setLimit] = useState(defaultLimit ?? 3);
 	const timerRef = useRef(null);
 
 	/* ---- Effects --------------------------------- */
-	useEffect(() => clear(), [location]);
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => { if (!firstRender) clear(); }, [location]);
 	useEffect(() => (() => clearTimeout(timerRef.current)), []);
 
 	/* ---- Functions ------------------------------- */
