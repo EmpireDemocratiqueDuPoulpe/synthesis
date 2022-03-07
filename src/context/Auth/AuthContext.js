@@ -33,7 +33,7 @@ export function AuthProvider(props) {
 			case states.CONNECTING:
 				return { ...state, status: states.CONNECTING, isConnected: false };
 			case states.CONNECTED:
-				return { ...state, status: states.CONNECTED, isConnected: true, user: action.user };
+				return { ...state, status: states.CONNECTED, isConnected: true, user: action.user, permissions: action.permissions };
 			case states.DISCONNECTED:
 				return { ...state, status: states.DISCONNECTED, isConnected: false, error: null, user: null };
 			case states.ERROR:
@@ -58,9 +58,9 @@ export function AuthProvider(props) {
 		dispatch({ type: states.DISCONNECTED });
 	}, [removeCookie]);
 
-	const setConnected = useCallback((user) => {
+	const setConnected = useCallback((user, availablePermissions) => {
 		if (user) {
-			dispatch({ type: states.CONNECTED, user: user });
+			dispatch({ type: states.CONNECTED, user: user, permissions: availablePermissions });
 		} else {
 			setDisconnected();
 		}
@@ -75,13 +75,18 @@ export function AuthProvider(props) {
 		try {
 			setConnecting();
 			const response = await API.users.logIn.fetch({ user: connectingUser });
-			setConnected(response.user);
 
-			navigate("/");
+			if (response.code !== 200) setDisconnected();
+			else {
+				const permResponse = await API.permissions.getAll.fetch();
+
+				setConnected(response.user, permResponse.permissions);
+				navigate("/");
+			}
 		} catch (err) {
 			setError(err);
 		}
-	}, [setConnected, setError, navigate]);
+	}, [setConnected, setDisconnected, setError, navigate]);
 
 	const reload = useCallback(async () => {
 		try {
@@ -89,7 +94,11 @@ export function AuthProvider(props) {
 			const response = await API.users.authenticate.fetch();
 
 			if (response.code !== 200) setDisconnected();
-			else setConnected(response.user);
+			else {
+				const permResponse = await API.permissions.getAll.fetch();
+
+				setConnected(response.user, permResponse.permissions);
+			}
 		} catch (err) {
 			setError(err ?? "Une erreur inconnue est survenue. Veuillez réessayer plus tard.");
 		}
@@ -110,7 +119,12 @@ export function AuthProvider(props) {
 		if (!auth.user && !isAuthenticating) {
 			isAuthenticating = true;
 			API.users.authenticate.fetch()
-				.then(response => isMounted ? (response.code !== 200 ? setDisconnected() : setConnected(response.user)) : null)
+				.then(response => {
+					if (isMounted) {
+						if (response.code !== 200) setDisconnected();
+						else API.permissions.getAll.fetch().then(permResponse => setConnected(response.user, permResponse.permissions));
+					}
+				})
 				.catch(err => setError(err.message))
 				.finally(() => { isAuthenticating = false; });
 		}
