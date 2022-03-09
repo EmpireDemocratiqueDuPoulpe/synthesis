@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAuth from "../../context/Auth/AuthContext.js";
+import useAuth, { states } from "../../context/Auth/AuthContext.js";
 
 function Login() {
 	/* ---- States ---------------------------------- */
@@ -20,28 +20,42 @@ function Login() {
 		event.preventDefault();
 	};
 
+	const handleLogout = (event) => {
+		auth.setDisconnected();
+		event.preventDefault();
+	};
+
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Login">
-			<h1>Connexion</h1>
+			{auth.status !== states.CONNECTED ? (
+				<>
+					<h1>Connexion</h1>
 
-			<form onSubmit={handleLogin}>
-				<fieldset>
-					<legend>yo</legend>
+					<form onSubmit={handleLogin}>
+						<fieldset>
+							<legend>yo</legend>
 
-					<label>
-						<span>E-mail</span>
-						<input type="email" name="email" value={user.email} onChange={handleChange}/>
-					</label>
+							<label>
+								<span>E-mail</span>
+								<input type="email" name="email" value={user.email} onChange={handleChange}/>
+							</label>
 
-					<label>
-						<span>Mot de passe</span>
-						<input type="password" name="password" value={user.password} onChange={handleChange}/>
-					</label>
+							<label>
+								<span>Mot de passe</span>
+								<input type="password" name="password" value={user.password} onChange={handleChange}/>
+							</label>
 
-					<input type="submit" value="Se connecter"/>
-				</fieldset>
-			</form>
+							<input type="submit" value="Se connecter"/>
+						</fieldset>
+					</form>
+				</>
+			) : (
+				<>
+					<h1>D&eacute;connexion</h1>
+					<button onClick={handleLogout}>Se d&eacute;connecter</button>
+				</>
+			)}
 		</div>
 	);
 }
