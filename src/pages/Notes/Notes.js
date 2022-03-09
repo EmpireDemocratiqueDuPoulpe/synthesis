@@ -1,49 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import useAuth from "../../context/Auth/AuthContext.js";
 import Collapsible from "../../components/Collapsible/Collapsible.js";
+import { API } from "../../config/config.js";
 import "./Notes.css";
+import useMessage from "../../context/Message/MessageContext.js";
 
 function Notes() {
 	/* ---- States ---------------------------------- */
+	const messages = useMessage();
 	const { user } = useAuth();
 
-	const [modules] = useState([
-		{moduleName: "1WORK", note: 10.5, year: 1, ects: 3},
-		{moduleName: "1TEAM", note: 15.0, year: 1, ects: 2},
-		{moduleName: "1PROG", note: 16.25, year: 2, ects: 4},
-		{moduleName: "1PYTH", note: 10, year: 2, ects: 4},
-		{moduleName: "1O365", note: 12.5, year: 2, ects: 3},
-		{moduleName: "1GRAPH", note: 13, year: 2, ects: 2},
-		{moduleName: "2AWSP", note: 8.75, year: 2, ects: 3},
-		{moduleName: "2ALGO", note: 16, year: 2, ects: 1},
-		{moduleName: "2PMGT", note: 18, year: 2, ects: 2},
-		{moduleName: "2DVST", note: 14.25, year: 2, ects: 4},
-		{moduleName: "2PHPD", note: 17, year: 2, ects: 3},
-		{moduleName: "2UIXD", note: 15, year: 2, ects: 4},
-		{moduleName: "3AGIL", note: 16.5, year: 2, ects: 2},
-		{moduleName: "3DVSC", note: 14.75, year: 2, ects: 3},
-		{moduleName: "3VRAR", note: 10, year: 2, ects: 4},
-		{moduleName: "3BAEX", note: 13, year: 2, ects: 2},
-		{moduleName: "3MERN", note: 15.25, year: 2, ects: 4},
-		{moduleName: "3CCNA", note: 16, year: 2, ects: 3},
-		{moduleName: "4BOSS", note: 19, year: 2, ects: 3},
-		{moduleName: "4GDPR", note: 10.25, year: 2, ects: 3},
-		{moduleName: "4PENE", note: 14.50, year: 2, ects: 3},
-		{moduleName: "4DATA", note: 16.25, year: 2, ects: 3},
-		{moduleName: "4DOKR", note: 10.75, year: 2, ects: 3},
-		{moduleName: "4KUBE", note: 14, year: 2, ects: 2},
-		{moduleName: "5DATA", note: 13.5, year: 2, ects: 2},
-		{moduleName: "5RBIG", note: 17, year: 2, ects: 3},
-		{moduleName: "5ENGL", note: 12, year: 2, ects: 4},
-		{moduleName: "5MDDP", note: 13.75, year: 2, ects: 4},
-		{moduleName: "5CCNA", note: 15.75, year: 2, ects: 3},
-		{moduleName: "5ITIL", note: 16.25, year: 2, ects: 4}
-	]);
+	const [notes, setNotes] = useState([]);
 
 	//const [totalEcts, setTotalEcts] = useState(65);
 
 	const [selectedYear, setSelectedYear] = useState(4);
 
+	useEffect(() => {
+		let fetching = false;
+		if(!fetching){
+			fetching = true;
+			API.notes.getAllOfUser.fetch({ userID: user.user_id })
+				.then(response => setNotes(response.notes))
+				.catch(err => messages.add("error", err.error));
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 
 	/* ---- Page content ---------------------------- */
 	return (
@@ -59,16 +41,16 @@ function Notes() {
 					<option value="5">M.Eng.2</option>
 				</select>
 
-				{modules.filter((m) => m.year === selectedYear).map((module, index) => {
+				{notes.filter((n) => n.module.year === selectedYear).map((note, index) => {
 					return (
-						<Collapsible key={`module-${index}-note`} title={module.moduleName}>
-							<p>{module.note}</p>
+						<Collapsible key={`module-${index}-note`} title={note.module.name}>
+							<p>{note.note}</p>
 						</Collapsible>
 					);
 				})}
 			</div>
-			<p>ECTS totaux : {modules.filter((m) => (m.year === selectedYear) && (m.note >= 10)).reduce((acc, module) => acc + module.ects, 0)}/60</p>
-		</>
+			<p>ECTS totaux : {notes.filter((n) => (n.module.year === selectedYear) && (n.note >= 10)).reduce((acc, note) => acc + note.module.ects, 0)}/60</p>
+		</div>
 	);
 }
 
