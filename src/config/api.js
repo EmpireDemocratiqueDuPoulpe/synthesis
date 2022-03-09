@@ -11,6 +11,6 @@ export default {
 		getAll: new API.GET("/permissions/all")
 	},
 	notes: {
-		getAllOfUser: new API.GET("/notes/by-user-id/")
+		getAllOfUser: new API.GET("/notes/by-user-id/{userID}")
 	}
 };

@@ -132,6 +132,19 @@ class URIPayload extends Endpoint {
 	}
 
 	/* ---- Getters --------------------------------- */
+	getURL(args) {
+		let url = super.getURL();
+		const paramsInUrl = url.match(/{(.*?)}/g);
+
+		if (paramsInUrl) {
+			paramsInUrl.forEach((param) => {
+				url = url.replace(param, args[param.slice(1, -1)]);
+			});
+		}
+
+		return url;
+	}
+
 	// TODO: Check args.reduce
 	getParams(...args) {
 		return this.#paramsBuilder
@@ -152,8 +165,8 @@ class URIPayload extends Endpoint {
 	}
 
 	/* ---- Functions ------------------------------- */
-	async fetch(method, ...args) {
-		const uri = urljoin(this.getURL(), this.#toQueryStr(...args));
+	async fetch(method, urlParams, ...queryParams) {
+		const uri = urljoin(this.getURL(urlParams), this.#toQueryStr(...queryParams));
 		const options = {
 			method: method,
 			headers: {}
@@ -179,8 +192,8 @@ class POST extends BodyPayload {
 }
 
 class GET extends URIPayload {
-	async fetch(...args) {
-		return super.fetch("GET", ...args);
+	async fetch(urlParams, ...queryParams) {
+		return super.fetch("GET", urlParams, ...queryParams);
 	}
 }
 
