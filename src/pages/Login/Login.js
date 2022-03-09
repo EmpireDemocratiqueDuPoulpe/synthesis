@@ -1,13 +1,9 @@
 import { useState } from "react";
-import useMessage from "../../context/Message/MessageContext.js";
-import useAuth, { states } from "../../context/Auth/AuthContext.js";
-import AuthorizedLinks from "../../components/AuthorizedLinks/AuthorizedLinks.js";
-import { API } from "../../config/config.js";
+import useAuth from "../../context/Auth/AuthContext.js";
 
 function Login() {
 	/* ---- States ---------------------------------- */
 	const [user, setUser] = useState({ email: "jay.rate@forni.te", password: "Mot De P4sse" });
-	const messages = useMessage();
 	const auth = useAuth();
 
 	/* ---- Functions ------------------------------- */
@@ -24,50 +20,29 @@ function Login() {
 		event.preventDefault();
 	};
 
-	const handleTest = () => {
-		API.users.getAll.fetch().then(resp => messages.add("success", JSON.stringify(resp))).catch(err => messages.add("error", JSON.stringify(err)));
-	};
-
 	/* ---- Page content ---------------------------- */
 	return (
-		<>
-			{(auth && auth.status === states.CONNECTED) ? (
-				<>
-					<h1>Auth state: {states[auth.status]}</h1>
+		<div className="Login">
+			<h1>Connexion</h1>
 
-					<p>User:</p>
-					{Object.entries(auth.user).map(([k, v]) => <p key={k} style={{ margin: "0 0 3px 10px", fontSize: "0.8em" }}>{k}: {JSON.stringify(v)}</p>)}
-					<p>Errors: {JSON.stringify(auth.error)}</p>
+			<form onSubmit={handleLogin}>
+				<fieldset>
+					<legend>yo</legend>
 
-					<button onClick={handleTest}>Tester la connexion</button>
-					<button onClick={auth.setDisconnected}>Déconnexion</button>
+					<label>
+						<span>E-mail</span>
+						<input type="email" name="email" value={user.email} onChange={handleChange}/>
+					</label>
 
-					<AuthorizedLinks/>
-				</>
-			) : (
-				<>
-					<h1>Connexion</h1>
+					<label>
+						<span>Mot de passe</span>
+						<input type="password" name="password" value={user.password} onChange={handleChange}/>
+					</label>
 
-					<form onSubmit={handleLogin}>
-						<fieldset>
-							<legend>yo</legend>
-
-							<label>
-								<span>E-mail</span>
-								<input type="email" name="email" value={user.email} onChange={handleChange}/>
-							</label>
-
-							<label>
-								<span>Mot de passe</span>
-								<input type="password" name="password" value={user.password} onChange={handleChange}/>
-							</label>
-
-							<input type="submit" value="Se connecter"/>
-						</fieldset>
-					</form>
-				</>
-			)}
-		</>
+					<input type="submit" value="Se connecter"/>
+				</fieldset>
+			</form>
+		</div>
 	);
 }
 

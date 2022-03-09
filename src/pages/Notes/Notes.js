@@ -47,7 +47,7 @@ function Notes() {
 
 	/* ---- Page content ---------------------------- */
 	return (
-		<>
+		<div className="Notes">
 			<h2>Notes de {user.first_name} {user.last_name}</h2>
 			<h3>Campus de {user.campus}</h3>
 			<div>

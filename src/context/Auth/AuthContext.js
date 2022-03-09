@@ -10,11 +10,11 @@ import { API } from "../../config/config.js";
  *****************************************************/
 
 export const states = {
-	"CONNECTING": 0,
-	"CONNECTED": 1,
-	"DISCONNECTED": 2,
-	"ERROR": 3,
-	"DEL_ERROR": 4,
+	"CONNECTING": "CONNECTING",
+	"CONNECTED": "CONNECTED",
+	"DISCONNECTED": "DISCONNECTED",
+	"ERROR": "ERROR",
+	"DEL_ERROR": "DEL_ERROR",
 };
 
 const initialState = { status: states.CONNECTING, isConnected: false, error: null, user: null };
@@ -79,7 +79,6 @@ export function AuthProvider(props) {
 			if (response.code !== 200) setDisconnected();
 			else {
 				const permResponse = await API.permissions.getAll.fetch();
-
 				setConnected(response.user, permResponse.permissions);
 				navigate("/");
 			}
@@ -96,7 +95,6 @@ export function AuthProvider(props) {
 			if (response.code !== 200) setDisconnected();
 			else {
 				const permResponse = await API.permissions.getAll.fetch();
-
 				setConnected(response.user, permResponse.permissions);
 			}
 		} catch (err) {
