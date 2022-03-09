@@ -7,10 +7,37 @@ function Notes() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
 
-	const [notes] = useState([
-		{moduleName: "1WORK", note: 10.5, year: 1},
-		{moduleName: "1TEAM", note: 15.0, year: 1},
-		{moduleName: "2JAVA", note: 16.25, year: 2}
+	const [modules] = useState([
+		{moduleName: "1WORK", note: 10.5, year: 1, ects: 3},
+		{moduleName: "1TEAM", note: 15.0, year: 1, ects: 2},
+		{moduleName: "1PROG", note: 16.25, year: 2, ects: 4},
+		{moduleName: "1PYTH", note: 10, year: 2, ects: 4},
+		{moduleName: "1O365", note: 12.5, year: 2, ects: 3},
+		{moduleName: "1GRAPH", note: 13, year: 2, ects: 2},
+		{moduleName: "2AWSP", note: 8.75, year: 2, ects: 3},
+		{moduleName: "2ALGO", note: 16, year: 2, ects: 1},
+		{moduleName: "2PMGT", note: 18, year: 2, ects: 2},
+		{moduleName: "2DVST", note: 14.25, year: 2, ects: 4},
+		{moduleName: "2PHPD", note: 17, year: 2, ects: 3},
+		{moduleName: "2UIXD", note: 15, year: 2, ects: 4},
+		{moduleName: "3AGIL", note: 16.5, year: 2, ects: 2},
+		{moduleName: "3DVSC", note: 14.75, year: 2, ects: 3},
+		{moduleName: "3VRAR", note: 10, year: 2, ects: 4},
+		{moduleName: "3BAEX", note: 13, year: 2, ects: 2},
+		{moduleName: "3MERN", note: 15.25, year: 2, ects: 4},
+		{moduleName: "3CCNA", note: 16, year: 2, ects: 3},
+		{moduleName: "4BOSS", note: 19, year: 2, ects: 3},
+		{moduleName: "4GDPR", note: 10.25, year: 2, ects: 3},
+		{moduleName: "4PENE", note: 14.50, year: 2, ects: 3},
+		{moduleName: "4DATA", note: 16.25, year: 2, ects: 3},
+		{moduleName: "4DOKR", note: 10.75, year: 2, ects: 3},
+		{moduleName: "4KUBE", note: 14, year: 2, ects: 2},
+		{moduleName: "5DATA", note: 13.5, year: 2, ects: 2},
+		{moduleName: "5RBIG", note: 17, year: 2, ects: 3},
+		{moduleName: "5ENGL", note: 12, year: 2, ects: 4},
+		{moduleName: "5MDDP", note: 13.75, year: 2, ects: 4},
+		{moduleName: "5CCNA", note: 15.75, year: 2, ects: 3},
+		{moduleName: "5ITIL", note: 16.25, year: 2, ects: 4}
 	]);
 
 	//const [totalEcts, setTotalEcts] = useState(65);
@@ -32,7 +59,7 @@ function Notes() {
 					<option value="5">M.Eng.2</option>
 				</select>
 
-				{notes.filter((m) => m.year === selectedYear).map((module, index) => {
+				{modules.filter((m) => m.year === selectedYear).map((module, index) => {
 					return (
 						<Collapsible key={`module-${index}-note`} title={module.moduleName}>
 							<p>{module.note}</p>
@@ -40,7 +67,7 @@ function Notes() {
 					);
 				})}
 			</div>
-			<p>ECTS totaux : {notes.filter((m) => m.year === selectedYear).reduce((acc, note) => acc + note.note, 0)}/60</p>
+			<p>ECTS totaux : {modules.filter((m) => (m.year === selectedYear) && (m.note >= 10)).reduce((acc, module) => acc + module.ects, 0)}/60</p>
 		</>
 	);
 }
