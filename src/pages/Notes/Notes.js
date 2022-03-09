@@ -20,7 +20,7 @@ function Notes() {
 
 	/* ---- Page content ---------------------------- */
 	return (
-		<>
+		<div className="Notes">
 			<h2>Notes de {user.first_name} {user.last_name}</h2>
 			<h3>Campus de {user.campus}</h3>
 			<div>
@@ -41,7 +41,7 @@ function Notes() {
 				})}
 			</div>
 			<p>ECTS totaux : {notes.filter((m) => m.year === selectedYear).reduce((acc, note) => acc + note.note, 0)}/60</p>
-		</>
+		</div>
 	);
 }
 
