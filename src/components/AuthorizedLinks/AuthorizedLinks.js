@@ -19,10 +19,10 @@ function AuthorizedLinks() {
 				{hasPermission(permissions.READ_PLANNINGS) && (<li><Link to="#">Planning</Link></li>)}
 				{hasPermission(permissions.READ_CAMPUS) && (<li><Link to="#">Campus</Link></li>)}
 				{hasPermission(permissions.READ_MODULES) && (<li><Link to="#">Modules</Link></li>)}
-				{hasPermission(permissions.READ_NOTES) && (<li><Link to="#">Notes</Link></li>)}
+				{hasPermission(permissions.READ_NOTES) && (<li><Link to="/notes">Notes</Link></li>)}
 				{hasPermission(permissions.READ_RESITS) && (<li><Link to="#">Resits</Link></li>)}
 				{hasPermission(permissions.READ_INTERNSHIP_OFFERS) && (<li><Link to="#">Offres de stages</Link></li>)}
-				{hasPermission(permissions.READ_COMPTA) && (<li><Link to="#">Comptabilité</Link></li>)}
+				{hasPermission(permissions.READ_COMPTA) && (<li><Link to="/comptabilite">Comptabilité</Link></li>)}
 				{hasPermission(permissions.MANAGE_PARTNERSHIPS) && (<li><Link to="#">Partenaires</Link></li>)}
 				{hasPermission(permissions.SEND_MAILS) && (<li><Link to="#">Envoyer un mail</Link></li>)}
 				{hasPermission(permissions.SYNC_DATA) && (<li><Link to="#">Synchroniser les données</Link></li>)}

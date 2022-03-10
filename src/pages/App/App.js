@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../Home/Home.js";
 import Login from "../Login/Login.js";
+import Compta from "../Compta/Compta.js";
 import Notes from "../Notes/Notes.js";
 import "./App.css";
 
@@ -12,6 +13,7 @@ function App() {
 				<Route path="/" element={<Home/>}/>
 				<Route path="/login" element={<Login/>}/>
 				<Route path="/notes" element={<Notes/>}/>
+				<Route path="/comptabilite" element={<Compta/>}/>
 			</Routes>
 		</div>
 	);
