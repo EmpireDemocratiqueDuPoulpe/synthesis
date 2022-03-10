@@ -5,10 +5,12 @@ import useAuth from "../../context/Auth/AuthContext.js";
 import { API } from "../../config/config.js";
 
 function Compta() {
+	/* ---- States ---------------------------------- */
 	const messages = useMessage();
 	const { user } = useAuth();
 	const [compta, setCompta] = useState(null);
 
+	/* ---- Effects --------------------------------- */
 	useEffect(() => {
 		const isFetching = false;
 
@@ -20,6 +22,7 @@ function Compta() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
+	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Compta">
 			<Link to="/">&lt;-- Retour</Link>
