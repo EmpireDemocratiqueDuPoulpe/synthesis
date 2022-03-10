@@ -30,8 +30,8 @@
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
-    "lint": "eslint .",
-    "lint-no-crlf": "eslint --rule \"linebreak-style: 0\" ."
+    "lint": "eslint ./src/",
+    "lint-no-crlf": "eslint --rule \"linebreak-style: 0\" ./src/"
   },
   "eslintConfig": {
     "extends": [
