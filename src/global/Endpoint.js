@@ -134,26 +134,30 @@ class URIPayload extends Endpoint {
 	/* ---- Getters --------------------------------- */
 	getURL(args) {
 		let url = super.getURL();
-		const paramsInUrl = url.match(/{(.*?)}/g);
 
-		if (paramsInUrl) {
-			paramsInUrl.forEach((param) => {
-				url = url.replace(param, args[param.slice(1, -1)]);
-			});
+		if (args) {
+			const paramsInUrl = url.match(/{(.*?)}/g);
+
+			if (paramsInUrl) {
+				paramsInUrl.forEach((param) => {
+					url = url.replace(param, args[param.slice(1, -1)]);
+				});
+			}
 		}
 
 		return url;
 	}
 
-	// TODO: Check args.reduce
-	getParams(...args) {
+	getParams(args) {
 		return this.#paramsBuilder
-			? this.#paramsBuilder.call(this, ...args)
-			: args.reduce((acc, value) => ({ ...acc, ...value }), {});
+			? this.#paramsBuilder.call(this, args)
+			: args;
 	}
 
-	#toQueryStr(...args) {
-		const params = this.getParams(...args);
+	#toQueryStr(args) {
+		if (!args) return "";
+
+		const params = this.getParams(args);
 		const queryStr = [];
 
 		Object.entries(params).forEach(([prop, value]) => {
@@ -165,8 +169,8 @@ class URIPayload extends Endpoint {
 	}
 
 	/* ---- Functions ------------------------------- */
-	async fetch(method, urlParams, ...queryParams) {
-		const uri = urljoin(this.getURL(urlParams), this.#toQueryStr(...queryParams));
+	async fetch(method, urlParams, queryParams) {
+		const uri = urljoin(this.getURL(urlParams), this.#toQueryStr(queryParams));
 		const options = {
 			method: method,
 			headers: {}
@@ -192,8 +196,8 @@ class POST extends BodyPayload {
 }
 
 class GET extends URIPayload {
-	async fetch(urlParams, ...queryParams) {
-		return super.fetch("GET", urlParams, ...queryParams);
+	async fetch(urlParams, queryParams) {
+		return super.fetch("GET", urlParams, queryParams);
 	}
 }
 
