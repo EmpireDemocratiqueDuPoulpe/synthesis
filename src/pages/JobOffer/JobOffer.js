@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+import urljoin from "url-join";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
@@ -37,6 +38,23 @@ function JobOffer() {
 							<span key={`job-offer-${jobOffer.job_offer_id}-domain-${domain.job_domain_id}`}>{domain.name}</span>
 						))}
 					</div>
+
+					{jobOffer.attachements && (
+						<div>
+							<span>Fichiers :</span>
+							{jobOffer.attachements.map((attachement) => (
+								<a
+									key={`job-offer-${jobOffer.job_offer_id}-attachement-${attachement.attachement_id}`}
+									href={urljoin(API.files, attachement.path)}
+									target="_blank"
+									rel="noreferrer"
+								>
+									{attachement.name} ({attachement.size})
+								</a>
+							))}
+						</div>
+					)}
+
 
 					<div>{jobOffer.content}</div>
 				</>
