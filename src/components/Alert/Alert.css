@@ -1,0 +1,39 @@
+/* ---- Alert ----------------------------------- */
+/* -- Container */
+.alert {
+	position: fixed;
+	left: 50%;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+	text-align: center;
+	width: 100%;
+	transition: top 200ms ease-in-out, height 200ms ease-in-out, opacity 200ms ease-in-out, visibility 200ms ease-in-out;
+	transform: translateX(-50%);
+	z-index: 20000;
+}
+.alert.hide { top: calc(-20px - 1em); height: 0; opacity: 0; visibility: hidden; z-index: -1; }
+.alert.show { top: 0; height: calc(20px + 1em); opacity: 1; visibility: visible; }
+
+.alert.error    { background: #D3495F; color: #FFFFFF; }
+.alert.warning  { background: #F0AD4E; color: #FFFFFF; }
+.alert.info     { background: #0275D8; color: #FFFFFF; }
+.alert.success  { background: #5CB85C; color: #FFFFFF; }
+
+/* -- Content */
+.alert-content { padding: 10px 0 10px 10px; }
+
+.alert-retry { cursor: pointer; }
+.alert-retry:hover { text-decoration: underline; }
+
+/* -- Close button */
+.alert-close {
+	box-sizing: border-box;
+	height: 100%;
+	margin-left: 5px;
+	padding: 10px 10px 10px 5px;
+	transition: color 150ms ease-in-out;
+	cursor: pointer;
+}
+.alert-close:hover { color: #D2D2D2; }

@@ -1,0 +1,15 @@
+# This workflow will run ESLint on the branch
+
+name: Run ESLint
+
+on: [push, pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install npm packages
+        run: npm install
+      - name: Running ESLint...
+        run: npm run lint-no-crlf
