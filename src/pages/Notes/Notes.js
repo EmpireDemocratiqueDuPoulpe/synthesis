@@ -9,8 +9,9 @@ function Notes() {
 	/* ---- States ---------------------------------- */
 	const messages = useMessage();
 	const { user } = useAuth();
+	const ects = { current: 0, total: 0 };
 
-	const [notes, setNotes] = useState([]);
+	const [modulesNotes, setModulesNotes] = useState([]);
 
 	//const [totalEcts, setTotalEcts] = useState(65);
 
@@ -20,8 +21,8 @@ function Notes() {
 		let fetching = false;
 		if(!fetching){
 			fetching = true;
-			API.notes.getAllOfUser.fetch({ userID: user.user_id })
-				.then(response => setNotes(response.notes))
+			API.modules.getAllNotesOfUser.fetch({ userID: user.user_id })
+				.then(response => setModulesNotes(response.modules))
 				.catch(err => messages.add("error", err.error));
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,16 +41,20 @@ function Notes() {
 					<option value="4">M.Eng.1</option>
 					<option value="5">M.Eng.2</option>
 				</select>
-
-				{notes.filter((n) => n.module.year === selectedYear).map((note, index) => {
+				{modulesNotes.filter((m) => m.year === selectedYear).map((module, mIndex) => {
+					ects.total += module.ects;
+					ects.current += (module.notes.reduce((acc, note) => acc + note.note, 0) / module.notes.length) >= 10 ? module.ects : 0;
 					return (
-						<Collapsible key={`module-${index}-note`} title={note.module.name}>
-							<p>{note.note}</p>
+						<Collapsible key={`module-${mIndex}`} title={module.year + module.name}>
+							{module.notes.map((note, nIndex) => (
+								<p key={`module-${mIndex}-note-${nIndex}`}>{note.note}</p>
+							))}
 						</Collapsible>
 					);
 				})}
+
 			</div>
-			<p>ECTS totaux : {notes.filter((n) => (n.module.year === selectedYear) && (n.note >= 10)).reduce((acc, note) => acc + note.module.ects, 0)}/60</p>
+			<p>ECTS totaux : {ects.current}/{ects.total}</p>
 		</div>
 	);
 }
