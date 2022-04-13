@@ -1,9 +1,10 @@
 import { createContext, useContext, useReducer, useMemo, useCallback, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import { useMsal, useIsAuthenticated } from "@azure/msal-react";
 import { useCookies } from "react-cookie";
 import useMessage from "../Message/MessageContext.js";
-import { API } from "../../config/config.js";
+import { API, Auth } from "../../config/config.js";
 
 /*****************************************************
  * Constants
@@ -17,7 +18,7 @@ export const states = {
 	"DEL_ERROR": "DEL_ERROR",
 };
 
-const initialState = { status: states.CONNECTING, isConnected: false, error: null, user: null };
+const initialState = { status: states.DISCONNECTED, isConnected: false, error: null, user: null };
 
 const AuthContext = createContext(undefined);
 
@@ -28,6 +29,8 @@ const AuthContext = createContext(undefined);
 export function AuthProvider(props) {
 	/* ---- States ---------------------------------- */
 	const messages = useMessage();
+	const { instance, inProgress, accounts } = useMsal();
+	const isUsingMS = useIsAuthenticated();
 	const [auth, dispatch] = useReducer((state, action) => {
 		switch (action.type) {
 			case states.CONNECTING:
@@ -39,7 +42,7 @@ export function AuthProvider(props) {
 			case states.ERROR:
 				return { ...state, status: states.ERROR, isConnected: false, error: action.error };
 			case states.DEL_ERROR:
-				return { ...state, error: null };
+				return { ...state, status: states.DISCONNECTED, error: null };
 			default:
 				throw new Error("AuthProvider: Invalid action.type!");
 		}
@@ -49,27 +52,43 @@ export function AuthProvider(props) {
 	const [, , removeCookie] = useCookies(["tokenPayload"]);
 
 	/* ---- Functions ------------------------------- */
-	const setConnecting = () => {
-		dispatch({ type: states.CONNECTING });
-	};
+	// ERROR
+	const setError = useCallback((err) => {
+		dispatch({ type: states.ERROR, error: err });
+		messages.add("error", err);
+	}, [messages]);
 
-	const setDisconnected = useCallback(() => {
-		removeCookie("tokenPayload", { path: "/" });
-		dispatch({ type: states.DISCONNECTED });
-	}, [removeCookie]);
+	// LOGOUT
+	const setDisconnected = () => dispatch({ type: states.DISCONNECTED });
 
+	const logout = useCallback(() => {
+		if (!isUsingMS) {
+			removeCookie("tokenPayload", { path: "/" });
+		}
+
+		setDisconnected();
+	}, [isUsingMS, removeCookie]);
+
+	const msLogout = useCallback(async () => {
+		try {
+			await instance.logoutPopup();
+			setDisconnected();
+		} catch (err) {
+			setError(err);
+		}
+	}, [instance, setError]);
+
+	// LOGIN IN PROGRESS
+	const setConnecting = () => dispatch({ type: states.CONNECTING });
+
+	// LOGIN
 	const setConnected = useCallback((user, availablePermissions) => {
 		if (user) {
 			dispatch({ type: states.CONNECTED, user: user, permissions: availablePermissions });
 		} else {
 			setDisconnected();
 		}
-	}, [setDisconnected]);
-
-	const setError = useCallback((err) => {
-		dispatch({ type: states.ERROR, error: err });
-		messages.add("error", err);
-	}, [messages]);
+	}, []);
 
 	const login = useCallback(async (connectingUser) => {
 		try {
@@ -85,9 +104,57 @@ export function AuthProvider(props) {
 		} catch (err) {
 			setError(err);
 		}
-	}, [setConnected, setDisconnected, setError, navigate]);
+	}, [setConnected, setError, navigate]);
 
+	const msLogin = useCallback(async () => {
+		try {
+			await instance.loginPopup(Auth.login);
+		} catch (err) {
+			setError(err);
+		}
+	}, [instance, setError]);
+
+	const msCallGraph = useCallback(async () => {
+		console.log(isUsingMS);
+		if (!isUsingMS) return;
+		setConnecting();
+
+		const request = { ...Auth.login, account: accounts[0] };
+		const getFromGraph = async (accessToken) => {
+			const headers = new Headers();
+			const bearer = `Bearer ${accessToken}`;
+
+			headers.append("Authorization", bearer);
+			const options = { method: "GET", headers };
+
+			try {
+				const response = await fetch(Auth.graph.graphMeEndpoint, options);
+				const data = response.json();
+
+				// TODO: Permissions system for MS users
+				setConnected({
+					email: data.userPrincipalName
+				}, []);
+				console.log(data);
+				navigate("/");
+			} catch (err) {
+				setError(err);
+			}
+		};
+
+		try {
+			const silentResponse = await instance.acquireTokenSilent(request);
+			await getFromGraph(silentResponse.accessToken);
+		} catch (err) {
+			const popupResponse = await instance.acquireTokenPopup(request);
+			await getFromGraph(popupResponse.accessToken);
+		}
+	}, [isUsingMS, accounts, setConnected, navigate, setError, instance]);
+
+	// RELOAD
 	const reload = useCallback(async () => {
+		if (isUsingMS) navigate.go(0);
+
 		try {
 			setConnecting();
 			const response = await API.users.authenticate.fetch();
@@ -100,7 +167,7 @@ export function AuthProvider(props) {
 		} catch (err) {
 			setError(err ?? "Une erreur inconnue est survenue. Veuillez réessayer plus tard.");
 		}
-	}, [setConnected, setDisconnected, setError]);
+	}, [isUsingMS, navigate, setConnected, setError]);
 
 	/* ---- Effects --------------------------------- */
 	useEffect(() => {
@@ -114,7 +181,7 @@ export function AuthProvider(props) {
 		let isMounted = true;
 		let isAuthenticating = false;
 
-		if (!auth.user && !isAuthenticating) {
+		if (!auth.user && !isAuthenticating && !isUsingMS && !inProgress) {
 			isAuthenticating = true;
 			API.users.authenticate.fetch()
 				.then(response => {
@@ -128,12 +195,12 @@ export function AuthProvider(props) {
 		}
 
 		return () => { isMounted = false; };
-	}, [auth.user, setConnected, setDisconnected, setError]);
+	}, [auth.user, isUsingMS, inProgress, setConnected, setError]);
 
 	/* ---- Page content ---------------------------- */
 	const memoizedAuth = useMemo(
-		() => ({ ...auth, setConnecting, setConnected, setDisconnected, setError, login, reload }),
-		[auth, setConnected, setDisconnected, setError, login, reload]
+		() => ({ ...auth, isUsingMS, logout, msLogout, login, msLogin, msCallGraph, reload }),
+		[auth, isUsingMS, logout, msLogout, login, msLogin, msCallGraph, reload]
 	);
 
 	return (

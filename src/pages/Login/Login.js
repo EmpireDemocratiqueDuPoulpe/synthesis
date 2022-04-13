@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { useIsAuthenticated } from "@azure/msal-react";
 import useAuth, { states } from "../../context/Auth/AuthContext.js";
+import Microsoft from "../../components/Microsoft/Microsoft.js";
 
 function Login() {
 	/* ---- States ---------------------------------- */
 	const [user, setUser] = useState({ email: "jay.rate@forni.te", password: "Mot De P4sse" });
 	const auth = useAuth();
+	const microsoftAuth = useIsAuthenticated();
 
 	/* ---- Functions ------------------------------- */
 	const handleChange = (event) => {
@@ -28,7 +31,7 @@ function Login() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Login">
-			{auth.status !== states.CONNECTED ? (
+			{(auth.status !== states.CONNECTED && !microsoftAuth) ? (
 				<>
 					<h1>Connexion</h1>
 
@@ -49,11 +52,14 @@ function Login() {
 							<input type="submit" value="Se connecter"/>
 						</fieldset>
 					</form>
+
+					<Microsoft.LogIn/>
 				</>
 			) : (
 				<>
 					<h1>D&eacute;connexion</h1>
 					<button onClick={handleLogout}>Se d&eacute;connecter</button>
+					<Microsoft.LogOut/>
 				</>
 			)}
 		</div>

@@ -20,22 +20,18 @@ function Home() {
 			<h1>Home</h1>
 			<h2>Auth state: {states[auth.status]}</h2>
 
-			{(auth && auth.status === states.CONNECTED) ? (
+			{((auth && auth.status === states.CONNECTED) || auth.isUsingMS) ? (
 				<>
 					<p>User:</p>
 					{Object.entries(auth.user).map(([k, v]) => <p key={k} style={{ margin: "0 0 3px 10px", fontSize: "0.8em" }}>{k}: {JSON.stringify(v)}</p>)}
 					<p>Errors: {JSON.stringify(auth.error)}</p>
 
 					<button onClick={handleTest}>Tester la connexion</button>
-					<button onClick={auth.setDisconnected}>Déconnexion</button>
+					{auth.isUsingMS ? <button onClick={auth.logout}>Déconnexion</button> : <button onClick={auth.msLogout}>MS Déconnexion</button>}
 
 					<AuthorizedLinks/>
 				</>
-			) : (
-				<>
-					<Link to="/login">Se connecter</Link>
-				</>
-			)}
+			) : <Link to="/login">Se connecter</Link>}
 		</div>
 	);
 }

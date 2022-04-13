@@ -1,18 +1,15 @@
-import { useMsal } from "@azure/msal-react";
-import { Auth } from "../../config/config.js";
+import useAuth from "../../../context/Auth/AuthContext.js";
 
 function MicrosoftLogIn() {
 	/* ---- States ---------------------------------- */
-	const { instance } = useMsal();
+	const auth = useAuth();
 
 	/* ---- Functions ------------------------------- */
-	const handleLogin = (instance) => {
-		instance.loginRedirect(Auth.login).catch(console.error);
-	};
+	const handleLogin = () => auth.msLogin().catch();
 
 	/* ---- Page content ---------------------------- */
 	return (
-		<button onClick={() => handleLogin(instance)}>Connexion Microsoft</button>
+		<button onClick={handleLogin}>Connexion Microsoft</button>
 	);
 }
 
