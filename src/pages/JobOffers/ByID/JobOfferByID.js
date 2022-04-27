@@ -1,17 +1,17 @@
 import { useParams, Link } from "react-router-dom";
 import urljoin from "url-join";
-import useJobOffers from "../../hooks/JobOffers/useJobOffers.js";
-import Loader from "../../components/Loader/Loader.js";
-import { API } from "../../config/config.js";
+import useJobOffers from "../../../hooks/JobOffers/useJobOffers.js";
+import Loader from "../../../components/Loader/Loader.js";
+import { API } from "../../../config/config.js";
 
-function JobOffer() {
+function JobOfferByID() {
 	/* ---- States ---------------------------------- */
 	const { jobOfferID } = useParams();
 	const jobOffer = useJobOffers({ id: jobOfferID });
 
 	/* ---- Page content ---------------------------- */
 	return (
-		<div className="JobOffer">
+		<div className="JobOffers JobOfferByID">
 			<Link to="/jobs/offers">&lt;-- Retour</Link>
 
 			{!jobOffer.isUsable() ? (jobOffer.isLoading && <Loader/>) : (
@@ -50,4 +50,4 @@ function JobOffer() {
 	);
 }
 
-export default JobOffer;
+export default JobOfferByID;
