@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import urljoin from "url-join";
-import useJobOffers from "../../../hooks/JobOffers/useJobOffers.js";
+import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import Loader from "../../../components/Loader/Loader.js";
 import { API } from "../../../config/config.js";
 

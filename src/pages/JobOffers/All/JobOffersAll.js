@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useJobOffers from "../../../hooks/JobOffers/useJobOffers.js";
+import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import { isoStrToDate } from "../../../global/Functions.js";
 import Loader from "../../../components/Loader/Loader.js";
 
