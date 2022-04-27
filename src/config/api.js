@@ -17,6 +17,9 @@ export default {
 	comptas: {
 		getByUserID: new API.GET("/comptas/by-user-id/{userID}")
 	},
+	jobDomains: {
+		getAll: new API.GET("/jobs/domains/all"),
+	},
 	jobOffers: {
 		getAll: new API.GET("/jobs/offers/all"),
 		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}")
