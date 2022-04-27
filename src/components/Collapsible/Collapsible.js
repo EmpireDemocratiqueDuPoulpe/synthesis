@@ -1,6 +1,6 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import useClassName from "../../hooks/ClassName/useClassName.js";
+import useClassName from "../../hooks/className/useClassName.js";
 import { clickOnEnter } from "../../global/Functions.js";
 import "./Collapsible.css";
 
