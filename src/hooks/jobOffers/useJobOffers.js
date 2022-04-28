@@ -1,8 +1,8 @@
-import { useQueryClient, useQuery } from "react-query";
+import { useQueryClient, useQuery, useMutation } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function useJobOffers({ id, expired }) {
+function useJobOffers({ id, expired }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
@@ -15,13 +15,14 @@ function useJobOffers({ id, expired }) {
 				return (await API.jobOffers.getAll.fetch(null, { expired })).jobOffers;
 			}
 		},
-		{ onError: (err) => messages.add("error", err, retry) }
+		{ ...options, onError: err => messages.add("error", err, retry) }
 	);
 
 	/* ---- Mutations ------------------------------- */
-	const add = () => {
-		invalidateAll();
-	};
+	const add = useMutation(jobOffer => API.jobOffers.add.fetch(jobOffer), {
+		onSuccess: () => invalidateAll(),
+		onError: err => messages.add("error", err)
+	});
 
 	/* ---- Functions ------------------------------- */
 	const isUsable = () => !jobOffers.isLoading && !jobOffers.error;

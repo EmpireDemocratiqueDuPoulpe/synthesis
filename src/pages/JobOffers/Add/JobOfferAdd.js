@@ -1,10 +1,12 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import useJobDomains from "../../../hooks/jobDomains/useJobDomains.js";
 import Loader from "../../../components/Loader/Loader.js";
 
 function JobOfferAdd() {
 	/* ---- States ---------------------------------- */
+	const jobOffers = useJobOffers({}, { enabled: false });
 	const jobDomains = useJobDomains();
 	const [jobOffer, setJobOffer] = useState({
 		title: "",
@@ -17,6 +19,7 @@ function JobOfferAdd() {
 		content: "",
 		attachements: []
 	});
+	const navigate = useNavigate();
 
 	/* ---- Functions ------------------------------- */
 	const handleChange = event => {
@@ -53,13 +56,15 @@ function JobOfferAdd() {
 				formData.append(`${arrName}[]`, value);
 			});
 		};
-		
+
 		objToFormData("jobOffer", jobOffer, ["attachements", "domains"]);
 		arrayToFormData("attachements", jobOffer.attachements);
 		arrayToFormData("jobOffer[job_domains]", jobOffer.domains);
 		
 		// Send the new job offer
-		console.log([...formData]);
+		jobOffers.add.mutate(formData, {
+			onSuccess: () => navigate("/jobs/offers")
+		});
 	};
 
 	/* ---- Page content ---------------------------- */
@@ -73,13 +78,13 @@ function JobOfferAdd() {
 						<legend>Offre d&apos;emploi</legend>
 						
 						<label>
-								Titre
+								Titre*
 							<input type="text" name="title" value={jobOffer.title} onChange={handleChange} required/>
 						</label>
 						<br/>
 						
 						<label>
-								Type
+								Type*
 							<select name="type" value={jobOffer.type} onChange={handleChange} required>
 								<option value="stage">Stage</option>
 								<option value="alternance">Alternance</option>
@@ -88,7 +93,7 @@ function JobOfferAdd() {
 						<br/>
 						
 						<label>
-								Entreprise
+								Entreprise*
 							<input type="text" name="company_name" value={jobOffer.company_name} onChange={handleChange} required/>
 						</label>
 						<br/>
