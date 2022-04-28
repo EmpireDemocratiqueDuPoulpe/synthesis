@@ -25,6 +25,7 @@ export default {
 			.headers({ "Content-Type": null, "Accept": "application/json" }, true)
 			.stringify(false),
 		getAll: new API.GET("/jobs/offers/all"),
-		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}")
+		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}"),
+		delete: new API.DELETE("/jobs/offers/delete")
 	},
 };

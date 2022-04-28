@@ -1,4 +1,4 @@
-import { useParams, Link } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import urljoin from "url-join";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import Loader from "../../../components/Loader/Loader.js";
@@ -8,6 +8,14 @@ function JobOfferByID() {
 	/* ---- States ---------------------------------- */
 	const { jobOfferID } = useParams();
 	const jobOffer = useJobOffers({ id: jobOfferID });
+	const navigate = useNavigate();
+
+	/* ---- Functions ------------------------------- */
+	const handleDelete = () => {
+		jobOffer.delete.mutate(jobOfferID, {
+			onSuccess: () => navigate("/jobs/offers")
+		});
+	};
 
 	/* ---- Page content ---------------------------- */
 	return (
@@ -16,6 +24,8 @@ function JobOfferByID() {
 
 			{!jobOffer.isUsable() ? (jobOffer.isLoading && <Loader/>) : (
 				<>
+					<button onClick={handleDelete}>Supprimer</button>
+
 					<h3>{jobOffer.data.title}</h3>
 					<p>{jobOffer.data.type}</p>
 					<p>{jobOffer.data.company_name}</p>
