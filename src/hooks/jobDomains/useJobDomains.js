@@ -9,7 +9,7 @@ function useJobDomains(params = {}, options = {}) {
 	const jobDomains = useQuery(
 		["jobDomains", {  }],
 		async () => (await API.jobDomains.getAll.fetch()).jobDomains,
-		{ ...options, onError: err => messages.add("error", err, retry) }
+		{ ...options, onError: err => messages.add(err.type, err, retry) }
 	);
 	
 	/* ---- Functions ------------------------------- */
@@ -18,7 +18,7 @@ function useJobDomains(params = {}, options = {}) {
 	const retry = (filter = "error") => {
 		if (filter === "error" && jobDomains.error) {
 			jobDomains.remove();
-			jobDomains.refetch().catch(err => messages.add("error", err));
+			jobDomains.refetch().catch(err => messages.add(err.type, err));
 		}
 	};
 	

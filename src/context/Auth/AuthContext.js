@@ -68,7 +68,7 @@ export function AuthProvider(props) {
 
 	const setError = useCallback((err) => {
 		dispatch({ type: states.ERROR, error: err });
-		messages.add("error", err);
+		messages.add(err.type, err);
 	}, [messages]);
 
 	const login = useCallback(async (connectingUser) => {
