@@ -10,6 +10,7 @@ function Notes() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
 	const ects = { current: 0, total: 0 };
+	// eslint-disable-next-line no-unused-vars
 	const [selectedYear, setSelectedYear] = useState(4);
 	const notes = useNotesOfUser({ userID: user.user_id });
 
