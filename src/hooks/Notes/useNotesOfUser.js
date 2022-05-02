@@ -1,0 +1,38 @@
+import { useQueryClient, useQuery } from "react-query";
+import useMessage from "../../context/Message/MessageContext.js";
+import { API } from "../../config/config.js";
+
+function useNotesOfUser({ userID }) {
+	/* ---- Queries --------------------------------- */
+	const messages = useMessage();
+	const queryClient = useQueryClient();
+	const notes = useQuery(
+		["notes", { userID }],
+		async () => (await API.modules.getAllNotesOfUser.fetch({ userID })).modules,
+		{ onError: (err) => messages.add("error", err, retry) }
+	);
+
+	/* ---- Mutations ------------------------------- */
+	const add = () => {
+		invalidateAll();
+	};
+
+	/* ---- Functions ------------------------------- */
+	const isUsable = () => !notes.isLoading && !notes.error;
+
+	const invalidateAll = () => {
+		queryClient.invalidateQueries("notes").catch(err => messages.add("error", err));
+	};
+
+	const retry = (filter = "error") => {
+		if (filter === "error" && notes.error) {
+			notes.remove();
+			notes.refetch().catch(err => messages.add("error", err));
+		}
+	};
+
+	/* ---- Expose hook ----------------------------- */
+	return { ...notes, add, isUsable, retry };
+}
+
+export default useNotesOfUser;
