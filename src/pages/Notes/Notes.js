@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
-import useNotesOfUser from "../../hooks/Notes/useNotesOfUser.js";
+import useNotesOfUser from "../../hooks/notes/useNotesOfUser.js";
 import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
 import "./Notes.css";
