@@ -28,4 +28,7 @@ export default {
 		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}"),
 		delete: new API.DELETE("/jobs/offers/delete")
 	},
+	studies: {
+		getByUserID: new API.GET("/studies/by-user-id/{userID}")
+	}
 };
