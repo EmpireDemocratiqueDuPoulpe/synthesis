@@ -12,7 +12,7 @@ export default {
 		getAll: new API.GET("/permissions/all")
 	},
 	modules: {
-		getAllNotesOfUser: new API.GET("modules/notes/by-user-id/{userID}")
+		getAllNotesOfUser: new API.GET("/modules/notes/by-user-id/{userID}")
 	},
 	comptas: {
 		getByUserID: new API.GET("/comptas/by-user-id/{userID}")
