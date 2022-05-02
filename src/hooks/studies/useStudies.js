@@ -2,13 +2,13 @@ import { useQueryClient, useQuery } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function useNotesOfUser({ userID, years }, options = {}) {
+function useStudies({ userID }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
-	const notes = useQuery(
-		["notes", { userID, years }],
-		async () => (await API.modules.getAllNotesOfUser.fetch({ userID }, { years })).modules,
+	const studies = useQuery(
+		["studies", { userID }],
+		async () => (await API.studies.getByUserID.fetch({ userID })).study,
 		{ ...options, onError: (err) => messages.add(err.type, err, retry) }
 	);
 
@@ -18,21 +18,21 @@ function useNotesOfUser({ userID, years }, options = {}) {
 	};
 
 	/* ---- Functions ------------------------------- */
-	const isUsable = () => !notes.isLoading && !notes.error;
+	const isUsable = () => !studies.isLoading && !studies.error;
 
 	const invalidateAll = () => {
-		queryClient.invalidateQueries("notes").catch(err => messages.add(err.type, err));
+		queryClient.invalidateQueries("studies").catch(err => messages.add(err.type, err));
 	};
 
 	const retry = (filter = "error") => {
-		if (filter === "error" && notes.error) {
-			notes.remove();
-			notes.refetch().catch(err => messages.add(err.type, err));
+		if (filter === "error" && studies.error) {
+			studies.remove();
+			studies.refetch().catch(err => messages.add(err.type, err));
 		}
 	};
 
 	/* ---- Expose hook ----------------------------- */
-	return { ...notes, add, isUsable, retry };
+	return { ...studies, add, isUsable, retry };
 }
 
-export default useNotesOfUser;
+export default useStudies;
