@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import useClassName from "../../hooks/className/useClassName.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { regular } from "@fortawesome/fontawesome-svg-core/import.macro.js";
+import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { clickOnEnter } from "../../global/Functions.js";
 import "./Alert.css";
 
