@@ -26,6 +26,7 @@ export default {
 			.stringify(false),
 		getAll: new API.GET("/jobs/offers/all"),
 		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}"),
+		update: new API.PUT("/jobs/offers"),
 		delete: new API.DELETE("/jobs/offers/delete")
 	},
 };

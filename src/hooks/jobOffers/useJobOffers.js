@@ -23,6 +23,11 @@ function useJobOffers({ id, expired }, options = {}) {
 		onSuccess: () => invalidateAll(),
 		onError: err => messages.add(err.type, err)
 	});
+	
+	const update = useMutation(jobOffer => API.jobOffers.update.fetch({ jobOffer }), {
+		onSuccess: () => invalidateAll(),
+		onError: err => messages.add(err.type, err)
+	});
 
 	const del = useMutation(jobOfferID => API.jobOffers.delete.fetch({ jobOfferID }), {
 		onSuccess: () => invalidateAll(),
@@ -44,7 +49,7 @@ function useJobOffers({ id, expired }, options = {}) {
 	};
 
 	/* ---- Expose hook ----------------------------- */
-	return { ...jobOffers, add, delete: del, isUsable, retry };
+	return { ...jobOffers, add, update, delete: del, isUsable, retry };
 }
 
 export default useJobOffers;
