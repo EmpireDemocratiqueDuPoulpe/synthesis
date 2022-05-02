@@ -9,23 +9,18 @@ import { API } from "../../config/config.js";
  * Constants
  *****************************************************/
 
-export const states = {
-	"CONNECTING": "CONNECTING",
-	"CONNECTED": "CONNECTED",
-	"DISCONNECTED": "DISCONNECTED",
-	"ERROR": "ERROR",
-	"DEL_ERROR": "DEL_ERROR",
-};
+export const states = { CONNECTING: "CONNECTING", CONNECTED: "CONNECTED", DISCONNECTED: "DISCONNECTED", };
+const internalStates = { FAILED_AUTH: "FAILED_AUTH", ERROR: "ERROR", DEL_ERROR: "DEL_ERROR" };
 
-const initialState = { status: states.CONNECTING, isConnected: false, error: null, user: null };
+const initialState = { status: states.CONNECTING, isConnected: false, error: null, failedAuth: 0, user: null, permissions: [] };
 
-const AuthContext = createContext(undefined);
+const AuthContext = createContext(null);
 
 /*****************************************************
  * AuthProvider
  *****************************************************/
 
-export function AuthProvider(props) {
+export function AuthProvider({ maxAuthTry, children }) {
 	/* ---- States ---------------------------------- */
 	const messages = useMessage();
 	const [auth, dispatch] = useReducer((state, action) => {
@@ -33,12 +28,14 @@ export function AuthProvider(props) {
 			case states.CONNECTING:
 				return { ...state, status: states.CONNECTING, isConnected: false };
 			case states.CONNECTED:
-				return { ...state, status: states.CONNECTED, isConnected: true, user: action.user, permissions: action.permissions };
+				return { ...state, status: states.CONNECTED, isConnected: true, failedAuth: 0, user: action.user, permissions: action.permissions };
 			case states.DISCONNECTED:
-				return { ...state, status: states.DISCONNECTED, isConnected: false, error: null, user: null };
-			case states.ERROR:
-				return { ...state, status: states.ERROR, isConnected: false, error: action.error };
-			case states.DEL_ERROR:
+				return { ...state, status: states.DISCONNECTED, isConnected: false, error: null, user: null, permissions: [] };
+			case internalStates.FAILED_AUTH:
+				return { ...state, status: state.DISCONNECTED, isConnected: false, error: action.error, failedAuth: (state.failedAuth + 1), user: null, permissions: [] };
+			case internalStates.ERROR:
+				return { ...state, error: action.error };
+			case internalStates.DEL_ERROR:
 				return { ...state, error: null };
 			default:
 				throw new Error("AuthProvider: Invalid action.type!");
@@ -65,10 +62,14 @@ export function AuthProvider(props) {
 			setDisconnected();
 		}
 	}, [setDisconnected]);
-
-	const setError = useCallback((err) => {
-		dispatch({ type: states.ERROR, error: err });
-		messages.add(err.type, err);
+	
+	const setAuthFailure = error => {
+		dispatch({ type: internalStates.FAILED_AUTH, error });
+	};
+	
+	const setError = useCallback(error => {
+		dispatch({ type: internalStates.ERROR, error });
+		messages.add(error.type, error);
 	}, [messages]);
 
 	const login = useCallback(async (connectingUser) => {
@@ -87,7 +88,7 @@ export function AuthProvider(props) {
 		}
 	}, [setConnected, setDisconnected, setError, navigate]);
 
-	const reload = useCallback(async () => {
+	const reload = useCallback(async (navigateTo = null) => {
 		try {
 			setConnecting();
 			const response = await API.users.authenticate.fetch();
@@ -96,39 +97,42 @@ export function AuthProvider(props) {
 			else {
 				const permResponse = await API.permissions.getAll.fetch();
 				setConnected(response.user, permResponse.permissions);
+				if (navigateTo) navigate(navigateTo);
 			}
 		} catch (err) {
 			setError(err ?? "Une erreur inconnue est survenue. Veuillez réessayer plus tard.");
 		}
-	}, [setConnected, setDisconnected, setError]);
+	}, [setConnected, setDisconnected, setError, navigate]);
 
 	/* ---- Effects --------------------------------- */
+	// auth.error is not a dependency, otherwise the desired effect won't work
+	// eslint-disable-next-line react-hooks/exhaustive-deps
+	useEffect(() => { if (auth.error) dispatch({ type: internalStates.DEL_ERROR }); }, [location.pathname]);
+
 	useEffect(() => {
-		if (auth.error) {
-			dispatch({ type: states.DEL_ERROR });
+		let isCancelled = false;
+		
+		const authenticate = async () => {
+			try {
+				const response = await API.users.authenticate.fetch();
+				
+				if (!isCancelled) {
+					if (200 <= response.code && response.code <= 299) {
+						setConnected(response.user, response.permissions);
+					} else setAuthFailure(response.error);
+				}
+			} catch (err) {
+				if (!isCancelled) setAuthFailure(err.message);
+			}
+		};
+		
+		if (!auth.isConnected && auth.failedAuth < maxAuthTry) {
+			authenticate().catch();
 		}
+		
+		return () => { isCancelled = true; };
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [location.pathname]);
-
-	useEffect(() => {
-		let isMounted = true;
-		let isAuthenticating = false;
-
-		if (!auth.user && !isAuthenticating) {
-			isAuthenticating = true;
-			API.users.authenticate.fetch()
-				.then(response => {
-					if (isMounted) {
-						if (response.code !== 200) setDisconnected();
-						else API.permissions.getAll.fetch().then(permResponse => setConnected(response.user, permResponse.permissions));
-					}
-				})
-				.catch(err => setError(err.message))
-				.finally(() => { isAuthenticating = false; });
-		}
-
-		return () => { isMounted = false; };
-	}, [auth.user, setConnected, setDisconnected, setError]);
+	}, [auth.isConnected, auth.failedAuth, maxAuthTry]);
 
 	/* ---- Page content ---------------------------- */
 	const memoizedAuth = useMemo(
@@ -138,11 +142,15 @@ export function AuthProvider(props) {
 
 	return (
 		<AuthContext.Provider value={memoizedAuth}>
-			{auth.status !== states.CONNECTING && props.children}
+			{auth.status !== states.CONNECTING && children}
 		</AuthContext.Provider>
 	);
 }
-AuthProvider.propTypes = { children: PropTypes.node };
+AuthProvider.propTypes = {
+	maxAuthTry: PropTypes.number,
+	children: PropTypes.node
+};
+AuthProvider.defaultProps = { maxAuthTry: 1 };
 
 /*****************************************************
  * Hook
