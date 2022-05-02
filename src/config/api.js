@@ -17,8 +17,15 @@ export default {
 	comptas: {
 		getByUserID: new API.GET("/comptas/by-user-id/{userID}")
 	},
+	jobDomains: {
+		getAll: new API.GET("/jobs/domains/all"),
+	},
 	jobOffers: {
+		add: new API.POST("/jobs/offers") // <- Sending FormData
+			.headers({ "Content-Type": null, "Accept": "application/json" }, true)
+			.stringify(false),
 		getAll: new API.GET("/jobs/offers/all"),
-		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}")
+		getByID: new API.GET("/jobs/offers/by-id/{jobOfferID}"),
+		delete: new API.DELETE("/jobs/offers/delete")
 	},
 };

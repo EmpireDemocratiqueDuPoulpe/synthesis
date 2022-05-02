@@ -1,8 +1,8 @@
-import { useQueryClient, useQuery } from "react-query";
+import { useQueryClient, useQuery, useMutation } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function useJobOffers({ id, expired }) {
+function useJobOffers({ id, expired }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
@@ -15,30 +15,36 @@ function useJobOffers({ id, expired }) {
 				return (await API.jobOffers.getAll.fetch(null, { expired })).jobOffers;
 			}
 		},
-		{ onError: (err) => messages.add("error", err, retry) }
+		{ ...options, onError: err => messages.add(err.type, err, retry) }
 	);
 
 	/* ---- Mutations ------------------------------- */
-	const add = () => {
-		invalidateAll();
-	};
+	const add = useMutation(jobOffer => API.jobOffers.add.fetch(jobOffer), {
+		onSuccess: () => invalidateAll(),
+		onError: err => messages.add(err.type, err)
+	});
+
+	const del = useMutation(jobOfferID => API.jobOffers.delete.fetch({ jobOfferID }), {
+		onSuccess: () => invalidateAll(),
+		onError: err => messages.add(err.type, err)
+	});
 
 	/* ---- Functions ------------------------------- */
 	const isUsable = () => !jobOffers.isLoading && !jobOffers.error;
 
 	const invalidateAll = () => {
-		queryClient.invalidateQueries("jobOffers").catch(err => messages.add("error", err));
+		queryClient.invalidateQueries("jobOffers").catch(err => messages.add(err.type, err));
 	};
 
 	const retry = (filter = "error") => {
 		if (filter === "error" && jobOffers.error) {
 			jobOffers.remove();
-			jobOffers.refetch().catch(err => messages.add("error", err));
+			jobOffers.refetch().catch(err => messages.add(err.type, err));
 		}
 	};
 
 	/* ---- Expose hook ----------------------------- */
-	return { ...jobOffers, add, isUsable, retry };
+	return { ...jobOffers, add, delete: del, isUsable, retry };
 }
 
 export default useJobOffers;
