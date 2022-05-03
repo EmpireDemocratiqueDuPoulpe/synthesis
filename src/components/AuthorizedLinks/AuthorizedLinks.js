@@ -18,7 +18,7 @@ function AuthorizedLinks() {
 				{hasPermission(permissions.READ_SCTS) && (<li><Link to="#">SCTs</Link></li>)}
 				{hasPermission(permissions.READ_PLANNINGS) && (<li><Link to="#">Planning</Link></li>)}
 				{hasPermission(permissions.READ_CAMPUS) && (<li><Link to="#">Campus</Link></li>)}
-				{hasPermission(permissions.READ_MODULES) && (<li><Link to="#">Modules</Link></li>)}
+				{hasPermission(permissions.READ_MODULES) && (<li><Link to="/modules">Modules</Link></li>)}
 				{hasPermission(permissions.READ_NOTES) && (<li><Link to="/notes">Notes</Link></li>)}
 				{hasPermission(permissions.READ_RESITS) && (<li><Link to="#">Resits</Link></li>)}
 				{hasPermission(permissions.READ_INTERNSHIP_OFFERS) && (<li><Link to="/jobs/offers">Offres de stages</Link></li>)}

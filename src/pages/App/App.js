@@ -5,6 +5,7 @@ import Students from "../Students/Students.js";
 import Compta from "../Compta/Compta.js";
 import JobOffers from "../JobOffers/JobOffers.js";
 import Notes from "../Notes/Notes.js";
+import Modules from "../Modules/Modules.js";
 import "./App.css";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 				<Route path="/students" element={<Students.all/>}/>
 				
 				<Route path="/notes" element={<Notes/>}/>
+				<Route path="/modules" element={<Modules/>}/>
 				<Route path="/comptabilite" element={<Compta/>}/>
 				
 				<Route path="/jobs/offer/:jobOfferID" element={<JobOffers.byID/>}/>
