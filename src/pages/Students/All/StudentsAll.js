@@ -33,7 +33,7 @@ function StudentsAll() {
 								<td className="student-email">{student.email}</td>
 								<td className="student-birth-date">{student.birth_date}</td>
 								<td className="student-current-level">{student.study.current_level}</td>
-								<td className="student-campus">{student.campus}</td>
+								<td className="student-campus">{student.campus.name}</td>
 								<td className="student-region">{student.region}</td>
 							</tr>
 						))}
