@@ -4,7 +4,7 @@ import useStudents from "../../../hooks/students/useStudents.js";
 
 function StudentsAll() {
 	/* ---- States ---------------------------------- */
-	const students = useStudents();
+	const students = useStudents({ withModules: true });
 	
 	/* ---- Page content ---------------------------- */
 	return (
@@ -22,6 +22,7 @@ function StudentsAll() {
 							<th>Niveau actuel</th>
 							<th>Campus</th>
 							<th>Region</th>
+							<th>Modules</th>
 						</tr>
 					</thead>
 					
@@ -35,6 +36,7 @@ function StudentsAll() {
 								<td className="student-current-level">{student.study.current_level}</td>
 								<td className="student-campus">{student.campus.name}</td>
 								<td className="student-region">{student.region}</td>
+								<td className="student-modules">{student.modules.map(m => `${m.year}${m.name}`).join(", ")}</td>
 							</tr>
 						))}
 					</tbody>

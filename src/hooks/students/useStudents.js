@@ -2,14 +2,13 @@ import { useQueryClient, useQuery } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-// eslint-disable-next-line no-unused-vars
-function useStudents(params = {}, options = {}) {
+function useStudents({ withModules }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
 	const students = useQuery(
-		["students", {  }],
-		async () => (await API.students.getAll.fetch()).students,
+		["students", { withModules }],
+		async () => (await API.students.getAll.fetch(null, { withModules })).students,
 		{ ...options, onError: err => messages.add(err.type, err, retry) }
 	);
 	
