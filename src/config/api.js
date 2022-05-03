@@ -29,6 +29,9 @@ export default {
 		update: new API.PUT("/jobs/offers"),
 		delete: new API.DELETE("/jobs/offers/delete")
 	},
+	students: {
+		getAll: new API.GET("/students/all"),
+	},
 	studies: {
 		getByUserID: new API.GET("/studies/by-user-id/{userID}")
 	}

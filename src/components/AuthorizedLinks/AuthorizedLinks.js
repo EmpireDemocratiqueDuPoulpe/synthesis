@@ -14,7 +14,7 @@ function AuthorizedLinks() {
 	return (status !== states.CONNECTED) ? null : (
 		<div className="authorized-links">
 			<ul>
-				{hasPermission(permissions.READ_STUDENTS) && (<li><Link to="#">&Eacute;tudiants</Link></li>)}
+				{hasPermission(permissions.READ_STUDENTS) && (<li><Link to="/students">&Eacute;tudiants</Link></li>)}
 				{hasPermission(permissions.READ_SCTS) && (<li><Link to="#">SCTs</Link></li>)}
 				{hasPermission(permissions.READ_PLANNINGS) && (<li><Link to="#">Planning</Link></li>)}
 				{hasPermission(permissions.READ_CAMPUS) && (<li><Link to="#">Campus</Link></li>)}
