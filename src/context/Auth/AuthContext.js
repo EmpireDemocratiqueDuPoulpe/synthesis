@@ -118,7 +118,8 @@ export function AuthProvider({ maxAuthTry, children }) {
 				
 				if (!isCancelled) {
 					if (200 <= response.code && response.code <= 299) {
-						setConnected(response.user, response.permissions);
+						const permResponse = await API.permissions.getAll.fetch();
+						setConnected(response.user, permResponse.permissions);
 					} else setAuthFailure(response.error);
 				}
 			} catch (err) {
