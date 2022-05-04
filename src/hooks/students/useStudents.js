@@ -2,13 +2,13 @@ import { useQueryClient, useQuery } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function useStudents({ withModules }, options = {}) {
+function useStudents({ expand }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
 	const students = useQuery(
-		["students", { withModules }],
-		async () => (await API.students.getAll.fetch(null, { withModules })).students,
+		["students", { expand }],
+		async () => (await API.students.getAll.fetch(null, { expand })).students,
 		{ ...options, onError: err => messages.add(err.type, err, retry) }
 	);
 	
