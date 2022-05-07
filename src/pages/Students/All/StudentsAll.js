@@ -26,21 +26,19 @@ function StudentsAll() {
 	const sortStudentsByPassed = students => {
 		return students.sort((studA, studB) => (
 			(studA.hasPassed === studB.hasPassed) ? 0 : (
-				studA.hasPassed === "✓" ? 1 : (
-					studB.hasPassed === "✓" ? 1 : (
-						studA.hasPassed === "×" ? 1 : -1
+				studA.hasPassed ? 1 : (
+					studB.hasPassed ? 1 : (
+						studA.hasPassed === false ? 1 : -1
 					)
 				)
 			)
 		));
 	};
 	
-	const hasPassed = (student, moduleID) => {
-		const studentModule = student.modules.filter(m => m.module_id === moduleID)[0];
-		
-		student.hasPassed = (!studentModule || !studentModule.notes) ? "N/A" : (
-			studentModule.notes.length === 0 ? "N/A" : (
-				(studentModule.notes.reduce((acc, value) => acc + value.note, 0) / studentModule.notes.length) >= 10 ? "✓" : "×"
+	const hasPassed = (student, module) => {
+		student.hasPassed = (!module || !module.notes) ? null : (
+			module.notes.length === 0 ? null : (
+				(module.notes.reduce((acc, value) => acc + value.note, 0) / module.notes.length) >= 10
 			)
 		);
 		student.noteCalc = true;
@@ -92,9 +90,11 @@ function StudentsAll() {
 										{permissions.READ_CAMPUS && <td className="student-campus">{student.campus.name}</td>}
 										<td className="student-region">{student.region}</td>
 										{permissions.READ_MODULES && (
-											<td className="student-modules">{student.modules.map(module => `${module.year}${module.name}${
-												(module.notes.reduce((acc, value) => acc + value.note, 0) / module.notes.length) >= 10 ? "✓" : "×"
-											}`).join(", ")}</td>
+											<td className="student-modules">
+												{student.modules.map(module =>
+													`${module.year}${module.name}(${hasPassed(student, module).hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")})`
+												).join(", ")}
+											</td>
 										)}
 									</tr>
 								))}
@@ -121,7 +121,7 @@ function StudentsAll() {
 									</thead>
 									
 									<tbody>
-										{studs.map(s => hasPassed(s, module.module_id)).sort(sortStudentsByPassed).map(student => (
+										{studs.map(s => hasPassed(s, s.modules.filter(m => m.module_id === module.module_id)[0])).sort(sortStudentsByPassed).map(student => (
 											<tr key={`students-list-student-${student.user_id}`}>
 												<td className="student-first-name">{student.first_name}</td>
 												<td className="student-last-name">{student.last_name}</td>
@@ -130,7 +130,7 @@ function StudentsAll() {
 												<td className="student-current-level">{student.study.current_level}</td>
 												{permissions.READ_CAMPUS && <td className="student-campus">{student.campus.name}</td>}
 												<td className="student-region">{student.region}</td>
-												<td className="student-modules">{student.hasPassed}</td>
+												<td className="student-modules">{student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}</td>
 											</tr>
 										))}
 									</tbody>
