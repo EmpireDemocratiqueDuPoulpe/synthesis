@@ -96,7 +96,7 @@ function StudentsAll() {
 										{permissions.READ_MODULES && (
 											<td className="student-modules">
 												{student.modules.map(module =>
-													`${module.year}${module.name}(${hasPassed(student, module).hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")})`
+													`${module.year}${module.name}(${hasPassed(student, module).hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}${permissions.READ_ECTS && ` - ${student.hasPassed ? module.ects : 0} ECTS`})`
 												).join(", ")}
 											</td>
 										)}
@@ -120,6 +120,8 @@ function StudentsAll() {
 											<th>Niveau actuel</th>
 											{permissions.READ_CAMPUS && <th>Campus</th>}
 											<th>R&eacute;gion</th>
+											{permissions.READ_ECTS && <th>ECTS accumul&eacute;s</th>}
+											{permissions.READ_ECTS && <th>ECTS totaux</th>}
 											<th>Valid&eacute;</th>
 										</tr>
 									</thead>
@@ -134,6 +136,8 @@ function StudentsAll() {
 												<td className="student-current-level">{student.study.current_level}</td>
 												{permissions.READ_CAMPUS && <td className="student-campus">{student.campus.name}</td>}
 												<td className="student-region">{student.region}</td>
+												{permissions.READ_ECTS && <td className="student-ects">{student.hasPassed ? module.ects : 0} ECTS</td>}
+												{permissions.READ_ECTS && <td className="student-module-ects">{module.ects} ECTS</td>}
 												<td className="student-modules">{student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}</td>
 											</tr>
 										))}
