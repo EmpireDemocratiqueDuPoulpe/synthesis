@@ -1,15 +1,17 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../../context/Auth/AuthContext.js";
-import Loader from "../../../components/Loader/Loader.js";
 import useStudents from "../../../hooks/students/useStudents.js";
 import useModules from "../../../hooks/modules/useModules.js";
+import Loader from "../../../components/Loader/Loader.js";
+import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import { sortObjectArr } from "../../../global/Functions.js";
 
 function StudentsAll() {
 	/* ---- States ---------------------------------- */
 	const { permissions } = useAuth();
 	const [sortBy, setSortBy] = useState("first_name");
+	const [search, setSearch] = useState("");
 	const students = useStudents({
 		expand: [
 			(permissions.READ_CAMPUS ? "campus" : ""), (permissions.READ_MODULES ? "module" : ""),
@@ -51,7 +53,7 @@ function StudentsAll() {
 		<div className="Students StudentsAll">
 			<Link to="/">&lt;-- Retour</Link>
 			
-			<select value={sortBy} onChange={handleSortChange}>
+			<select value={sortBy} onChange={handleSortChange} disabled={sortBy !== "modules" ? (!students.isUsable()) : (!students.isUsable() || !modules.isUsable())}>
 				<option value="first_name">Pr&eacute;nom</option>
 				<option value="last_name">Nom</option>
 				<option value="email">Adresse email</option>
@@ -61,6 +63,8 @@ function StudentsAll() {
 				<option value="region">R&eacute;gion</option>
 				{permissions.READ_MODULES && <option value="modules">Modules</option>}
 			</select>
+			
+			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<>
