@@ -17,6 +17,7 @@ function App() {
 				<Route path="/" element={<Home/>}/>
 				<Route path="/login" element={<Login/>}/>
 				
+				<Route path="/student/:UUID" element={<Students.byUUID/>}/>
 				<Route path="/students" element={<Students.all/>}/>
 				
 				<Route path="/notes" element={<Notes/>}/>

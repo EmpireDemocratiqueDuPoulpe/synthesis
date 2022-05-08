@@ -80,6 +80,7 @@ function StudentsAll() {
 									{permissions.READ_CAMPUS && <th>Campus</th>}
 									<th>R&eacute;gion</th>
 									{permissions.READ_MODULES && <th>Modules</th>}
+									<th>Actions</th>
 								</tr>
 							</thead>
 							
@@ -100,6 +101,7 @@ function StudentsAll() {
 												).join(", ")}
 											</td>
 										)}
+										<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
 									</tr>
 								))}
 							</tbody>
@@ -123,6 +125,7 @@ function StudentsAll() {
 											{permissions.READ_ECTS && <th>ECTS accumul&eacute;s</th>}
 											{permissions.READ_ECTS && <th>ECTS totaux</th>}
 											<th>Valid&eacute;</th>
+											<th>Actions</th>
 										</tr>
 									</thead>
 									
@@ -139,6 +142,7 @@ function StudentsAll() {
 												{permissions.READ_ECTS && <td className="student-ects">{student.hasPassed ? module.ects : 0} ECTS</td>}
 												{permissions.READ_ECTS && <td className="student-module-ects">{module.ects} ECTS</td>}
 												<td className="student-modules">{student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}</td>
+												<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
 											</tr>
 										))}
 									</tbody>

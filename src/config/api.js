@@ -32,6 +32,7 @@ export default {
 	},
 	students: {
 		getAll: new API.GET("/students/all"),
+		getByUUID: new API.GET("/students/by-uuid/{UUID}"),
 	},
 	studies: {
 		getByUserID: new API.GET("/studies/by-user-id/{userID}")
