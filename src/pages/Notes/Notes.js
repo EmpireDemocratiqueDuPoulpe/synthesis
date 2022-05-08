@@ -6,6 +6,7 @@ import useStudies from "../../hooks/studies/useStudies.js";
 import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
 import "./Notes.css";
+import {Link} from "react-router-dom";
 
 function Notes() {
 	/* ---- States ---------------------------------- */
@@ -26,8 +27,9 @@ function Notes() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Notes">
+			<Link to="/">&lt;-- Retour</Link>
 			<h2>Notes de {user.first_name} {user.last_name}</h2>
-			<h3>Campus de {user.campus}</h3>
+			<h3>Campus de {user.campus.name}</h3>
 			<div>
 				{(!notes.isUsable() || !study.isUsable()) ? ((notes.isLoading || study.isLoading) && <Loader/>) : (
 					<>

@@ -3,9 +3,9 @@ import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import useStudies from "../../hooks/studies/useStudies.js";
-import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
 import "./Modules.css";
+import {Link} from "react-router-dom";
 
 function Modules() {
 	/* ---- States ---------------------------------- */
@@ -33,6 +33,7 @@ function Modules() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Modules">
+			<Link to="/">&lt;-- Retour</Link>
 			<h2>Liste des cours</h2>
 			<div>
 				{(!modules.isUsable() || !study.isUsable()) ? ((modules.isLoading || study.isLoading) && <Loader/>) : (
@@ -44,9 +45,7 @@ function Modules() {
 							isMulti/>
 						{modules.data.map((module, mIndex) => {
 							return (
-								<Collapsible key={`module-${mIndex}`} title={module.year + module.name}>
-									<p key={`module-${mIndex}`}>{module.name}</p>
-								</Collapsible>
+								<p key={`module-${mIndex}`}>{module.year}{module.name}</p>
 							);
 						})}
 					</>
