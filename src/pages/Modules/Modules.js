@@ -5,6 +5,7 @@ import useModules from "../../hooks/modules/useModules.js";
 import useStudies from "../../hooks/studies/useStudies.js";
 import Loader from "../../components/Loader/Loader.js";
 import "./Modules.css";
+import {Link} from "react-router-dom";
 
 function Modules() {
 	/* ---- States ---------------------------------- */
@@ -32,6 +33,7 @@ function Modules() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Modules">
+			<Link to="/">&lt;-- Retour</Link>
 			<h2>Liste des cours</h2>
 			<div>
 				{(!modules.isUsable() || !study.isUsable()) ? ((modules.isLoading || study.isLoading) && <Loader/>) : (
