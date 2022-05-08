@@ -9,7 +9,15 @@ function useStudies({ userID }, options = {}) {
 	const studies = useQuery(
 		["studies", { userID }],
 		async () => (await API.studies.getByUserID.fetch({ userID })).study,
-		{ ...options, onError: (err) => messages.add(err.type, err, retry) }
+		{ ...options, onError: (err) => {
+			let addError = true;
+			
+			if (options.onError) {
+				addError = !!options.onError();
+			}
+			
+			if (addError) messages.add(err.type, err, retry);
+		}}
 	);
 
 	/* ---- Mutations ------------------------------- */
