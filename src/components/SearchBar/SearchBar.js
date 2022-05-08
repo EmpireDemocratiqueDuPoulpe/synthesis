@@ -19,6 +19,6 @@ SearchBar.propTypes = {
 	setValue: PropTypes.func.isRequired,
 	disabled: PropTypes.bool
 };
-SearchBar.propTypes = { disabled: false };
+SearchBar.defaultProps = { disabled: false };
 
 export default SearchBar;
