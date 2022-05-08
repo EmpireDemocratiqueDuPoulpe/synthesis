@@ -27,7 +27,7 @@ function Notes() {
 	return (
 		<div className="Notes">
 			<h2>Notes de {user.first_name} {user.last_name}</h2>
-			<h3>Campus de {user.campus}</h3>
+			<h3>Campus de {user.campus.name}</h3>
 			<div>
 				{(!notes.isUsable() || !study.isUsable()) ? ((notes.isLoading || study.isLoading) && <Loader/>) : (
 					<>

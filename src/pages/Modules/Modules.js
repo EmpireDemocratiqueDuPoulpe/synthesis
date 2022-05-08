@@ -3,7 +3,6 @@ import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import useStudies from "../../hooks/studies/useStudies.js";
-import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
 import "./Modules.css";
 
@@ -44,9 +43,7 @@ function Modules() {
 							isMulti/>
 						{modules.data.map((module, mIndex) => {
 							return (
-								<Collapsible key={`module-${mIndex}`} title={module.year + module.name}>
-									<p key={`module-${mIndex}`}>{module.name}</p>
-								</Collapsible>
+								<p key={`module-${mIndex}`}>{module.year}{module.name}</p>
 							);
 						})}
 					</>
