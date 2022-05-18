@@ -103,6 +103,14 @@ export function AuthProvider({ maxAuthTry, children }) {
 			setError(err ?? "Une erreur inconnue est survenue. Veuillez réessayer plus tard.");
 		}
 	}, [setConnected, setDisconnected, setError, navigate]);
+	
+	const hasPermission = useCallback((permission) => {
+		if (!auth.permissions[permission]) {
+			throw new Error("AuthProvider: Invalid permission name!");
+		}
+		
+		return auth.user.position.permissions.includes(permission);
+	}, [auth.permissions, auth.user]);
 
 	/* ---- Effects --------------------------------- */
 	// auth.error is not a dependency, otherwise the desired effect won't work
@@ -137,8 +145,8 @@ export function AuthProvider({ maxAuthTry, children }) {
 
 	/* ---- Page content ---------------------------- */
 	const memoizedAuth = useMemo(
-		() => ({ ...auth, setConnecting, setConnected, setDisconnected, setError, login, reload }),
-		[auth, setConnected, setDisconnected, setError, login, reload]
+		() => ({ ...auth, setConnecting, setConnected, setDisconnected, setError, login, reload, hasPermission}),
+		[auth, setConnected, setDisconnected, setError, login, reload, hasPermission]
 	);
 
 	return (

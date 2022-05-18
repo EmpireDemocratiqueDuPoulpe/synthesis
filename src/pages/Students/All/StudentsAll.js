@@ -9,13 +9,13 @@ import { calcECTS, sortObjectArr } from "../../../global/Functions.js";
 
 function StudentsAll() {
 	/* ---- States ---------------------------------- */
-	const { permissions } = useAuth();
+	const { hasPermission, permissions } = useAuth();
 	const [sortBy, setSortBy] = useState("first_name");
 	const [search, setSearch] = useState("");
 	const students = useStudents({
 		expand: [
-			(permissions.READ_CAMPUS ? "campus" : ""), (permissions.READ_MODULES ? "module" : ""),
-			(permissions.READ_ECTS ? "ects" : "")
+			(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module" : ""),
+			(hasPermission(permissions.READ_ECTS) ? "ects" : "")
 		].filter(Boolean)
 	});
 	const modules = useModules({}, { enabled: sortBy === "modules" });
@@ -55,9 +55,9 @@ function StudentsAll() {
 				<option value="email">Adresse email</option>
 				<option value="birthdate" disabled>Date de naissance</option>
 				<option value="study.current_level">Niveau actuel</option>
-				{permissions.READ_CAMPUS && <option value="campus.name">Campus</option>}
+				{hasPermission(permissions.READ_CAMPUS) && <option value="campus.name">Campus</option>}
 				<option value="region">R&eacute;gion</option>
-				{permissions.READ_MODULES && <option value="modules">Modules</option>}
+				{hasPermission(permissions.READ_MODULES) && <option value="modules">Modules</option>}
 			</select>
 			
 			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
@@ -73,9 +73,9 @@ function StudentsAll() {
 									<th>Adresse e-mail</th>
 									<th>Date de naissance</th>
 									<th>Niveau actuel</th>
-									{permissions.READ_CAMPUS && <th>Campus</th>}
+									{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
 									<th>R&eacute;gion</th>
-									{permissions.READ_MODULES && <th>Modules</th>}
+									{hasPermission(permissions.READ_MODULES) && <th>Modules</th>}
 									<th>Actions</th>
 								</tr>
 							</thead>
@@ -88,12 +88,12 @@ function StudentsAll() {
 										<td className="student-email">{student.email}</td>
 										<td className="student-birth-date">{student.birth_date}</td>
 										<td className="student-current-level">{student.study.current_level}</td>
-										{permissions.READ_CAMPUS && <td className="student-campus">{student.campus.name}</td>}
+										{hasPermission(permissions.READ_CAMPUS) && <td className="student-campus">{student.campus.name}</td>}
 										<td className="student-region">{student.region}</td>
-										{permissions.READ_MODULES && (
+										{hasPermission(permissions.READ_MODULES) && (
 											<td className="student-modules">
 												{student.modules.map(module =>
-													`${module.year}${module.name}(${hasPassed(student, module).hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}${permissions.READ_ECTS && ` - ${student.hasPassed ? module.ects : 0} ECTS`})`
+													`${module.year}${module.name}${hasPermission(permissions.READ_ECTS) ? (`(${hasPassed(student, module).hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")} - ${student.hasPassed ? module.ects : 0} ECTS)`) : ""}`
 												).join(", ")}
 											</td>
 										)}
@@ -116,11 +116,15 @@ function StudentsAll() {
 											<th>Adresse e-mail</th>
 											<th>Date de naissance</th>
 											<th>Niveau actuel</th>
-											{permissions.READ_CAMPUS && <th>Campus</th>}
+											{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
 											<th>R&eacute;gion</th>
-											{permissions.READ_ECTS && <th>ECTS accumul&eacute;s</th>}
-											{permissions.READ_ECTS && <th>ECTS totaux</th>}
-											<th>Valid&eacute;</th>
+											{hasPermission(permissions.READ_ECTS) && (
+												<>
+													<th>ECTS accumul&eacute;s</th>
+													<th>ECTS totaux</th>
+													<th>Valid&eacute;</th>
+												</>
+											)}
 											<th>Actions</th>
 										</tr>
 									</thead>
@@ -133,11 +137,15 @@ function StudentsAll() {
 												<td className="student-email">{student.email}</td>
 												<td className="student-birth-date">{student.birth_date}</td>
 												<td className="student-current-level">{student.study.current_level}</td>
-												{permissions.READ_CAMPUS && <td className="student-campus">{student.campus.name}</td>}
+												{hasPermission(permissions.READ_CAMPUS) && <td className="student-campus">{student.campus.name}</td>}
 												<td className="student-region">{student.region}</td>
-												{permissions.READ_ECTS && <td className="student-ects">{student.hasPassed ? module.ects : 0} ECTS</td>}
-												{permissions.READ_ECTS && <td className="student-module-ects">{module.ects} ECTS</td>}
-												<td className="student-modules">{student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}</td>
+												{hasPermission(permissions.READ_ECTS) && (
+													<>
+														<td className="student-ects">{student.hasPassed ? module.ects : 0} ECTS</td>
+														<td className="student-module-ects">{module.ects} ECTS</td>
+														<td className="student-modules">{student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}</td>
+													</>
+												)}
 												<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
 											</tr>
 										))}
