@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import useAuth from "../../../context/Auth/AuthContext.js";
 import useStudents from "../../../hooks/students/useStudents.js";
 import Loader from "../../../components/Loader/Loader.js";
+import { calcECTS } from "../../../global/Functions.js";
 
 function StudentsByUUID() {
 	/* ---- States ---------------------------------- */
@@ -46,7 +47,18 @@ function StudentsByUUID() {
 						) : `En ${student.data.study.current_level}`}</p>
 						
 						<h4>Modules</h4>
-						<p>ugh</p>
+						<ul>
+							{student.data.modules.map(module => (
+								<li key={`student-profile-module-${module.module_id}`}>
+									{module.year}{module.name} - {calcECTS(module).ects}/{module.ects} ECTS
+									<ul>
+										{module.notes && (module.notes.map(note => (
+											<li key={`student-profile-module-${module.module_id}-note-${note.note_id}`}>{note.note}/20</li>
+										)))}
+									</ul>
+								</li>
+							))}
+						</ul>
 					</div>
 				</>
 			)}
