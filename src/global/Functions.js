@@ -1,4 +1,18 @@
 /*****************************************************
+ * ECTS
+ *****************************************************/
+
+export function calcECTS(module) {
+	const mean = (module.notes && module.notes.length > 0)
+		? (module.notes.reduce((acc, value) => acc + value.note, 0) /  module.notes.length)
+		: -1;
+	const hasPassed = mean >= 10;
+	const ects = hasPassed ? module.ects : 0;
+	
+	return { hasPassed, mean, ects };
+}
+
+/*****************************************************
  * Accessibility
  *****************************************************/
 

@@ -6,6 +6,7 @@ import useNotesOfUser from "../../hooks/notes/useNotesOfUser.js";
 import useStudies from "../../hooks/studies/useStudies.js";
 import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
+import { calcECTS } from "../../global/Functions.js";
 import "./Notes.css";
 
 function Notes() {
@@ -41,7 +42,7 @@ function Notes() {
 						
 						{notes.data.map(module => {
 							ects.total += module.ects;
-							ects.current += (module.notes.reduce((acc, note) => acc + note.note, 0) / module.notes.length) >= 10 ? module.ects : 0;
+							ects.current += calcECTS(module).ects;
 							return (
 								<Collapsible key={`notes-list-module-${module.module_id}`} title={module.year + module.name}>
 									{module.notes.map(note => (

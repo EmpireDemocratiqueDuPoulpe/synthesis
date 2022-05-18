@@ -5,7 +5,7 @@ import useStudents from "../../../hooks/students/useStudents.js";
 import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
-import { sortObjectArr } from "../../../global/Functions.js";
+import { calcECTS, sortObjectArr } from "../../../global/Functions.js";
 
 function StudentsAll() {
 	/* ---- States ---------------------------------- */
@@ -38,11 +38,7 @@ function StudentsAll() {
 	};
 	
 	const hasPassed = (student, module) => {
-		student.hasPassed = (!module || !module.notes) ? null : (
-			module.notes.length === 0 ? null : (
-				(module.notes.reduce((acc, value) => acc + value.note, 0) / module.notes.length) >= 10
-			)
-		);
+		student.hasPassed = (!module || !module.notes) ? null : (module.notes.length === 0 ? null : calcECTS(module).hasPassed);
 		student.noteCalc = true;
 		
 		return student;
