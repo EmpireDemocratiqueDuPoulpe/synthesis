@@ -15,7 +15,7 @@ function AuthorizedLinks() {
 		<div className="authorized-links">
 			<ul>
 				{hasPermission(permissions.READ_STUDENTS) && (<li><Link to="/students">&Eacute;tudiants</Link></li>)}
-				{hasPermission(permissions.READ_SCTS) && (<li><Link to="#">SCTs</Link></li>)}
+				{hasPermission(permissions.READ_SCTS) && (<li><Link to="/scts">SCTs</Link></li>)}
 				{hasPermission(permissions.READ_PLANNINGS) && (<li><Link to="#">Planning</Link></li>)}
 				{hasPermission(permissions.READ_MODULES) && (<li><Link to="/modules">Modules</Link></li>)}
 				{hasPermission(permissions.READ_NOTES) && (<li><Link to="/notes">Notes</Link></li>)}

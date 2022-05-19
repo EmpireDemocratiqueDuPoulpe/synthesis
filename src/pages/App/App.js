@@ -1,6 +1,7 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "../Home/Home.js";
 import Login from "../Login/Login.js";
+import SCTs from "../SCTs/SCTs.js";
 import Students from "../Students/Students.js";
 import Compta from "../Compta/Compta.js";
 import JobOffers from "../JobOffers/JobOffers.js";
@@ -17,6 +18,7 @@ function App() {
 				<Route path="/" element={<Home/>}/>
 				<Route path="/login" element={<Login/>}/>
 				
+				<Route path="/scts" element={<SCTs.all/>}/>
 				<Route path="/student/:UUID" element={<Students.byUUID/>}/>
 				<Route path="/students" element={<Students.all/>}/>
 				
