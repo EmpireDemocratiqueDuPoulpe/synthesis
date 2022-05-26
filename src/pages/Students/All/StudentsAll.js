@@ -6,6 +6,7 @@ import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import { calcECTS, sortObjectArr } from "../../../global/Functions.js";
+import "./StudentAll.css";
 
 function StudentsAll() {
 	/* ---- States ---------------------------------- */
@@ -92,9 +93,18 @@ function StudentsAll() {
 										<td className="student-region">{student.region}</td>
 										{hasPermission(permissions.READ_MODULES) && (
 											<td className="student-modules">
-												{student.modules.map(module =>
-													`${module.year}${module.name}${hasPermission(permissions.READ_ECTS) ? (`(${hasPassed(student, module).hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")} - ${student.hasPassed ? module.ects : 0} ECTS)`) : ""}`
-												).join(", ")}
+												{student.modules.map((module, m_index) => (
+													<span key={`student-modules-module-${module.module_id}`}>
+														{module.year}{module.name}
+														{hasPermission(permissions.READ_ECTS) && (
+															<span className={`student-module ${hasPassed(student, module).hasPassed === null ? "unknown" : (student.hasPassed ? "passed" : "not-passed")}`}>
+																&nbsp;({student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}
+																&nbsp;-&nbsp;{student.hasPassed ? module.ects : 0} ECTS)
+																{m_index < (student.modules.length - 1) && ", "}
+															</span>
+														)}
+													</span>
+												))}
 											</td>
 										)}
 										<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
