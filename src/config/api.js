@@ -30,6 +30,9 @@ export default {
 		update: new API.PUT("/jobs/offers"),
 		delete: new API.DELETE("/jobs/offers/delete")
 	},
+	resits: {
+		getStudents: new API.GET("/resits/students"),
+	},
 	scts: {
 		getAll: new API.GET("/scts/all"),
 	},
