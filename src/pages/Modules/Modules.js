@@ -5,6 +5,8 @@ import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import useStudies from "../../hooks/studies/useStudies.js";
 import Loader from "../../components/Loader/Loader.js";
+import Kalend, { CalendarView } from "kalend";
+import "kalend/dist/styles/index.css";
 import "./Modules.css";
 
 function Modules() {
@@ -37,7 +39,43 @@ function Modules() {
 		<div className="Modules">
 			<Link to="/">&lt;-- Retour</Link>
 			<h2>Liste des cours</h2>
-			
+			<Kalend
+				onEventClick={ console.log("Event click") }
+				onNewEventClick={ console.log("New Event click") }
+				events={[
+					{
+						id: 1,
+						startAt: "2022-05-15T18:00:00.000Z",
+						endAt: "2022-05-15T19:00:00.000Z",
+						timezoneStartAt: "Europe/Paris", // optional
+						summary: "test",
+						color: "blue",
+						calendarID: "modulePlanning"
+					},
+					{
+						id: 2,
+						startAt: "2022-05-12T18:00:00.000Z",
+						endAt: "2022-05-12T19:00:00.000Z",
+						timezoneStartAt: "Europe/Paris", // optional
+						summary: "woooow",
+						color: "red",
+						calendarID: "modulePlanning"
+					}
+				]}
+				initialDate={new Date().toISOString()}
+				hourHeight={10}
+				initialView={CalendarView.MONTH}
+				disabledViews={[CalendarView.DAY]}
+				onSelectView={ console.log("Onselectview Event") }
+				selectedView={ console.log("Onselectedview Event") }
+				onPageChange={ console.log("Onpagechange Event") }
+				timeFormat={"24"}
+				weekDayStart={"Monday"}
+				showWeekNumbers={true}
+				calendarIDsHidden={["modulePlanning"]}
+				language={"fr"}
+				draggingDisabledConditions={{calendarID: "modulePlanning"}}
+			/>
 			{(!modules.isUsable() || (!study.isUsable() && !noStudy)) ? ((modules.isLoading || study.isLoading) && <Loader/>) : (
 				<div>
 					{noStudy ? null : (
@@ -47,7 +85,7 @@ function Modules() {
 							onChange={setSelectedYears}
 							isMulti/>
 					)}
-					
+
 					{modules.data.map(module => {
 						return (
 							<div key={`modules-list-module-${module.module_id}`}>
@@ -59,6 +97,7 @@ function Modules() {
 					})}
 				</div>
 			)}
+
 		</div>
 	);
 }
