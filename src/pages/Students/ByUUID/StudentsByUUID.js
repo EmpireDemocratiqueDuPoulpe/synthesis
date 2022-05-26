@@ -56,7 +56,7 @@ function StudentsByUUID() {
 										<li key={`student-profile-module-${module.module_id}`}>
 											{module.year}{module.name}{hasPermission(permissions.READ_ECTS) && (
 												<>
-													- ${calcECTS(module).ects}/${module.ects} ECTS
+													- {calcECTS(module).ects}/{module.ects} ECTS
 													<ul>
 														{module.notes && (module.notes.map(note => (
 															<li key={`student-profile-module-${module.module_id}-note-${note.note_id}`}>{note.note}/20</li>
