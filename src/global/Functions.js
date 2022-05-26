@@ -12,6 +12,28 @@ export function calcECTS(module) {
 	return { hasPassed, mean, ects };
 }
 
+export const sortStudentsByPassed = students => {
+	return students.sort((studA, studB) => (
+		(studA.hasPassed === studB.hasPassed) ? 0 : (
+			studA.hasPassed ? 1 : (
+				studB.hasPassed ? 1 : (
+					studA.hasPassed === false ? 1 : -1
+				)
+			)
+		)
+	));
+};
+
+export const hasPassed = (student, module) => {
+	const studentModule = calcECTS(module);
+	
+	student.hasPassed = (!module || !module.notes) ? null : (module.notes.length === 0 ? null : studentModule.hasPassed);
+	student[`mean-${module.module_id}`] = studentModule.mean;
+	student.noteCalc = true;
+	
+	return student;
+};
+
 /*****************************************************
  * Accessibility
  *****************************************************/
