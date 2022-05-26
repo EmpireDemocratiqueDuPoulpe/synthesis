@@ -40,8 +40,6 @@ function Modules() {
 			<Link to="/">&lt;-- Retour</Link>
 			<h2>Liste des cours</h2>
 			<Kalend
-				onEventClick={ console.log("Event click") }
-				onNewEventClick={ console.log("New Event click") }
 				events={[
 					{
 						id: 1,
@@ -66,9 +64,6 @@ function Modules() {
 				hourHeight={10}
 				initialView={CalendarView.MONTH}
 				disabledViews={[CalendarView.DAY]}
-				onSelectView={ console.log("Onselectview Event") }
-				selectedView={ console.log("Onselectedview Event") }
-				onPageChange={ console.log("Onpagechange Event") }
 				timeFormat={"24"}
 				weekDayStart={"Monday"}
 				showWeekNumbers={true}
