@@ -74,19 +74,25 @@ export function sortObjectArr(propPath, obj1, obj2) {
 			return sortNumber(val1, val2);
 		case "boolean":
 			return sortBool(val1, val2);
+		case "date":
+			return sortDate(val1, val2);
 	}
 }
 
-function sortStr(str1, str2) {
+export function sortStr(str1, str2) {
 	return str1.localeCompare(str2);
 }
 
-function sortNumber(num1, num2) {
+export function sortNumber(num1, num2) {
 	return num1 - num2;
 }
 
-function sortBool(bool1, bool2) {
+export function sortBool(bool1, bool2) {
 	return (bool1 === bool2) ? 0 : (bool1 ? -1 : 1);
+}
+
+export function sortDate(date1, date2) {
+	return isoStrToDate(date1) - isoStrToDate(date2);
 }
 
 /*****************************************************
@@ -95,6 +101,10 @@ function sortBool(bool1, bool2) {
 
 /** @see https://stackoverflow.com/a/54751179/15024857 */
 export function isoStrToDate(isoStr) {
+	if (typeOf(isoStr) === "date") {
+		return isoStr;
+	}
+	
 	const dateParts = isoStr.split(/\D+/);
 	const convertedDate = new Date();
 
