@@ -3,6 +3,7 @@ import Home from "../Home/Home.js";
 import Login from "../Login/Login.js";
 import SCTs from "../SCTs/SCTs.js";
 import Students from "../Students/Students.js";
+import Planning from "../Planning/Planning.js";
 import Compta from "../Compta/Compta.js";
 import Jobs from "../Jobs/Jobs.js";
 import JobOffers from "../JobOffers/JobOffers.js";
@@ -23,9 +24,10 @@ function App() {
 				<Route path="/scts" element={<SCTs.all/>}/>
 				<Route path="/student/:UUID" element={<Students.byUUID/>}/>
 				<Route path="/students" element={<Students.all/>}/>
-				
+
 				<Route path="/notes" element={<Notes/>}/>
 				<Route path="/modules" element={<Modules/>}/>
+				<Route path="/planning" element={<Planning/>}/>
 				<Route path="/resits" element={<Resits/>}/>
 				
 				<Route path="/comptabilite" element={<Compta/>}/>
