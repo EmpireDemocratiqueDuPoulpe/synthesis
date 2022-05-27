@@ -15,6 +15,9 @@ export default {
 		getAll: new API.GET("/modules/all"),
 		getAllNotesOfUser: new API.GET("/modules/notes/by-user-id/{userID}")
 	},
+	planning: {
+		getAll: new API.GET("/planning/all"),
+	},
 	comptas: {
 		getByUserID: new API.GET("/comptas/by-user-id/{userID}")
 	},

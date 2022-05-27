@@ -4,6 +4,7 @@ import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import useStudies from "../../hooks/studies/useStudies.js";
+import usePlanning from "../../hooks/planning/usePlanning.js";
 import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
 import "kalend/dist/styles/index.css";
@@ -17,6 +18,7 @@ function Modules() {
 			const usableYears = yearsOptions.filter(y => y.value <= data.current_level);
 			setYearsOptions(usableYears);
 			setSelectedYears(usableYears);
+			setUserCurrentYear(data.current_level);
 		},
 		onError: () => setNoStudy(true),
 		retry: 0
@@ -30,7 +32,12 @@ function Modules() {
 		{ value: 5, label: "M.Eng.2" }
 	]);
 	const [selectedYears, setSelectedYears] = useState([]);
+	const [userCurrentYear, setUserCurrentYear] = useState();
 	const modules = useModules({ years: noStudy ? null : selectedYears.map(y => y.value) }, {
+		enabled: study.isUsable() || noStudy
+	});
+
+	const modulesPlanning = usePlanning({ year: userCurrentYear, eventType: "module" }, {
 		enabled: study.isUsable() || noStudy
 	});
 
@@ -48,7 +55,8 @@ function Modules() {
 						timezoneStartAt: "Europe/Paris", // optional
 						summary: "test",
 						color: "blue",
-						calendarID: "modulePlanning"
+						calendarID: "modulePlanning",
+						key: 1
 					},
 					{
 						id: 2,
@@ -57,7 +65,8 @@ function Modules() {
 						timezoneStartAt: "Europe/Paris", // optional
 						summary: "woooow",
 						color: "red",
-						calendarID: "modulePlanning"
+						calendarID: "modulePlanning",
+						key: 2
 					}
 				]}
 				initialDate={new Date().toISOString()}
@@ -71,6 +80,9 @@ function Modules() {
 				language={"fr"}
 				draggingDisabledConditions={{calendarID: "modulePlanning"}}
 			/>
+			{(!modulesPlanning.isUsable() || (!study.isUsable() && !noStudy)) ? ((modulesPlanning.isLoading || study.isLoading) && <Loader/>) : (
+				console.log(modulesPlanning)
+			)}
 			{(!modules.isUsable() || (!study.isUsable() && !noStudy)) ? ((modules.isLoading || study.isLoading) && <Loader/>) : (
 				<div>
 					{noStudy ? null : (
@@ -79,6 +91,7 @@ function Modules() {
 							defaultValue={selectedYears}
 							onChange={setSelectedYears}
 							isMulti/>
+
 					)}
 
 					{modules.data.map(module => {
