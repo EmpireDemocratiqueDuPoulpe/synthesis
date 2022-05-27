@@ -2,7 +2,7 @@ import { useQueryClient, useQuery } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function useStudents({ UUID, campus, expand }, options = {}) {
+function useStudents({ UUID, campus, onlyHired, expand }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
@@ -12,7 +12,7 @@ function useStudents({ UUID, campus, expand }, options = {}) {
 			if (UUID) {
 				return (await API.students.getByUUID.fetch({ UUID }, { campus, expand })).student;
 			} else {
-				return (await API.students.getAll.fetch(null, { campus, expand })).students;
+				return (await API.students.getAll.fetch(null, { campus, onlyHired, expand })).students;
 			}
 		},
 		{ ...options, onError: err => messages.add(err.type, err, retry) }
