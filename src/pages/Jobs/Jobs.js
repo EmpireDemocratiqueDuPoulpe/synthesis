@@ -1,0 +1,74 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import useAuth from "../../context/Auth/AuthContext.js";
+import useStudents from "../../hooks/students/useStudents.js";
+import Loader from "../../components/Loader/Loader.js";
+import SearchBar from "../../components/SearchBar/SearchBar.js";
+import { sortObjectArr, isoStrToDate } from "../../global/Functions.js";
+
+function Jobs() {
+	/* ---- States ---------------------------------- */
+	const { permissions, hasPermission } = useAuth();
+	const [sortBy, setSortBy] = useState("first_name");
+	const [search, setSearch] = useState("");
+	const students = useStudents({ onlyHired: true, expand: ["job"] });
+	
+	/* ---- Functions ------------------------------- */
+	const handleSortChange = event => {
+		setSortBy(event.target.value);
+	};
+	
+	/* ---- Page content ---------------------------- */
+	return (
+		<div className="Jobs">
+			<Link to="/">&lt;-- Retour</Link>
+			
+			<select value={sortBy} onChange={handleSortChange} disabled={!students.isUsable()}>
+				<option value="first_name">Pr&eacute;nom</option>
+				<option value="last_name">Nom</option>
+				<option value="email">Adresse email</option>
+				<option value="study.current_level">Niveau actuel</option>
+				<option value="region">R&eacute;gion</option>
+				<option value="#" disabled>Stage/Alternance</option>
+				{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <option value="#" disabled>Entreprise</option>}
+			</select>
+			
+			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
+			
+			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
+				<div>
+					<table>
+						<thead>
+							<tr>
+								<th>Pr&eacute;nom</th>
+								<th>Nom</th>
+								<th>Adresse e-mail</th>
+								<th>Niveau actuel</th>
+								<th>R&eacute;gion</th>
+								<th>Stage/Alternance</th>
+								{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <th>Entreprise</th>}
+								<th>Actions</th>
+							</tr>
+						</thead>
+						
+						<tbody>
+							{students.data.sort((a, b) => sortObjectArr(sortBy, a, b)).map(student => (
+								<tr key={`hired-students-list-student-${student.user_id}`}>
+									<td className="hired-student-first-name">{student.first_name}</td>
+									<td className="hired-student-last-name">{student.last_name}</td>
+									<td className="hired-student-email">{student.email}</td>
+									<td className="hired-student-current-level">{student.study.current_level}</td>
+									<td className="hired-student-region">{student.region}</td>
+									<td className="hired-student-jobs">{student.jobs.map(j => `${j.type} à ${j.company_name} à partir du ${isoStrToDate(j.start_date)}${j.end_date ? (` jusqu'au ${isoStrToDate(j.end_date)}`) : ""}`).join(" | ")}</td>
+									<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			)}
+		</div>
+	);
+}
+
+export default Jobs;

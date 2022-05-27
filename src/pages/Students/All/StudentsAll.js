@@ -5,7 +5,7 @@ import useStudents from "../../../hooks/students/useStudents.js";
 import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
-import { calcECTS, sortObjectArr } from "../../../global/Functions.js";
+import { hasPassed, sortStudentsByPassed, sortObjectArr } from "../../../global/Functions.js";
 import "./StudentAll.css";
 
 function StudentsAll() {
@@ -24,25 +24,6 @@ function StudentsAll() {
 	/* ---- Functions ------------------------------- */
 	const handleSortChange = event => {
 		setSortBy(event.target.value);
-	};
-	
-	const sortStudentsByPassed = students => {
-		return students.sort((studA, studB) => (
-			(studA.hasPassed === studB.hasPassed) ? 0 : (
-				studA.hasPassed ? 1 : (
-					studB.hasPassed ? 1 : (
-						studA.hasPassed === false ? 1 : -1
-					)
-				)
-			)
-		));
-	};
-	
-	const hasPassed = (student, module) => {
-		student.hasPassed = (!module || !module.notes) ? null : (module.notes.length === 0 ? null : calcECTS(module).hasPassed);
-		student.noteCalc = true;
-		
-		return student;
 	};
 	
 	/* ---- Page content ---------------------------- */
