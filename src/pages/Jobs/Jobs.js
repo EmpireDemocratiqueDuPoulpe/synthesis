@@ -11,7 +11,7 @@ function Jobs() {
 	const { permissions, hasPermission } = useAuth();
 	const [sortBy, setSortBy] = useState("first_name");
 	const [search, setSearch] = useState("");
-	const students = useStudents({ onlyHired: true, expand: ["job"] });
+	const students = useStudents({ onlyHired: true, expand: ["job<current>"] });
 	
 	/* ---- Functions ------------------------------- */
 	const handleSortChange = event => {
@@ -29,8 +29,10 @@ function Jobs() {
 				<option value="email">Adresse email</option>
 				<option value="study.current_level">Niveau actuel</option>
 				<option value="region">R&eacute;gion</option>
-				<option value="#" disabled>Stage/Alternance</option>
-				{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <option value="#" disabled>Entreprise</option>}
+				<option value="jobs[0].type">Stage/Alternance</option>
+				{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <option value="jobs[0].company_name">Entreprise</option>}
+				<option value="jobs[0].start_date">Date de d&eacute;but</option>
+				<option value="jobs[0].end_date">Date de fin</option>
 			</select>
 			
 			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
@@ -47,6 +49,8 @@ function Jobs() {
 								<th>R&eacute;gion</th>
 								<th>Stage/Alternance</th>
 								{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <th>Entreprise</th>}
+								<th>Du</th>
+								<th>Au</th>
 								<th>Actions</th>
 							</tr>
 						</thead>
@@ -59,7 +63,10 @@ function Jobs() {
 									<td className="hired-student-email">{student.email}</td>
 									<td className="hired-student-current-level">{student.study.current_level}</td>
 									<td className="hired-student-region">{student.region}</td>
-									<td className="hired-student-jobs">{student.jobs.map(j => `${j.type} à ${j.company_name} à partir du ${isoStrToDate(j.start_date)}${j.end_date ? (` jusqu'au ${isoStrToDate(j.end_date)}`) : ""}`).join(" | ")}</td>
+									<td className="hired-student-job-type">{student.jobs[0].type}</td>
+									<td className="hired-student-job-company">{student.jobs[0].company_name}</td>
+									<td className="hired-student-job-start">{isoStrToDate(student.jobs[0].start_date).toLocaleDateString()}</td>
+									<td className="hired-student-job-end">{isoStrToDate(student.jobs[0].end_date).toLocaleDateString()}</td>
 									<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
 								</tr>
 							))}
