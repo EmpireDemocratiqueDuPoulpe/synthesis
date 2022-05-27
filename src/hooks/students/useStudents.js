@@ -7,7 +7,7 @@ function useStudents({ UUID, campus, onlyHired, expand }, options = {}) {
 	const messages = useMessage();
 	const queryClient = useQueryClient();
 	const students = useQuery(
-		["students", { UUID, campus, expand }],
+		["students", { UUID, campus, onlyHired, expand }],
 		async () => {
 			if (UUID) {
 				return (await API.students.getByUUID.fetch({ UUID }, { campus, expand })).student;
