@@ -3,12 +3,7 @@ import useAuth, { states } from "../../context/Auth/AuthContext.js";
 
 function AuthorizedLinks() {
 	/* ---- States ---------------------------------- */
-	const { status, user, permissions } = useAuth();
-
-	/* ---- Functions ------------------------------- */
-	const hasPermission = (permission) => {
-		return user ? (user.position.permissions.includes(permission)) : false;
-	};
+	const { status, user, permissions, hasPermission } = useAuth();
 
 	/* ---- Page content ---------------------------- */
 	return (status !== states.CONNECTED) ? null : (
@@ -28,6 +23,8 @@ function AuthorizedLinks() {
 				{hasPermission(permissions.SEND_MAILS) && (<li><Link to="#">Envoyer un mail</Link></li>)}
 				{hasPermission(permissions.SYNC_DATA) && (<li><Link to="#">Synchroniser les données</Link></li>)}
 				{hasPermission(permissions.EXPORT_DATA) && (<li><Link to="#">Exporter les données</Link></li>)}
+				
+				<li><Link to={user.position.name === "Étudiant" ? `/student/${user.uuid}` : "#"}>Profil</Link></li>
 			</ul>
 		</div>
 	);
