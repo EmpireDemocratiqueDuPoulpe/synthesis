@@ -18,9 +18,6 @@ export default {
 	planning: {
 		getAll: new API.GET("/planning/all"),
 	},
-	comptas: {
-		getByUserID: new API.GET("/comptas/by-user-id/{userID}")
-	},
 	jobDomains: {
 		getAll: new API.GET("/jobs/domains/all"),
 	},
@@ -45,5 +42,8 @@ export default {
 	},
 	studies: {
 		getByUserID: new API.GET("/studies/by-user-id/{userID}")
+	},
+	comptas: {
+		getByUUID: new API.GET("/comptas/by-uuid/{UUID}")
 	}
 };
