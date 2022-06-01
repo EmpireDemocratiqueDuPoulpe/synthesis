@@ -9,12 +9,13 @@ import "./Planning.css";
 function Planning() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-	// TODO: EVENTTYPE ACCEPTE UN TABLEAU
-	const planning = usePlanning({year: user.study ? user.study.current_level : "", eventType: ""});
+	const planning = usePlanning({
+		years: [user.study ? user.study.current_level : ""],
+		campuses: [user.campus ? user.campus.campus_id : ""]});
 
 	/* ---- Page content ---------------------------- */
 	return (
-		<div className="Modules">
+		<div className="Planning">
 			<Link to="/">&lt;-- Retour</Link>
 			<h2>Planning</h2>
 			{!planning.isUsable() ? (planning.isLoading && <Loader/>) : (

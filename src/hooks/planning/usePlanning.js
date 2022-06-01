@@ -2,13 +2,13 @@ import { useQueryClient, useQuery } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function usePlanning({ year, eventType }, options = {}) {
+function usePlanning({ years, eventTypes, campuses }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
 	const planning = useQuery(
-		["planning", { year, eventType }],
-		async () => (await API.planning.getAll.fetch(null, { year, eventType })).planning,
+		["planning", { years, eventTypes, campuses }],
+		async () => (await API.planning.getAll.fetch(null, { years, eventTypes, campuses })).planning,
 		{ ...options, onError: (err) => messages.add(err.type, err, retry) }
 	);
 
