@@ -24,6 +24,7 @@ function AuthorizedLinks() {
 				{hasPermission(permissions.READ_INTERNSHIP_OFFERS) && (<li><Link to="/jobs/offers">Offres de stages</Link></li>)}
 				{hasPermission(permissions.READ_COMPTA) && (<li><Link to="/comptabilite">Comptabilité</Link></li>)}
 				{hasPermission(permissions.MANAGE_PARTNERSHIPS) && (<li><Link to="#">Partenaires</Link></li>)}
+				{hasPermission(permissions.MANAGE_ABSENCES) && (<li><Link to="/absences">Absences</Link></li>)}
 				{hasPermission(permissions.SEND_MAILS) && (<li><Link to="#">Envoyer un mail</Link></li>)}
 				{hasPermission(permissions.SYNC_DATA) && (<li><Link to="#">Synchroniser les données</Link></li>)}
 				{hasPermission(permissions.EXPORT_DATA) && (<li><Link to="#">Exporter les données</Link></li>)}
