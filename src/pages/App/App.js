@@ -23,6 +23,7 @@ function App() {
 				
 				<Route path="/scts" element={<SCTs.all/>}/>
 				<Route path="/student/:UUID" element={<Students.byUUID/>}/>
+				<Route path="/students/old" element={<Students.old/>}/>
 				<Route path="/students" element={<Students.all/>}/>
 
 				<Route path="/notes" element={<Notes/>}/>
