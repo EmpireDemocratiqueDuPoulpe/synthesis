@@ -1,3 +1,4 @@
+import ComptaAll from "./All/ComptaAll.js";
 import ComptaByUUID from "./ByUUID/ComptaByUUID.js";
 
-export default { byUUID: ComptaByUUID };
+export default { all: ComptaAll, byUUID: ComptaByUUID };

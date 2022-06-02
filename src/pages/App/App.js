@@ -32,6 +32,7 @@ function App() {
 				<Route path="/resits" element={<Resits/>}/>
 				
 				<Route path="/comptabilite/:UUID" element={<Compta.byUUID/>}/>
+				<Route path="/comptabilite" element={<Compta.all/>}/>
 				
 				<Route path="/jobs" element={<Jobs/>}/>
 				<Route path="/jobs/offer/:jobOfferID" element={<JobOffers.byID/>}/>
