@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useNotesOfUser from "../../hooks/notes/useNotesOfUser.js";
-import useStudies from "../../hooks/studies/useStudies.js";
+//import useStudies from "../../hooks/studies/useStudies.js";
 import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
 import { calcECTS } from "../../global/Functions.js";
@@ -12,7 +12,7 @@ import "./Notes.css";
 function Notes() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-	const study = useStudies({ userID: user.user_id });
+	//const study = useStudies({ userID: user.user_id });
 	const ects = { current: 0, total: 0 };
 	const yearsOptions = [
 		{ value: 1, label: "A.Sc.1" },
@@ -21,7 +21,7 @@ function Notes() {
 		{ value: 4, label: "M.Eng.1" },
 		{ value: 5, label: "M.Eng.2" }
 	];
-	const [selectedYears, setSelectedYears] = useState([yearsOptions[3]]);
+	const [selectedYears, setSelectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : []);
 	const notes = useNotesOfUser({ userID: user.user_id, years: selectedYears.map(y => y.value) });
 
 	/* ---- Page content ---------------------------- */
@@ -32,10 +32,10 @@ function Notes() {
 			<h3>Campus de {user.campus.name}</h3>
 			
 			<div>
-				{(!notes.isUsable() || !study.isUsable()) ? ((notes.isLoading || study.isLoading) && <Loader/>) : (
+				{(!notes.isUsable()) ? (notes.isLoading && <Loader/>) : (
 					<>
 						<Select
-							options={yearsOptions.filter(o => o.value <= study.data.current_level)}
+							options={user.study ? yearsOptions.filter(o => o.value <= user.study.current_level) : yearsOptions}
 							defaultValue={selectedYears}
 							onChange={setSelectedYears}
 							isMulti/>
