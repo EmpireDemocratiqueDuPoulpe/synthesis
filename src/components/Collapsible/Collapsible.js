@@ -18,7 +18,7 @@ function Collapsible({ title, children }) {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className={classes}>
-			<span className="collapsible-title" onClick={handleClick} onKeyPress={e => clickOnEnter(e, handleClick)} role="button" tabIndex={0}>{title}</span>
+			<span className="collapsible-title" onClick={handleClick} onKeyDown={e => clickOnEnter(e, handleClick)} role="button" tabIndex={0}>{title}</span>
 			<div className="collapsible-content">
 				{children}
 			</div>

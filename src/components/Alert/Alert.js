@@ -47,12 +47,12 @@ function Alert({ type, message, onRetry, onClose }) {
 				{onRetry && (
 					<>
 						&nbsp;
-						<span className="alert-retry" onClick={handleRetry} onKeyPress={e => clickOnEnter(e, handleRetry)} role="button" tabIndex={0}>Appuyez ici pour réessayer.</span>
+						<span className="alert-retry" onClick={handleRetry} onKeyDown={e => clickOnEnter(e, handleRetry)} role="button" tabIndex={0}>Appuyez ici pour réessayer.</span>
 					</>
 				)}
 			</span>
 
-			<span className="alert-close" onClick={handleClose} onKeyPress={e => clickOnEnter(e, handleClose)} role="button" tabIndex={0}>
+			<span className="alert-close" onClick={handleClose} onKeyDown={e => clickOnEnter(e, handleClose)} role="button" tabIndex={0}>
 				<FontAwesomeIcon icon={regular("window-minimize")} size="xs" pull="right"/>
 			</span>
 		</div>

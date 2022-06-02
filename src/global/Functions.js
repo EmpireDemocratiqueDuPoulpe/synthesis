@@ -39,7 +39,7 @@ export const hasPassed = (student, module) => {
  *****************************************************/
 
 export function clickOnEnter(e, callback, ...callbackArgs) {
-	if (e.keyCode !== 13) return;
+	if (e.key !== "Enter") return;
 
 	if (callbackArgs) callback(...callbackArgs);
 	else callback(e);
