@@ -12,8 +12,8 @@ function StudentsByUUID() {
 	const { UUID } = useParams();
 	const { hasPermission, permissions } = useAuth();
 	const student = useStudents({ UUID, expand: [
-		(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module" : ""),
-		(hasPermission(permissions.READ_ECTS) ? "ects" : ""), (hasPermission(permissions.READ_STUDENTS_JOBS) ? "job" : "")
+		(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module~" : ""),
+		(hasPermission(permissions.READ_ECTS) ? "ects~" : ""), (hasPermission(permissions.READ_STUDENTS_JOBS) ? "job~" : "")
 	].filter(Boolean)
 	});
 	const navigate = useNavigate();

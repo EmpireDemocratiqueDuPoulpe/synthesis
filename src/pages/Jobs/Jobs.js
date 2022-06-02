@@ -11,7 +11,7 @@ function Jobs() {
 	const { permissions, hasPermission } = useAuth();
 	const [sortBy, setSortBy] = useState("first_name");
 	const [search, setSearch] = useState("");
-	const students = useStudents({ onlyHired: true, expand: ["job<current>"] });
+	const students = useStudents({ expand: ["job<current>"] });
 	
 	/* ---- Functions ------------------------------- */
 	const handleSortChange = event => {

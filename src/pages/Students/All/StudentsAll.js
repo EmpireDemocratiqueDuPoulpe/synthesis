@@ -15,8 +15,8 @@ function StudentsAll() {
 	const [search, setSearch] = useState("");
 	const students = useStudents({
 		expand: [
-			(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module" : ""),
-			(hasPermission(permissions.READ_ECTS) ? "ects" : "")
+			(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module~" : ""),
+			(hasPermission(permissions.READ_ECTS) ? "ects~" : "")
 		].filter(Boolean)
 	});
 	const modules = useModules({}, { enabled: sortBy === "modules" });

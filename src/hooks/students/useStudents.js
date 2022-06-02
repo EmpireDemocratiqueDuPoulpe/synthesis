@@ -2,17 +2,17 @@ import { useQueryClient, useQuery } from "react-query";
 import useMessage from "../../context/Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
-function useStudents({ UUID, campus, onlyHired, onlyOld, expand }, options = {}) {
+function useStudents({ UUID, campus, onlyOld, expand }, options = {}) {
 	/* ---- Queries --------------------------------- */
 	const messages = useMessage();
 	const queryClient = useQueryClient();
 	const students = useQuery(
-		["students", { UUID, campus, onlyHired, onlyOld, expand }],
+		["students", { UUID, campus, onlyOld, expand }],
 		async () => {
 			if (UUID) {
 				return (await API.students.getByUUID.fetch({ UUID }, { campus, expand })).student;
 			} else {
-				return (await API.students.getAll.fetch(null, { campus, onlyHired, onlyOld, expand })).students;
+				return (await API.students.getAll.fetch(null, { campus, onlyOld, expand })).students;
 			}
 		},
 		{ ...options, onError: err => messages.add(err.type, err, retry) }
