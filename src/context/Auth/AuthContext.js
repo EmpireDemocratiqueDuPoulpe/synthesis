@@ -76,7 +76,7 @@ export function AuthProvider({ maxAuthTry, children }) {
 		try {
 			setConnecting();
 			const response = await API.users.logIn.fetch({ user: connectingUser });
-
+			
 			if (response.code !== 200) setDisconnected();
 			else {
 				const permResponse = await API.permissions.getAll.fetch();
@@ -84,6 +84,7 @@ export function AuthProvider({ maxAuthTry, children }) {
 				navigate("/");
 			}
 		} catch (err) {
+			setDisconnected();
 			setError(err);
 		}
 	}, [setConnected, setDisconnected, setError, navigate]);
@@ -100,6 +101,7 @@ export function AuthProvider({ maxAuthTry, children }) {
 				if (navigateTo) navigate(navigateTo);
 			}
 		} catch (err) {
+			setDisconnected();
 			setError(err ?? "Une erreur inconnue est survenue. Veuillez réessayer plus tard.");
 		}
 	}, [setConnected, setDisconnected, setError, navigate]);
