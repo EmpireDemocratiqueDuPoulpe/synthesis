@@ -14,7 +14,7 @@ function SCTsAll() {
 	const [search, setSearch] = useState("");
 	const scts = useSCTs({
 		expand: [
-			(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module" : "")
+			(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module~" : "")
 		].filter(Boolean)
 	});
 	const modules = useModules({}, { enabled: sortBy === "modules" });
