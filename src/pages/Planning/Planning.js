@@ -1,12 +1,11 @@
+import { useState } from "react";
+import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import usePlanning from "../../hooks/planning/usePlanning.js";
 import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
 import "kalend/dist/styles/index.css";
 import "./Planning.css";
-import {useState} from "react";
-import Select from "react-select";
-//import {useState} from "react";
 
 function Planning() {
 	/* ---- States ---------------------------------- */
