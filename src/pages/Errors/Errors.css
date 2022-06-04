@@ -1,0 +1,44 @@
+/* ---- Errors ---------------------------------- */
+/* -- Container */
+.error-box {
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+}
+
+/* -- Error code */
+.error-code {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	font-size: 20em;
+	margin: 0;
+	color: #D3495F;
+	opacity: 0.15;
+	transform: translate(-50%, -50%);
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	z-index: -1;
+}
+
+/* -- Error message */
+.error-message {
+	font-size: 3em;
+	margin: 0 0 5px 0;
+	color: #D3495F;
+}
+
+/* -- Error link */
+.error-link.secondary-link {
+	margin-top: 10px;
+	color: #17171D !important;
+	font-weight: 500 !important;
+}
+.error-link.secondary-link::before { background-color: #17171D !important; }
