@@ -18,7 +18,7 @@ function Modules() {
 		{ value: 5, label: "M.Eng.2" }
 	]);
 	const [selectedYears, setSelectedYears] = useState(
-		user.study ? [yearsOptions.filter(yo => yo.value <= user.study.current_level)] : yearsOptions
+		user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions
 	);
 	const modules = useModules({ years: selectedYears.map(y => y.value) });
 
