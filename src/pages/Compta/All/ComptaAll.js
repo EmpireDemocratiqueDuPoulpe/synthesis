@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import useStudents from "../../../hooks/students/useStudents.js";
 import Loader from "../../../components/Loader/Loader.js";
 import { clickOnEnter } from "../../../global/Functions.js";
@@ -17,7 +16,6 @@ function ComptaAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Compta ComptaAll">
-			<Link to="/">&lt;-- Retour</Link>
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<>
 					<div>

@@ -26,8 +26,6 @@ function Resits() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Resits">
-			<Link to="/">&lt;-- Retour</Link>
-			
 			<select value={sortBy} onChange={handleSortChange} disabled={sortBy !== "modules" ? (!resitStudents.isUsable()) : (!resitStudents.isUsable() || !modules.isUsable())}>
 				<option value="first_name">Pr&eacute;nom</option>
 				<option value="last_name">Nom</option>

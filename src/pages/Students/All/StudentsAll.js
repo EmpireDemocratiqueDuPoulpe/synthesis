@@ -29,8 +29,6 @@ function StudentsAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Students StudentsAll">
-			<Link to="/">&lt;-- Retour</Link>
-			
 			<select value={sortBy} onChange={handleSortChange} disabled={sortBy !== "modules" ? (!students.isUsable()) : (!students.isUsable() || !modules.isUsable())}>
 				<option value="first_name">Pr&eacute;nom</option>
 				<option value="last_name">Nom</option>

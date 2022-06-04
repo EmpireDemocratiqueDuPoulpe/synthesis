@@ -12,7 +12,6 @@ function JobOffersAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="JobOffers JobOffersAll">
-			<Link to="/">&lt;-- Retour</Link>
 			<Link to="/jobs/offers/add">+ Ajouter</Link>
 
 			<label>
