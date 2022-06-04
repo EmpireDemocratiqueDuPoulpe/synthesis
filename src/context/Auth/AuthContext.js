@@ -108,7 +108,7 @@ export function AuthProvider({ maxAuthTry, children }) {
 	
 	const hasPermission = useCallback((permission) => {
 		if (!auth.permissions[permission]) {
-			throw new Error("AuthProvider: Invalid permission name!");
+			throw new Error(`AuthProvider: Invalid permission name! [${permission}]`);
 		}
 		
 		return auth.user.position.permissions.includes(permission);
