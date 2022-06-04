@@ -1,4 +1,3 @@
-import { Link } from "react-router-dom";
 import useAuth from "../../context/Auth/AuthContext.js";
 import usePlanning from "../../hooks/planning/usePlanning.js";
 import Loader from "../../components/Loader/Loader.js";
@@ -47,7 +46,6 @@ function Planning() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Planning">
-			<Link to="/">&lt;-- Retour</Link>
 			<h2>Planning</h2>
 
 			{!planning.isUsable() ? (planning.isLoading && <Loader/>) : (
