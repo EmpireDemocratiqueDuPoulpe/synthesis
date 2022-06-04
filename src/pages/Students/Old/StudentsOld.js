@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import useAuth from "../../../context/Auth/AuthContext.js";
 import useStudents from "../../../hooks/students/useStudents.js";
 import Loader from "../../../components/Loader/Loader.js";
@@ -24,8 +23,6 @@ function StudentsOld() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Students StudentsOld">
-			<Link to="/">&lt;-- Retour</Link>
-			
 			<select value={sortBy} onChange={handleSortChange} disabled={!students.isUsable()}>
 				<option value="first_name">Pr&eacute;nom</option>
 				<option value="last_name">Nom</option>

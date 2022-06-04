@@ -1,9 +1,7 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useNotesOfUser from "../../hooks/notes/useNotesOfUser.js";
-//import useStudies from "../../hooks/studies/useStudies.js";
 import Collapsible from "../../components/Collapsible/Collapsible.js";
 import Loader from "../../components/Loader/Loader.js";
 import { calcECTS } from "../../global/Functions.js";
@@ -12,7 +10,6 @@ import "./Notes.css";
 function Notes() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-	//const study = useStudies({ userID: user.user_id });
 	const ects = { current: 0, total: 0 };
 	const yearsOptions = [
 		{ value: 1, label: "A.Sc.1" },
@@ -27,7 +24,6 @@ function Notes() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Notes">
-			<Link to="/">&lt;-- Retour</Link>
 			<h2>Notes de {user.first_name} {user.last_name}</h2>
 			<h3>Campus de {user.campus.name}</h3>
 			

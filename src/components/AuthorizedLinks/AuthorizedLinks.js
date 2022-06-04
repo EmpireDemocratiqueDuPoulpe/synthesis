@@ -23,8 +23,6 @@ function AuthorizedLinks() {
 				{hasPermission(permissions.MANAGE_ABSENCES) && (<li><Link to="/absences">Absences</Link></li>)}
 				{hasPermission(permissions.SYNC_DATA) && (<li><Link to="#">Synchroniser les données</Link></li>)}
 				{hasPermission(permissions.EXPORT_DATA) && (<li><Link to="#">Exporter les données</Link></li>)}
-				
-				<li><Link to={user.position.name === "Étudiant" ? `/student/${user.uuid}` : "#"}>Profil</Link></li>
 			</ul>
 		</div>
 	);

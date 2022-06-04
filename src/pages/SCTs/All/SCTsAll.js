@@ -27,8 +27,6 @@ function SCTsAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="SCTs SCTsAll">
-			<Link to="/">&lt;-- Retour</Link>
-			
 			<select value={sortBy} onChange={handleSortChange} disabled={sortBy !== "modules" ? (!scts.isUsable()) : (!scts.isUsable() || !modules.isUsable())}>
 				<option value="first_name">Pr&eacute;nom</option>
 				<option value="last_name">Nom</option>

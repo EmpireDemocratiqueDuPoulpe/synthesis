@@ -10,3 +10,33 @@ body {
 }
 
 /* -- Special classes */
+.secondary-link,
+.secondary-link-wrapper a {
+  position: relative;
+  color: #0275D8;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.secondary-link::before,
+.secondary-link-wrapper a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 0.104em;
+  background-color: #0275D8;
+  transition: width 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.secondary-link:focus,
+.secondary-link-wrapper a:focus { outline: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .secondary-link:hover::before,
+  .secondary-link-wrapper a:hover::before {
+    right: auto;
+    left: 0;
+    width: 100%;
+  }
+}

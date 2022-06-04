@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import useJobDomains from "../../../hooks/jobDomains/useJobDomains.js";
 import Loader from "../../../components/Loader/Loader.js";
@@ -70,8 +70,6 @@ function JobOfferAdd() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="JobOffers JobOffersAdd">
-			<Link to="/jobs/offers">&lt;-- Retour</Link>
-			
 			{!jobDomains.isUsable() ? (jobDomains.isLoading && <Loader/>) : (
 				<form onSubmit={handleSubmit} encType="multipart/form-data">
 					<fieldset>

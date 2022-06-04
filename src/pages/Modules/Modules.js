@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
@@ -25,7 +24,6 @@ function Modules() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Modules">
-			<Link to="/">&lt;-- Retour</Link>
 			<h2>Liste des cours</h2>
 
 			{!modules.isUsable() ? (modules.isLoading && <Loader/>) : (

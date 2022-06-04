@@ -21,8 +21,6 @@ function Jobs() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Jobs">
-			<Link to="/">&lt;-- Retour</Link>
-			
 			<select value={sortBy} onChange={handleSortChange} disabled={!students.isUsable()}>
 				<option value="first_name">Pr&eacute;nom</option>
 				<option value="last_name">Nom</option>

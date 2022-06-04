@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useParams, useNavigate, Link } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import urljoin from "url-join";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import useJobDomains from "../../../hooks/jobDomains/useJobDomains.js";
@@ -54,8 +54,6 @@ function JobOfferByID() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="JobOffers JobOfferByID">
-			<Link to="/jobs/offers">&lt;-- Retour</Link>
-
 			{(!jobOffer.isUsable() || !jobDomains.isUsable()) ? ((jobOffer.isLoading || jobDomains.isLoading) && <Loader/>) : (
 				<>
 					<button onClick={() => setIsUpdating(!isUpdating)}>{isUpdating ? "Annuler" : "Modifier"}</button>

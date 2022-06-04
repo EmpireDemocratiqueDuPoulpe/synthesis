@@ -1,4 +1,4 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useAuth from "../../../context/Auth/AuthContext.js";
 import useStudents from "../../../hooks/students/useStudents.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,13 +16,10 @@ function StudentsByUUID() {
 		(hasPermission(permissions.READ_ECTS) ? "ects~" : ""), (hasPermission(permissions.READ_STUDENTS_JOBS) ? "job~" : "")
 	].filter(Boolean)
 	});
-	const navigate = useNavigate();
 	
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Students StudentsByUUID">
-			<button onClick={() => navigate(-1)}>&lt;-- Retour</button>
-			
 			{!student.isUsable() ? (student.isLoading && <Loader/>) : (
 				<>
 					<a href={`mailto:${student.data.email}`}>
