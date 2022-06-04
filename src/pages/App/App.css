@@ -1,0 +1,40 @@
+/* ---- App ------------------------------------- */
+/* -- App header */
+.App .App-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: stretch;
+	height: 40px;
+	padding-right: 20px;
+	background: #F1F1F1;
+	border-bottom: thin solid darkgray;
+}
+
+.App .App-header .back-btn {
+	background: rgba(0, 0, 0, 0);
+	width: 40px;
+	background: none;
+	border: none;
+	border-right: thin solid darkgray;
+	transition: background-color 100ms ease-in-out;
+}
+.App .App-header .back-btn:not(:disabled) { cursor: pointer; }
+.App .App-header .back-btn:not(:disabled):hover {
+	background: rgba(0, 0, 0, 0.10);
+}
+
+.App .App-header .header-user {
+	position: relative;
+	width: 40px;
+	height: 40px;
+}
+
+.App .App-header .header-user .user-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 30px;
+	height: 30px;
+	transform: translate(-50%, -50%);
+}
