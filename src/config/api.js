@@ -45,5 +45,9 @@ export default {
 	},
 	comptas: {
 		getByUUID: new API.GET("/comptas/by-uuid/{UUID}")
+	},
+	campuses: {
+		getAll: new API.GET("/campuses/all"),
+		getByID: new API.GET("/campuses/by-id/{campusID}"),
 	}
 };

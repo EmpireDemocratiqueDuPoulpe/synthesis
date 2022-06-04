@@ -2,6 +2,7 @@ import { useState } from "react";
 import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import usePlanning from "../../hooks/planning/usePlanning.js";
+import useCampuses from "../../hooks/campuses/useCampuses.js";
 import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
 import "kalend/dist/styles/index.css";
@@ -22,17 +23,15 @@ function Planning() {
 		user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions
 	);
 
-	const campusesOptions = [
-		{ value: 10000, label: "Caen" },
-		{ value: 10001, label: "Distanciel" },
-		{ value: 10002, label: "Lille" },
-		{ value: 10003, label: "Lyon" },
-		{ value: 10004, label: "Paris" },
-		{ value: 10005, label: "Tours" }
-	];
-	const [selectedCampuses, setSelectedCampuses] = useState(
-		user.campus ? campusesOptions.filter(c => c.value === user.campus.campus_id) : campusesOptions
-	);
+	const campuses = useCampuses({}, {
+		onSuccess: data => {
+			const mappedData = data.map(c => ({ value: c.campus_id, label: c.name }));
+			setCampusesOptions(mappedData);
+			setSelectedCampuses(mappedData.filter(c => c.value === user.campus.campus_id));
+		}
+	});
+	const [campusesOptions, setCampusesOptions] = useState([]);
+	const [selectedCampuses, setSelectedCampuses] = useState([]);
 
 	const eventTypesOptions = [
 		{ value: "module", label: "Cours" },
@@ -47,7 +46,7 @@ function Planning() {
 		<div className="Planning">
 			<h2>Planning</h2>
 
-			{!planning.isUsable() ? (planning.isLoading && <Loader/>) : (
+			{(!planning.isUsable() || !campuses.isUsable()) ? ((planning.isLoading || campuses.isLoading) && <Loader/>) : (
 				<div>
 					<span>Année(s)</span>
 					<Select
