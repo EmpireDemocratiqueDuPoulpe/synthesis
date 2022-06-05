@@ -2,6 +2,7 @@ import { createContext, useContext, useReducer, useMemo, useCallback, useEffect 
 import { useNavigate, useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { useCookies } from "react-cookie";
+import { isArray } from "lodash-es";
 import useMessage from "../Message/MessageContext.js";
 import { API } from "../../config/config.js";
 
@@ -107,6 +108,10 @@ export function AuthProvider({ maxAuthTry, children }) {
 	}, [setConnected, setDisconnected, setError, navigate]);
 	
 	const hasPermission = useCallback((permission) => {
+		if (isArray(permission)) {
+			return permission.every(p => hasPermission(p));
+		}
+		
 		if (!auth.permissions[permission]) {
 			throw new Error(`AuthProvider: Invalid permission name! [${permission}]`);
 		}
