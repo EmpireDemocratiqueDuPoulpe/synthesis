@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import useAuth from "../../context/Auth/AuthContext.js";
 import useStudents from "../../hooks/students/useStudents.js";
 import Loader from "../../components/Loader/Loader.js";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
@@ -8,7 +7,6 @@ import { sortObjectArr, isoStrToDate } from "../../global/Functions.js";
 
 function Jobs() {
 	/* ---- States ---------------------------------- */
-	const { permissions, hasPermission } = useAuth();
 	const [sortBy, setSortBy] = useState("first_name");
 	const [search, setSearch] = useState("");
 	const students = useStudents({ expand: ["job<current>"] });
@@ -28,7 +26,7 @@ function Jobs() {
 				<option value="study.current_level">Niveau actuel</option>
 				<option value="region">R&eacute;gion</option>
 				<option value="jobs[0].type">Stage/Alternance</option>
-				{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <option value="jobs[0].company_name">Entreprise</option>}
+				<option value="jobs[0].company_name">Entreprise</option>
 				<option value="jobs[0].start_date">Date de d&eacute;but</option>
 				<option value="jobs[0].end_date">Date de fin</option>
 			</select>
@@ -46,7 +44,7 @@ function Jobs() {
 								<th>Niveau actuel</th>
 								<th>R&eacute;gion</th>
 								<th>Stage/Alternance</th>
-								{hasPermission(permissions.READ_STUDENTS_COMPANIES) && <th>Entreprise</th>}
+								<th>Entreprise</th>
 								<th>Du</th>
 								<th>Au</th>
 								<th>Actions</th>
