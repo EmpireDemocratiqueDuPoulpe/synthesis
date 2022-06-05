@@ -1,6 +1,44 @@
 /* ---- App ------------------------------------- */
-/* -- App header */
-.App .App-header {
+/* -- App */
+.App {
+	display: flex;
+	flex-direction: row;
+	justify-content: stretch;
+	align-items: stretch;
+	width: 100%;
+	max-width: 100vw;
+	min-height: 100vh;
+	overflow-x: hidden;
+}
+
+/* -- App navigation menu */
+.App .App-nav {
+	flex-shrink: 0;
+	width: 20vw;
+	font-size: 1.25em;
+	background: #E7E7E7;
+}
+
+.App .App-nav .nav-links {
+	list-style: none;
+	margin: 100px 0 0 0;
+	padding: 0 20px;
+}
+
+.App .App-nav .nav-links li {
+	height: 2em;
+	line-height: 2em;
+	padding: 0 0.2em;
+}
+.App .App-nav .nav-links li:hover { background: rgba(0, 0, 0, 0.15); }
+
+.App .App-nav .nav-links li a { text-decoration: none; }
+
+/* -- App page */
+.App .App-page { flex-grow: 1; min-width: 0; }
+
+/* - App header */
+.App .App-page .App-header {
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -11,7 +49,7 @@
 	border-bottom: thin solid darkgray;
 }
 
-.App .App-header .back-btn {
+.App .App-page .App-header .back-btn {
 	background: rgba(0, 0, 0, 0);
 	width: 40px;
 	background: none;
@@ -19,22 +57,28 @@
 	border-right: thin solid darkgray;
 	transition: background-color 100ms ease-in-out;
 }
-.App .App-header .back-btn:not(:disabled) { cursor: pointer; }
-.App .App-header .back-btn:not(:disabled):hover {
-	background: rgba(0, 0, 0, 0.10);
-}
+.App .App-page .App-header .back-btn:not(:disabled) { cursor: pointer; }
+.App .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(0, 0, 0, 0.10); }
 
-.App .App-header .header-user {
+.App .App-page .App-header .header-user {
 	position: relative;
 	width: 40px;
 	height: 40px;
 }
 
-.App .App-header .header-user .user-icon {
+.App .App-page .App-header .header-user .user-icon {
 	position: absolute;
 	top: 50%;
 	left: 50%;
 	width: 30px;
 	height: 30px;
 	transform: translate(-50%, -50%);
+}
+
+/* - App body */
+.App .App-page .App-body {
+	box-sizing: border-box;
+	width: 100%;
+	height: calc(100% - 41px); /* 41px: Height of the App-header plus its border */
+	padding: 25px 35px;
 }
