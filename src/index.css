@@ -2,10 +2,17 @@
 /* -- Colors */
 :root {
   --primary-color: #3D2683;
+  --primary-text-color: #101010;
+
+  --error-color: #D3495F;
+  --warning-color: #F0AD4E;
+  --info-color: #0275D8;
+  --success-color: #5CB85C;
 }
 
 /* -- Body */
 body {
+  color: var(--primary-text-color);
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
