@@ -51,13 +51,13 @@
 	z-index: 10;
 }
 
-.App-nav .nav-links li {
+.App-nav .nav-links .nav-link {
 	height: 2em;
 	line-height: 2em;
 	white-space: nowrap;
 }
 
-.App-nav .nav-links li a { text-decoration: none; }
+.App-nav .nav-links .nav-link a { text-decoration: none; }
 
 .App-nav .nav-links .link-label { transition: 250ms color ease-in-out; }
 .App-nav:not(.open) .nav-links .link-label { color: transparent; }
@@ -65,11 +65,13 @@
 /* - Link icon */
 .App-nav .nav-links .link-icon { color: #FFFFFF; }
 
-.App-nav .nav-links li:hover .link-icon {
+.App-nav .nav-links .nav-link.active .link-icon,
+.App-nav .nav-links .nav-link:hover .link-icon {
+	color: #FFFFFF !important;
 	background: rgba(255, 255, 255, 0.25);
 	border-radius: 50%;
 }
 
 /* - Link label */
-.App-nav .nav-links li .link-label { margin-left: 0.5em; padding-left: 0.5em; }
-.App-nav .nav-links li:hover .link-label { background: rgba(0, 0, 0, 0.15); }
+.App-nav .nav-links .nav-link .link-label { margin-left: 0.5em; padding-left: 0.5em; }
+.App-nav .nav-links .nav-link:hover .link-label { background: rgba(0, 0, 0, 0.15); }
