@@ -1,4 +1,9 @@
 /* ---- Global ---------------------------------- */
+/* -- Colors */
+:root {
+  --primary-color: #3D2683;
+}
+
 /* -- Body */
 body {
   margin: 0;

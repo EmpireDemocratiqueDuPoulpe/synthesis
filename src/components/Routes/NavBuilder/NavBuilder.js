@@ -19,7 +19,7 @@ function NavBuilder({ routes }) {
 								<FontAwesomeIcon icon={route.link.icon.file}/>
 							</span>
 						)}
-						<span>{route.link.label}</span>
+						<span className="link-label">{route.link.label}</span>
 					</Link>
 				</li>
 			))}

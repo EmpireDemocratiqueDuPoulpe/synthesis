@@ -2,9 +2,9 @@ import { useLocation, useNavigate } from "react-router-dom";
 import useAuth, { states } from "../../context/Auth/AuthContext.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import AppNav from "../../components/App/AppNav/AppNav.js";
 import UserIcon from "../../components/UserIcon/UserIcon.js";
 import RoutesBuilder from "../../components/Routes/RoutesBuilder/RoutesBuilder.js";
-import NavBuilder from "../../components/Routes/NavBuilder/NavBuilder.js";
 import { Routes } from "../../config/config.js";
 import "./App.css";
 
@@ -18,9 +18,7 @@ function App() {
 	// TODO: Choose between french/english urls
 	return (
 		<div className="App">
-			<nav className="App-nav">
-				<NavBuilder routes={Routes}/>
-			</nav>
+			<AppNav/>
 			
 			<div className="App-page">
 				<div className="App-header">

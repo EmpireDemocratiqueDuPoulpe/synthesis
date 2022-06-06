@@ -1,0 +1,75 @@
+/* ---- App navigation menu --------------------- */
+/* -- Container */
+.App-nav {
+	position: relative;
+	width: 4vw;
+	font-size: 1.35em;
+	transition: 250ms width ease-in-out;
+	overflow-x: hidden;
+}
+.App-nav.open { width: 20vw; }
+
+.App-nav::before, .App-nav::after {
+	content: "";
+	position: absolute;
+	top: 0;
+	height: 100%;
+	z-index: -1;
+}
+.App-nav::before {
+	left: 0;
+	width: 4vw; /* Same width as closed App-nav */
+	background: var(--primary-color);
+}
+.App-nav::after {
+	left: 4vw; /* Same width as closed App-nav */
+	width: calc(100% - 4vw);
+	background: #E7E7E7;
+}
+
+/* -- App nav button */
+.App-nav .app-nav-btn {
+	width: 1.4em;
+	height: 1.4em;
+	font-size: 1.1em;
+	margin-top: 20px;
+	margin-left: calc((4vw / 2) - (1.4em / 2));
+	background: none;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.App-nav .app-nav-btn:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* -- Links */
+.App-nav .nav-links {
+	list-style: none;
+	margin: 100px 0 0 0;
+	/* (Close nav width / 2) - (Font size / 2) - (Link icon left padding / 1.5) */
+	padding: 0 calc((4vw / 2) - (1.35em / 2) - (10px / 1.5));
+	z-index: 10;
+}
+
+.App-nav .nav-links li {
+	height: 2em;
+	line-height: 2em;
+	white-space: nowrap;
+}
+
+.App-nav .nav-links li a { text-decoration: none; }
+
+.App-nav .nav-links .link-label { transition: 250ms color ease-in-out; }
+.App-nav:not(.open) .nav-links .link-label { color: transparent; }
+
+/* - Link icon */
+.App-nav .nav-links .link-icon { color: #FFFFFF; }
+
+.App-nav .nav-links li:hover .link-icon {
+	background: rgba(255, 255, 255, 0.25);
+	border-radius: 50%;
+}
+
+/* - Link label */
+.App-nav .nav-links li .link-label { margin-left: 0.5em; padding-left: 0.5em; }
+.App-nav .nav-links li:hover .link-label { background: rgba(0, 0, 0, 0.15); }
