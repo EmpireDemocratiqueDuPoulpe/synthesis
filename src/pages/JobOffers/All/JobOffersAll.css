@@ -1,0 +1,37 @@
+/* ---- Alert ----------------------------------- */
+/* -- Job offers list */
+.job-offers .job-offer:not(:last-child) { margin-bottom: 10px; }
+
+/* -- Job offer */
+.job-offer {
+	padding: 10px;
+	border: thin solid #D3D3D3;
+	border-radius: 10px;
+	transition: background-color 100ms ease-in;
+}
+.job-offer:hover { background: #E7E7E7; }
+
+.job-offer.expired { opacity: 0.5; }
+
+.job-offer a {
+	color: var(--primary-text-color);
+	text-decoration: none;
+}
+
+.job-offer h3 { font-size: 1em; margin: 0 0 3px 0; }
+.job-offer p { margin: 0; }
+
+.job-offer .job-offer-exp-date {
+	font-size: 0.8em;
+	margin-left: 5px;
+	font-weight: normal;
+}
+.job-offer.expired .job-offer-exp-date { color: var(--error-color) }
+.job-offer .job-offer-type { text-transform: capitalize; }
+
+/* - Job offer domains */
+.job-offer .job-offer-domains {
+	font-size: 0.8em;
+	margin-top: 8px;
+	color: #777777;
+}
