@@ -31,7 +31,7 @@ function Planning() {
 		}
 	});
 	const [campusesOptions, setCampusesOptions] = useState([]);
-	const [selectedCampuses, setSelectedCampuses] = useState([]);
+	const [selectedCampuses, setSelectedCampuses] = useState(user.campus ? [user.campus.campus_id] : []);
 
 	const eventTypesOptions = [
 		{ value: "module", label: "Cours" },
@@ -90,6 +90,7 @@ function Planning() {
 						calendarIDsHidden={["planning"]}
 						language={"fr"}
 						draggingDisabledConditions={{calendarID: "planning"}}
+						isNewEventOpen={false}
 					/>
 				</div>
 
