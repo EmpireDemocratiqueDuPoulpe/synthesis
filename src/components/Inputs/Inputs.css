@@ -1,0 +1,56 @@
+/* ---- Inputs ---------------------------------- */
+/* -- Checkbox */
+.input.checkbox {
+	display: inline-block;
+	height: 1em;
+	line-height: 1em;
+	padding: 0.5em;
+	border: thin #D3D3D3 solid;
+	border-radius: 5px;
+	cursor: pointer;
+	transition: background 100ms ease-in, color 100ms ease-in, border-color 100ms ease-in;
+}
+
+.input.checkbox.active { background: var(--success-color); color: #FFFFFF; border-color: #439A43; }
+
+.input.checkbox span {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+}
+
+.input.checkbox input {
+	position: relative;
+	width: 1em;
+	height: 1em;
+	margin-right: 5px;
+	border: thin #D3D3D3 solid;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	transition: border-color 100ms ease-in;
+	cursor: pointer;
+}
+.input.checkbox.active input { border-color: #439A43; }
+
+.input.checkbox input::after {
+	content: "";
+	position: absolute;
+	top: 3px;
+	right: 3px;
+	bottom: 3px;
+	left: 3px;
+	background: #439A43;
+	opacity: 0;
+	transition: opacity 100ms ease-in;
+	pointer-events: none;
+}
+.input.checkbox.active input::after { opacity: 1; }
+
+.input.checkbox .input-label {
+	padding-left: 5px;
+	border-left: thin #D3D3D3 solid;
+	transition: border-color 100ms ease-in;
+}
+.input.checkbox.active .input-label { border-color: #439A43; }

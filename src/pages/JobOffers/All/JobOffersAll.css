@@ -1,5 +1,9 @@
-/* ---- Alert ----------------------------------- */
+/* ---- Job offers list ------------------------- */
 /* -- Job offers list */
+.job-offers {
+	margin-top: 10px;
+}
+
 .job-offers .job-offer:not(:last-child) { margin-bottom: 10px; }
 
 /* -- Job offer */
