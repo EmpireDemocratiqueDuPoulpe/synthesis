@@ -4,6 +4,7 @@ import SCTs from "../pages/SCTs/SCTs.js";
 import Students from "../pages/Students/Students.js";
 import Planning from "../pages/Planning/Planning.js";
 import Compta from "../pages/Compta/Compta.js";
+import Absences from "../pages/Absences/Absences.js";
 import Jobs from "../pages/Jobs/Jobs.js";
 import JobOffers from "../pages/JobOffers/JobOffers.js";
 import Notes from "../pages/Notes/Notes.js";
@@ -100,7 +101,7 @@ export default [
 	// Absences
 	{
 		path: "/absences",
-		element: () => <p>la page</p>,
+		element: Absences,
 		protected: true,
 		permissions: [ "MANAGE_ABSENCES" ],
 		link: {
