@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Loader from "../../../components/Loader/Loader.js";
 import Button from "../../../components/Button/Button.js";
+import Inputs from "../../../components/Inputs/Inputs.js";
 import { isoStrToDate } from "../../../global/Functions.js";
 import "./JobOffersAll.css";
 
@@ -22,10 +23,9 @@ function JobOffersAll() {
 				<Button link={{ to: "/jobs/offers/add" }} icon={<FontAwesomeIcon icon={solid("plus")}/>}>Ajouter</Button>
 			)}
 			
-			<label>
-				<input type="checkbox" value={expired} onChange={(e) => setExpired(e.target.checked)} checked={expired}/>
+			<Inputs.Checkbox value={expired} setValue={setExpired}>
 				Afficher les offres ayant expir&eacute;es
-			</label>
+			</Inputs.Checkbox>
 
 			{!jobOffers.isUsable() ? (jobOffers.isLoading && <Loader/>) : (
 				<div className="job-offers">
