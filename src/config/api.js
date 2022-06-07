@@ -49,5 +49,8 @@ export default {
 	campuses: {
 		getAll: new API.GET("/campuses/all"),
 		getByID: new API.GET("/campuses/by-id/{campusID}"),
-	}
+	},
+	absences: {
+		getAll: new API.GET("/absences/all"),
+	},
 };
