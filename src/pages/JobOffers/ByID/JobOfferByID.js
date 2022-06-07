@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import urljoin from "url-join";
+import useAuth from "../../../context/Auth/AuthContext.js";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import useJobDomains from "../../../hooks/jobDomains/useJobDomains.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Loader from "../../../components/Loader/Loader.js";
+import Button from "../../../components/Button/Button.js";
 import { API } from "../../../config/config.js";
 
 function JobOfferByID() {
 	/* ---- States ---------------------------------- */
 	const { jobOfferID } = useParams();
+	const { permissions, hasPermission } = useAuth();
 	const [isUpdating, setIsUpdating] = useState(false);
 	const [updatedOffer, setUpdatedOffer] = useState({});
 	const jobOffer = useJobOffers({ id: jobOfferID }, {
@@ -56,8 +61,12 @@ function JobOfferByID() {
 		<div className="JobOffers JobOfferByID">
 			{(!jobOffer.isUsable() || !jobDomains.isUsable()) ? ((jobOffer.isLoading || jobDomains.isLoading) && <Loader/>) : (
 				<>
-					<button onClick={() => setIsUpdating(!isUpdating)}>{isUpdating ? "Annuler" : "Modifier"}</button>
-					<button onClick={handleDelete}>Supprimer</button>
+					{hasPermission(permissions.EDIT_INTERNSHIP_OFFERS) && (
+						<>
+							<Button onClick={() => setIsUpdating(!isUpdating)}>{isUpdating ? "Annuler" : "Modifier"}</Button>
+							<Button onClick={handleDelete} color="red" icon={<FontAwesomeIcon icon={solid("trash")}/>}>Supprimer</Button>
+						</>
+					)}
 					
 					{isUpdating ? (
 						<form onSubmit={handleUpdate}>
