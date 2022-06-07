@@ -1,0 +1,18 @@
+/* ---- Button ---------------------------------- */
+/* -- Container */
+.button {
+	display: inline-block;
+	font-size: 0.9em;
+	margin: 0 1em 1em 0;
+	padding: 0.6em 0.8em;
+	background: var(--primary-color);
+	color: #FFFFFF;
+	border: none;
+	text-decoration: none;
+	transition: background-color 100ms ease-in;
+	cursor: pointer;
+}
+.button:hover { background: #604797; }
+
+/* -- Icon */
+.button .button-icon { margin-right: 5px; }
