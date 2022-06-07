@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import useAuth from "../../../context/Auth/AuthContext.js";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
-import { isoStrToDate } from "../../../global/Functions.js";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Loader from "../../../components/Loader/Loader.js";
+import Button from "../../../components/Button/Button.js";
+import { isoStrToDate } from "../../../global/Functions.js";
 import "./JobOffersAll.css";
 
 function JobOffersAll() {
 	/* ---- States ---------------------------------- */
+	const { permissions, hasPermission } = useAuth();
 	const [expired, setExpired] = useState(false);
 	const jobOffers = useJobOffers({ expired });
 
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="JobOffers JobOffersAll">
-			<Link to="/jobs/offers/add">+ Ajouter</Link>
-
+			{hasPermission(permissions.EDIT_INTERNSHIP_OFFERS) && (
+				<Button link={{ to: "/jobs/offers/add" }} icon={<FontAwesomeIcon icon={solid("plus")}/>}>Ajouter</Button>
+			)}
+			
 			<label>
 				<input type="checkbox" value={expired} onChange={(e) => setExpired(e.target.checked)} checked={expired}/>
 				Afficher les offres ayant expir&eacute;es
