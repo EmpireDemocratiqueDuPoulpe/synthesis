@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import urljoin from "url-join";
 import useAuth from "../../../context/Auth/AuthContext.js";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
@@ -8,7 +10,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Loader from "../../../components/Loader/Loader.js";
 import Button from "../../../components/Button/Button.js";
+import { isoStrToDate, formatBytes } from "../../../global/Functions.js";
 import { API } from "../../../config/config.js";
+import "./JobOfferByID.css";
 
 function JobOfferByID() {
 	/* ---- States ---------------------------------- */
@@ -117,35 +121,59 @@ function JobOfferByID() {
 						</form>
 					) : (
 						<>
-							<h3>{jobOffer.data.title}</h3>
-							<p>{jobOffer.data.type}</p>
-							<p>{jobOffer.data.company_name}</p>
-							<p>{jobOffer.data.city}, {jobOffer.data.postal_code}</p>
-							<p>{jobOffer.data.expiration_date}</p>
+							<h3 className="job-offer-title">{jobOffer.data.title}</h3>
+							<p className="job-offer-type">{jobOffer.data.type}</p>
+							<p className="job-offer-company">
+								<FontAwesomeIcon className="job-info-icon" icon={solid("building")}/> {jobOffer.data.company_name}
+							</p>
+							<p className="job-offer-location">
+								<FontAwesomeIcon className="job-info-icon" icon={solid("location-pin")}/> {jobOffer.data.city}, {jobOffer.data.postal_code}
+							</p>
+							{jobOffer.data.expiration_date && ((() => {
+								const expDate = isoStrToDate(jobOffer.data.expiration_date);
+								const expired = new Date() > expDate;
+								
+								return (
+									<p className={`job-offer-exp-date${expired ? " expired" : ""}`}>
+										<FontAwesomeIcon className="job-info-icon" icon={solid("clock")}/> {expDate.toLocaleDateString()}{expired ? " [EXPIRÉE]" : ""}
+									</p>
+								);
+							})())}
 							
-							<div>
-								{jobOffer.data.jobDomains.map((domain) => (
-									<span key={`job-offer-${jobOffer.data.job_offer_id}-domain-${domain.job_domain_id}`}>{domain.name}</span>
+							<div className="job-offer-domains">
+								{jobOffer.data.jobDomains.map((domain, index) => (
+									<span key={`job-offer-${jobOffer.data.job_offer_id}-domain-${domain.job_domain_id}`}>
+										{domain.name}
+										{(index < (jobOffer.data.jobDomains.length - 1)) ? ", " : ""}
+									</span>
 								))}
 							</div>
 							
-							{jobOffer.data.attachements && (
-								<div>
-									<span>Fichiers :</span>
-									{jobOffer.data.attachements.map((attachement) => (
-										<a
-											key={`job-offer-${jobOffer.data.job_offer_id}-attachement-${attachement.attachement_id}`}
-											href={urljoin(API.files, attachement.path)}
-											target="_blank"
-											rel="noreferrer"
-										>
-											{attachement.name} ({attachement.size})
-										</a>
-									))}
+							{(jobOffer.data.attachements && (jobOffer.data.attachements.length > 0)) && (
+								<div className="job-offer-files">
+									<div className="files-label">
+										<span>Fichiers</span>
+									</div>
+									
+									<div className="files-wrapper">
+										{jobOffer.data.attachements.map((attachement, index) => (
+											<a
+												key={`job-offer-${jobOffer.data.job_offer_id}-attachement-${attachement.attachement_id}`}
+												className="file"
+												href={urljoin(API.files, attachement.path)}
+												target="_blank"
+												rel="noreferrer"
+											>
+												{attachement.name} ({formatBytes(attachement.size)}){index < (jobOffer.data.attachements.length - 1) ? ", " : ""}
+											</a>
+										))}
+									</div>
 								</div>
 							)}
 							
-							<div>{jobOffer.data.content}</div>
+							<ReactMarkdown className="job-offer-content" remarkPlugins={[remarkGfm]}>
+								{jobOffer.data.content}
+							</ReactMarkdown>
 						</>
 					)}
 				</>
