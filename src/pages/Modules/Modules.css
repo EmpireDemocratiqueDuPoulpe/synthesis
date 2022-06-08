@@ -1,7 +1,56 @@
+/* ---- Modules page -------------------------- */
+/* -- Fixing calendar */
 .Kalend__Calendar__table {
     height: 500px !important;
 }
 
 .Kalend__WeekNumbersCol__wrapper{
     height: 500px !important;
+}
+
+/* -- Module element */
+.module {
+    width: 15%;
+    min-height: 100px;
+    border: 3px var(--primary-color) solid;
+    border-radius: 10px;
+    margin: 10px;
+    text-align: center;
+}
+
+.module_longname {
+    margin: 0;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.module_name {
+    margin: 0 0 5px;
+}
+
+.module_description {
+    margin: 0 10px 10px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+/* -- Module element animation */
+.hide_module {
+    opacity: 0;
+    transition: opacity 0.5s linear;
+}
+
+.show_module {
+    opacity: 1;
+}
+
+/* -- Modules root */
+.modulesRoot {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--primary-text-color);
 }
