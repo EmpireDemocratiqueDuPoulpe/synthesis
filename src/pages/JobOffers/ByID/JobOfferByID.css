@@ -49,3 +49,8 @@
 	color: var(--primary-color);
 	text-decoration: none;
 }
+
+.JobOfferByID .job-offer-content {
+	padding: 10px 20px;
+	text-align: justify;
+}
