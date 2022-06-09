@@ -3,6 +3,8 @@ import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import Loader from "../../components/Loader/Loader.js";
+//import ModulesRoot from "../../components/ModulesRoot/ModulesRoot.js";
+import ModulesRoot from "../../components/ModulesRoot/ModulesRoot.js";
 import "kalend/dist/styles/index.css";
 import "./Modules.css";
 
@@ -58,21 +60,41 @@ function Modules() {
 							defaultValue={selectedYears}
 							onChange={setSelectedYears}
 							isMulti/>
-
 					)}
-					<div className="modulesRoot">
-						{modules.data.map(module => {
-							return (
-								<div className="module <!--hide_module-->" key={`modules-list-module-${module.module_id}`}>
-									<h3 className="module_name">{module.year}{module.name}{(module.users && module.users.length > 0)}</h3>
-									<h4 className="module_longname">{module.long_name}</h4>
-									<p>{module.users.map(prof => (
-										`${prof.first_name} ${prof.last_name}`
-									)).join(", ")}</p>
-									<p className="module_description">{module.description}</p>
-								</div>
-							);
-						})}
+					<div>
+						<div>
+							{ selectedYears.some(y => y.value === 1) && <>
+								<h1 className="year_title">A.Sc.1</h1>
+								<hr/>
+								<ModulesRoot modules={modules.data} year={1}/>
+
+							</>
+							}
+							{ selectedYears.some(y => y.value === 2) && <>
+								<h1 className="year_title">A.Sc.2</h1>
+								<hr/>
+								<ModulesRoot modules={modules.data} year={2}/>
+							</>
+							}
+							{ selectedYears.some(y => y.value === 3) && <>
+								<h1 className="year_title">B.Sc</h1>
+								<hr/>
+								<ModulesRoot modules={modules.data} year={3}/>
+							</>
+							}
+							{ selectedYears.some(y => y.value === 4) && <>
+								<h1 className="year_title">M.Eng.1</h1>
+								<hr/>
+								<ModulesRoot modules={modules.data} year={4}/>
+							</>
+							}
+							{ selectedYears.some(y => y.value === 5) && <>
+								<h1 className="year_title">M.Eng.2</h1>
+								<hr/>
+								<ModulesRoot modules={modules.data} year={5}/>
+							</>
+							}
+						</div>
 					</div>
 				</div>
 			)}
