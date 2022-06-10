@@ -12,3 +12,12 @@
 .year_title {
     text-align: center;
 }
+
+/* -- Modules root */
+.modulesRoot {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--primary-text-color);
+}

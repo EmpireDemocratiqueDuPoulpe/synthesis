@@ -3,8 +3,7 @@ import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import Loader from "../../components/Loader/Loader.js";
-//import ModulesRoot from "../../components/ModulesRoot/ModulesRoot.js";
-import ModulesRoot from "../../components/ModulesRoot/ModulesRoot.js";
+import Module from "../../components/Module/Module.js";
 import "kalend/dist/styles/index.css";
 import "./Modules.css";
 
@@ -66,32 +65,61 @@ function Modules() {
 							{ selectedYears.some(y => y.value === 1) && <>
 								<h1 className="year_title">A.Sc.1</h1>
 								<hr/>
-								<ModulesRoot modules={modules.data} year={1}/>
-
+								<div className="modulesRoot">
+									{modules.data.filter(y => y.year === 1).map(module => {
+										return (
+											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
+										);
+									})}
+								</div>
 							</>
 							}
 							{ selectedYears.some(y => y.value === 2) && <>
 								<h1 className="year_title">A.Sc.2</h1>
 								<hr/>
-								<ModulesRoot modules={modules.data} year={2}/>
+								<div className="modulesRoot">
+									{modules.data.filter(y => y.year === 2).map(module => {
+										return (
+											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
+										);
+									})}
+								</div>
 							</>
 							}
 							{ selectedYears.some(y => y.value === 3) && <>
 								<h1 className="year_title">B.Sc</h1>
 								<hr/>
-								<ModulesRoot modules={modules.data} year={3}/>
+								<div className="modulesRoot">
+									{modules.data.filter(y => y.year === 3).map(module => {
+										return (
+											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
+										);
+									})}
+								</div>
 							</>
 							}
 							{ selectedYears.some(y => y.value === 4) && <>
 								<h1 className="year_title">M.Eng.1</h1>
 								<hr/>
-								<ModulesRoot modules={modules.data} year={4}/>
+								<div className="modulesRoot">
+									{modules.data.filter(y => y.year === 4).map(module => {
+										return (
+											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
+										);
+									})}
+								</div>
 							</>
 							}
 							{ selectedYears.some(y => y.value === 5) && <>
 								<h1 className="year_title">M.Eng.2</h1>
 								<hr/>
-								<ModulesRoot modules={modules.data} year={5}/>
+								<div className="modulesRoot">
+									{modules.data.filter(y => y.year === 5).map(module => {
+										return (
+											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
+										);
+									})}
+								</div>
 							</>
 							}
 						</div>
