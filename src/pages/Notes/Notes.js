@@ -20,7 +20,6 @@ function Notes() {
 	];
 	const [selectedYears, setSelectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : []);
 	const notes = useNotesOfUser({ userID: user.user_id, years: selectedYears.map(y => y.value) });
-	console.log(notes);
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Notes">
