@@ -1,21 +1,114 @@
-.collapsible-title {
-	box-sizing: border-box;
-	display: block;
-	width: 100%;
-	padding: 18px;
-	background-color: #777777;
-	color: white;
-	border: none;
-	cursor: pointer;
+.collapsible {
+	position: relative;
+	height: 110px;
+	margin: 20px;
 }
 
-.collapsible-title:hover { background-color: #555555; }
+.collapsible-title {
+	padding: 18px;
+	color: var(--secondary-text-color);
+	font-weight: bold;
+	max-width: 20ch;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+}
 
 .collapsible-content {
-	display: none;
+	position: absolute;
 	padding: 0 18px;
-	background-color: #f1f1f1;
+	background-color: #EDEDED;
 	overflow: hidden;
+	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0 5px 0 rgba(0,0,0,0.25);
+	transition: top 250ms ease-in-out, opacity 150ms ease-in-out;
+	z-index: -1;
+	left: 0;
+	right: 0;
+	border-radius: 0 0 10px 10px;
 }
-.collapsible.show .collapsible-content{ display: block; }
-.collapsible.hide .collapsible-content{ display: none; }
+
+.collapsible-content p {
+	margin: 1em 0;
+}
+
+.collapsible.show .collapsible-content{ opacity: 1; }
+.collapsible.hide .collapsible-content{ opacity: 0; }
+
+.collapsible.show .collapsible-content {
+	top: 110px !important;
+}
+
+.collapsible.show {
+	z-index: 1000;
+}
+
+.note_root {
+	display: flex;
+	flex-direction: row;
+	border-radius: 10px;
+	background-color: #EDEDED;
+	cursor: pointer;
+	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+}
+
+.collapsible.show .note_root {
+	border-radius: 10px 10px 0 0;
+}
+
+.note_ects {
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	white-space: pre;
+	color: var(--secondary-text-color);
+}
+
+.note_infos {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.note_misc {
+	font-weight: 500;
+	color: #003087;
+	margin: 15px 0 20px;
+}
+
+.note_title {
+	margin-left: 30px !important;
+}
+
+.note_misc span {
+	background-color: white;
+	margin: 0 10px;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.note_ects_img {
+	border-right: #B2C1C8 solid 2px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.collapsible_icon {
+	color: var(--secondary-color)
+}
+
+.collapsible.not_selected {
+	opacity: 0.5;
+}
+
+.note_icon.passed {
+	color: var(--success-color);
+}
+
+.note_icon.failed {
+	color: var(--error-color);
+}

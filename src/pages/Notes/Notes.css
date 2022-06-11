@@ -1,0 +1,18 @@
+.notes_main {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 0 5%;
+}
+
+.years_selector {
+    margin: 0 5%;
+}
+
+.Notes h3 {
+    margin: 0 0 30px 0;
+}
+
+.total_ects {
+    font-weight: bolder;
+    text-align: center;
+}

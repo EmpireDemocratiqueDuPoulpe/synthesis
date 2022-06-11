@@ -3,6 +3,8 @@
 :root {
   --primary-color: #3D2683;
   --primary-text-color: #2E2E2E;
+  --secondary-color: #0F58A8;
+  --secondary-text-color: #012169;
 
   --error-color: #D3495F;
   --warning-color: #F0AD4E;

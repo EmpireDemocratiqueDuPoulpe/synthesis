@@ -20,38 +20,34 @@ function Notes() {
 	];
 	const [selectedYears, setSelectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : []);
 	const notes = useNotesOfUser({ userID: user.user_id, years: selectedYears.map(y => y.value) });
-
+	console.log(notes);
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Notes">
 			<h2>Notes de {user.first_name} {user.last_name}</h2>
 			<h3>Campus de {user.campus.name}</h3>
 			
-			<div>
-				{(!notes.isUsable()) ? (notes.isLoading && <Loader/>) : (
-					<>
-						<Select
-							options={user.study ? yearsOptions.filter(o => o.value <= user.study.current_level) : yearsOptions}
-							defaultValue={selectedYears}
-							onChange={setSelectedYears}
-							isMulti/>
-						
+			{(!notes.isUsable()) ? (notes.isLoading && <Loader/>) : (
+				<>
+					<Select
+						className="years_selector"
+						options={user.study ? yearsOptions.filter(o => o.value <= user.study.current_level) : yearsOptions}
+						defaultValue={selectedYears}
+						onChange={setSelectedYears}
+						isMulti/>
+					<div className="notes_main">
 						{notes.data.map(module => {
 							ects.total += module.ects;
 							ects.current += calcECTS(module).ects;
 							return (
-								<Collapsible key={`notes-list-module-${module.module_id}`} title={module.year + module.name}>
-									{module.notes.map(note => (
-										<p key={`notes-list-module-${module.module_id}-note-${note.note_id}`}>{note.note}</p>
-									))}
-								</Collapsible>
+								<Collapsible key={`notes-list-module-${module.module_id}`} module={module}/>
 							);
 						})}
-					</>
-				)}
-
-			</div>
-			<p>ECTS totaux : {ects.current}/{ects.total}</p>
+					</div>
+				</>
+			)}
+			
+			<p className="total_ects" >ECTS totaux : {ects.current}/{ects.total}</p>
 		</div>
 	);
 }
