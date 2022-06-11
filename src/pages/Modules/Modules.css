@@ -21,3 +21,9 @@
     justify-content: center;
     color: var(--primary-text-color);
 }
+
+.modules_list {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 0 5%;
+}

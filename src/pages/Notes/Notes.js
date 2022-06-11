@@ -2,7 +2,7 @@ import { useState } from "react";
 import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useNotesOfUser from "../../hooks/notes/useNotesOfUser.js";
-import Collapsible from "../../components/Collapsible/Collapsible.js";
+import ModuleNotes from "../../components/Modules/ModuleNotes.js";
 import Loader from "../../components/Loader/Loader.js";
 import { calcECTS } from "../../global/Functions.js";
 import "./Notes.css";
@@ -40,7 +40,7 @@ function Notes() {
 							ects.total += module.ects;
 							ects.current += calcECTS(module).ects;
 							return (
-								<Collapsible key={`notes-list-module-${module.module_id}`} module={module}/>
+								<ModuleNotes key={`notes-list-module-${module.module_id}`} module={module}/>
 							);
 						})}
 					</div>

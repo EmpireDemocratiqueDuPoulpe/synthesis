@@ -4,27 +4,27 @@ import useClassName from "../../hooks/className/useClassName.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { clickOnEnter, calcECTS } from "../../global/Functions.js";
-import "./Collapsible.css";
+import "./ModuleNotes.css";
 
-function Collapsible({ module }) {
+function ModuleNotes({ module }) {
 	/* ---- States ---------------------------------- */
 	const [isCollapsed, setCollapse] = useState(true);
 
 	const classes = useClassName(hook => {
-		hook.set("collapsible");
+		hook.set("module_box");
 		hook.setIfElse(isCollapsed, "hide", "show", "state");
 		hook.setIfElse(isCollapsed, "plus_icon", "minus_icon", "icon");
 	}, [isCollapsed]);
 
 	const notes_height = module.notes.length * 3;
 	useEffect(() => {
-		const collapsibles = document.querySelectorAll(".collapsible.hide");
+		const module_boxes = document.querySelectorAll(".module_box.hide");
 
-		for (const collapsible of collapsibles) {
+		for (const module_box of module_boxes) {
 			if (!isCollapsed) {
-				collapsible.classList.add("not_selected");
+				module_box.classList.add("not_selected");
 			} else {
-				collapsible.classList.remove("not_selected");
+				module_box.classList.remove("not_selected");
 			}
 		}
 	}, [isCollapsed]);
@@ -43,20 +43,20 @@ function Collapsible({ module }) {
 						<FontAwesomeIcon className="note_icon failed" icon={solid("circle-xmark")} size="xl"/>
 					)}</span>
 					<span>{isCollapsed ? (
-						<FontAwesomeIcon className="collapsible_icon" icon={solid("plus")} size="xl"/>
+						<FontAwesomeIcon className="module_box_icon" icon={solid("plus")} size="xl"/>
 					) : (
-						<FontAwesomeIcon className="collpasible_icon" icon={solid("minus")} size="xl"/>
+						<FontAwesomeIcon className="module_box_icon" icon={solid("minus")} size="xl"/>
 					)}</span>
 				</div>
 				<div className="note_infos">
-					<span className="collapsible-title" >{module.long_name ?? "LOREM IPSUM DIVAETO"}</span>
+					<span className="module_box-title" >{module.long_name ?? "LOREM IPSUM DIVAETO"}</span>
 					<div className="note_misc">
 						<span className="note_title">{module.year + module.name}</span>
 						<span>{module.ects} ECTS</span>
 					</div>
 				</div>
 			</div>
-			<div className="collapsible-content" style={{ top: `calc(-${notes_height}em + 110px)`, height: `${notes_height}em` }}>
+			<div className="module_box-content" style={{ top: `calc(-${notes_height}em + 110px)`, height: `${notes_height}em` }}>
 				{module.notes.map(note => (
 					<p key={`notes-list-module-${module.module_id}-note-${note.note_id}`}>{note.note}</p>
 				))}
@@ -64,7 +64,7 @@ function Collapsible({ module }) {
 		</div>
 	);
 }
-Collapsible.propTypes = {
+ModuleNotes.propTypes = {
 	module: PropTypes.shape({
 		module_id: PropTypes.number.isRequired,
 		name: PropTypes.string.isRequired,
@@ -80,4 +80,4 @@ Collapsible.propTypes = {
 	}).isRequired
 };
 
-export default Collapsible;
+export default ModuleNotes;

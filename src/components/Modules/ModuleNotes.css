@@ -1,10 +1,10 @@
-.collapsible {
+.module_box {
 	position: relative;
 	height: 110px;
 	margin: 20px;
 }
 
-.collapsible-title {
+.module_box-title {
 	padding: 18px;
 	color: var(--secondary-text-color);
 	font-weight: bold;
@@ -15,7 +15,7 @@
 	text-transform: uppercase;
 }
 
-.collapsible-content {
+.module_box-content {
 	position: absolute;
 	padding: 0 18px;
 	background-color: #EDEDED;
@@ -29,18 +29,18 @@
 	border-radius: 0 0 10px 10px;
 }
 
-.collapsible-content p {
+.module_box-content p {
 	margin: 1em 0;
 }
 
-.collapsible.show .collapsible-content{ opacity: 1; }
-.collapsible.hide .collapsible-content{ opacity: 0; }
+.module_box.show .module_box-content{ opacity: 1; }
+.module_box.hide .module_box-content{ opacity: 0; }
 
-.collapsible.show .collapsible-content {
+.module_box.show .module_box-content {
 	top: 110px !important;
 }
 
-.collapsible.show {
+.module_box.show {
 	z-index: 1000;
 }
 
@@ -54,7 +54,7 @@
 	box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
 }
 
-.collapsible.show .note_root {
+.module_box.show .note_root {
 	border-radius: 10px 10px 0 0;
 }
 
@@ -97,11 +97,11 @@
 	align-items: center;
 }
 
-.collapsible_icon {
+.module_box_icon {
 	color: var(--secondary-color)
 }
 
-.collapsible.not_selected {
+.module_box.not_selected {
 	opacity: 0.5;
 }
 
@@ -111,4 +111,9 @@
 
 .note_icon.failed {
 	color: var(--error-color);
+}
+
+.module_box .invisible_icon {
+	color: transparent;
+	padding: 0 10px;
 }

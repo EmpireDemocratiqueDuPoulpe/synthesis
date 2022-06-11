@@ -3,7 +3,7 @@ import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import Loader from "../../components/Loader/Loader.js";
-import Module from "../../components/Module/Module.js";
+import Module from "../../components/Modules/Module.js";
 import "kalend/dist/styles/index.css";
 import "./Modules.css";
 
@@ -45,6 +45,24 @@ function Modules() {
 			}
 		});
 	});*/
+
+	const generateModules = (modules) => {
+		const modulesByYear = [];
+		const promos = ["B.Eng.1", "B.Eng.2", "B.Eng.3", "M.Eng.1", "M.Eng.2"];
+
+		modules.forEach(module => {
+			let index = modulesByYear.findIndex(y => y.year === module.year);
+
+			if (index === -1) {
+				modulesByYear.push({ year: module.year, promo: promos[module.year - 1], modules: [] });
+				index = modulesByYear.length - 1;
+			}
+
+			modulesByYear[index].modules.push(<Module key={module.module_id} module={module} />);
+		});
+
+		return modulesByYear;
+	};
 	
 	/* ---- Page content ---------------------------- */
 	return (
@@ -62,66 +80,12 @@ function Modules() {
 					)}
 					<div>
 						<div>
-							{ selectedYears.some(y => y.value === 1) && <>
-								<h1 className="year_title">A.Sc.1</h1>
-								<hr/>
-								<div className="modulesRoot">
-									{modules.data.filter(y => y.year === 1).map(module => {
-										return (
-											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
-										);
-									})}
+							{ generateModules(modules.data).map(year => (
+								<div key={year.year}>
+									<h3>{year.promo}</h3>
+									<div className="modules_list">{year.modules}</div>
 								</div>
-							</>
-							}
-							{ selectedYears.some(y => y.value === 2) && <>
-								<h1 className="year_title">A.Sc.2</h1>
-								<hr/>
-								<div className="modulesRoot">
-									{modules.data.filter(y => y.year === 2).map(module => {
-										return (
-											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
-										);
-									})}
-								</div>
-							</>
-							}
-							{ selectedYears.some(y => y.value === 3) && <>
-								<h1 className="year_title">B.Sc</h1>
-								<hr/>
-								<div className="modulesRoot">
-									{modules.data.filter(y => y.year === 3).map(module => {
-										return (
-											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
-										);
-									})}
-								</div>
-							</>
-							}
-							{ selectedYears.some(y => y.value === 4) && <>
-								<h1 className="year_title">M.Eng.1</h1>
-								<hr/>
-								<div className="modulesRoot">
-									{modules.data.filter(y => y.year === 4).map(module => {
-										return (
-											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
-										);
-									})}
-								</div>
-							</>
-							}
-							{ selectedYears.some(y => y.value === 5) && <>
-								<h1 className="year_title">M.Eng.2</h1>
-								<hr/>
-								<div className="modulesRoot">
-									{modules.data.filter(y => y.year === 5).map(module => {
-										return (
-											<Module key={`modules-list-module-${module.module_id}`} module={module}/>
-										);
-									})}
-								</div>
-							</>
-							}
+							)) }
 						</div>
 					</div>
 				</div>
