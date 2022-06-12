@@ -1,45 +1,20 @@
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useForm, FormProvider } from "react-hook-form";
 import useJobOffers from "../../../hooks/jobOffers/useJobOffers.js";
 import useJobDomains from "../../../hooks/jobDomains/useJobDomains.js";
 import Loader from "../../../components/Loader/Loader.js";
+import Inputs from "../../../components/Inputs/Inputs.js";
+import "./JobOfferAdd.css";
 
 function JobOfferAdd() {
 	/* ---- States ---------------------------------- */
+	const form = useForm();
 	const jobOffers = useJobOffers({}, { enabled: false });
 	const jobDomains = useJobDomains();
-	const [jobOffer, setJobOffer] = useState({
-		title: "",
-		type: "stage",
-		company_name: "",
-		city: "",
-		postal_code: "",
-		expiration_date: "",
-		domains: [],
-		content: "",
-		attachements: []
-	});
 	const navigate = useNavigate();
 
 	/* ---- Functions ------------------------------- */
-	const handleChange = event => {
-		const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
-		setJobOffer(prevState => ({ ...prevState, [event.target.name]: value }));
-	};
-	
-	const handleDomainsChange = event => {
-		setJobOffer(prevState => ({
-			...prevState,
-			[event.target.name]: Array.from(event.target.selectedOptions, (opt => opt.value))
-		}));
-	};
-	
-	const handleFilesChange = event => {
-		setJobOffer(prevState => ({ ...prevState, attachements: event.target.files ? Array.from(event.target.files) : [] }));
-	};
-	
-	const handleSubmit = event => {
-		event.preventDefault();
+	const handleSubmit = data => {
 		const formData = new FormData();
 		
 		const objToFormData = (objName, obj, exclude) => {
@@ -56,10 +31,13 @@ function JobOfferAdd() {
 				formData.append(`${arrName}[]`, value);
 			});
 		};
-
-		objToFormData("jobOffer", jobOffer, ["attachements", "domains"]);
-		arrayToFormData("attachements", jobOffer.attachements);
-		arrayToFormData("jobOffer[job_domains]", jobOffer.domains);
+		
+		objToFormData("jobOffer", data, ["attachements", "domains"]);
+		arrayToFormData("jobOffer[job_domains]", data.domains);
+		
+		if (data.attachements.length > 0) {
+			arrayToFormData("attachements", Array.from(data.attachements));
+		}
 		
 		// Send the new job offer
 		jobOffers.add.mutate(formData, {
@@ -69,73 +47,47 @@ function JobOfferAdd() {
 
 	/* ---- Page content ---------------------------- */
 	return (
-		<div className="JobOffers JobOffersAdd">
+		<div className="JobOffers JobOfferAdd">
+			<h2>Ajouter une offre d&apos;emploi</h2>
 			{!jobDomains.isUsable() ? (jobDomains.isLoading && <Loader/>) : (
-				<form onSubmit={handleSubmit} encType="multipart/form-data">
-					<fieldset>
-						<legend>Offre d&apos;emploi</legend>
+				<FormProvider {...form}>
+					<form onSubmit={form.handleSubmit(handleSubmit)} encType="multipart/form-data">
+						<Inputs.Text name="title" required>
+							Titre
+						</Inputs.Text>
 						
-						<label>
-								Titre*
-							<input type="text" name="title" value={jobOffer.title} onChange={handleChange} required/>
-						</label>
-						<br/>
+						<Inputs.Select name="type" options={[ {value: "stage", label: "Stage"}, {value: "alternance", label: "Alternance"} ]} required>
+							Type
+						</Inputs.Select>
 						
-						<label>
-								Type*
-							<select name="type" value={jobOffer.type} onChange={handleChange} required>
-								<option value="stage">Stage</option>
-								<option value="alternance">Alternance</option>
-							</select>
-						</label>
-						<br/>
+						<Inputs.Text name="company_name" required>
+							Entreprise
+						</Inputs.Text>
 						
-						<label>
-								Entreprise*
-							<input type="text" name="company_name" value={jobOffer.company_name} onChange={handleChange} required/>
-						</label>
-						<br/>
+						<Inputs.Address name="address">
+							Adresse
+						</Inputs.Address>
 						
-						<label>
-								Adresse
-							<input type="text" name="city" placeholder="Ville" value={jobOffer.city} onChange={handleChange}/>
-							<input type="text" name="postal_code" placeholder="Code postal" value={jobOffer.postal_code} onChange={handleChange}/>
-						</label>
-						<br/>
+						<Inputs.Date name="expiration_date">
+							Date d&apos;expiration
+						</Inputs.Date>
 						
-						<label>
-								Date d&apos;expiration
-							<input type="date" name="expiration_date" value={jobOffer.expiration_date} onChange={handleChange}/>
-						</label>
-						<br/>
-						
-						<label>
+						<Inputs.Select name="domains" options={jobDomains.data.map(jd => ({ value: jd.job_domain_id, label: jd.name }))} multiple>
 							Domaines
-							<select name="domains" value={jobOffer.domains} onChange={handleDomainsChange} multiple>
-								{jobDomains.data.map(jobDomain => (
-									<option key={`job-offer-domain-${jobDomain.job_domain_id}`} value={jobDomain.job_domain_id}>{jobDomain.name}</option>
-								))}
-							</select>
-						</label>
+						</Inputs.Select>
 						
-						<label>
-								Message
-							<textarea name="content" value={jobOffer.content} onChange={handleChange}/>
-						</label>
-						<br/>
+						<Inputs.Textarea name="content" resize={false}>
+							Message
+						</Inputs.Textarea>
 						
-						<label>
-								Fichiers joints
-							<input type="file" name="attachements" onChange={handleFilesChange} multiple/>
-						</label>
-						<br/>
+						<Inputs.File name="attachements" multiple>
+							Joindre des fichiers
+						</Inputs.File>
 						
-						<input type="submit" value="Ajouter"/>
-					</fieldset>
-				</form>
+						<input className="button primary-color" type="submit" value="Ajouter"/>
+					</form>
+				</FormProvider>
 			)}
-
-			{JSON.stringify(jobOffer)}
 		</div>
 	);
 }
