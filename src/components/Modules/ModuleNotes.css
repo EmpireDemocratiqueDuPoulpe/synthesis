@@ -1,0 +1,119 @@
+.module_box {
+	position: relative;
+	height: 110px;
+	margin: 20px;
+}
+
+.module_box-title {
+	padding: 18px;
+	color: var(--secondary-text-color);
+	font-weight: bold;
+	max-width: 20ch;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+}
+
+.module_box-content {
+	position: absolute;
+	padding: 0 18px;
+	background-color: #EDEDED;
+	overflow: hidden;
+	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0 5px 0 rgba(0,0,0,0.25);
+	transition: top 250ms ease-in-out, opacity 150ms ease-in-out;
+	z-index: -1;
+	left: 0;
+	right: 0;
+	border-radius: 0 0 10px 10px;
+}
+
+.module_box-content p {
+	margin: 1em 0;
+}
+
+.module_box.show .module_box-content{ opacity: 1; }
+.module_box.hide .module_box-content{ opacity: 0; }
+
+.module_box.show .module_box-content {
+	top: 110px !important;
+}
+
+.module_box.show {
+	z-index: 1000;
+}
+
+.note_root {
+	display: flex;
+	flex-direction: row;
+	border-radius: 10px;
+	background-color: #EDEDED;
+	cursor: pointer;
+	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+}
+
+.module_box.show .note_root {
+	border-radius: 10px 10px 0 0;
+}
+
+.note_ects {
+	padding: 0 10px;
+	display: flex;
+	align-items: center;
+	white-space: pre;
+	color: var(--secondary-text-color);
+}
+
+.note_infos {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.note_misc {
+	font-weight: 500;
+	color: #003087;
+	margin: 15px 0 20px;
+}
+
+.note_title {
+	margin-left: 30px !important;
+}
+
+.note_misc span {
+	background-color: white;
+	margin: 0 10px;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.note_ects_img {
+	border-right: #B2C1C8 solid 2px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.module_box_icon {
+	color: var(--secondary-color)
+}
+
+.module_box.not_selected {
+	opacity: 0.5;
+}
+
+.note_icon.passed {
+	color: var(--success-color);
+}
+
+.note_icon.failed {
+	color: var(--error-color);
+}
+
+.module_box .invisible_icon {
+	color: transparent;
+	padding: 0 10px;
+}

@@ -1,7 +1,29 @@
+/* ---- Modules page -------------------------- */
+/* -- Fixing calendar */
 .Kalend__Calendar__table {
     height: 500px !important;
 }
 
 .Kalend__WeekNumbersCol__wrapper{
     height: 500px !important;
+}
+
+/* -- Random stuff */
+.year_title {
+    text-align: center;
+}
+
+/* -- Modules root */
+.modulesRoot {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--primary-text-color);
+}
+
+.modules_list {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 0 5%;
 }
