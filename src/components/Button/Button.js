@@ -1,11 +1,19 @@
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
+import useClassName from "../../hooks/className/useClassName.js";
 import "./Button.css";
 
-function Button({ onClick, link, icon, color, children }) {
+function Button({ onClick, link, icon, outlined, color, children }) {
+	/* ---- States ---------------------------------- */
+	const classes = useClassName(hook => {
+		hook.set("button");
+		hook.set(`${color}-color`);
+		hook.setIf(outlined, "outlined");
+	}, [color, outlined]);
+	
 	/* ---- Page content ---------------------------- */
 	return (
-		<Wrapper link={link} className={`button ${color}-color`} onClick={onClick}>
+		<Wrapper link={link} className={classes} onClick={onClick}>
 			{icon && (<span className="button-icon">{icon}</span>)}
 			{children}
 		</Wrapper>
@@ -18,6 +26,7 @@ Button.propTypes = {
 		external: PropTypes.bool /* For some reason, the IDE "thinks" that isRequired means optional. */
 	}),
 	icon: PropTypes.any,
+	outlined: PropTypes.bool,
 	color: PropTypes.oneOf([ "primary", "red" ]),
 	children: PropTypes.node
 };

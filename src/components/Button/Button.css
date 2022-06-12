@@ -10,13 +10,30 @@
 	transition: background-color 100ms ease-in;
 	cursor: pointer;
 }
-.button:hover { background: #604797; }
 
+.button.outline {
+	border-width: 2px;
+	border-style: solid;
+	transition: background-color 100ms ease-in, border-color 100ms ease-in, color 100ms ease-in;
+}
+
+/* -- Idle color */
 .button.primary-color	{ background: var(--primary-color); color: #FFFFFF; }
+.button.green-color 	{ background: var(--success-color); color: #FFFFFF; }
 .button.red-color 		{ background: var(--error-color); color: #FFFFFF; }
 
-.button.primary-color:hover	{  background: #604797; }
+.button.outline.primary-color	{ background: none; color: var(--primary-color); border-color: var(--primary-color); }
+.button.outline.green-color 	{ background: none; color: var(--success-color); border-color: var(--success-color); }
+.button.outline.red-color 		{ background: none; color: var(--error-color); border-color: var(--error-color); }
+
+/* -- Hover color */
+.button.primary-color:hover	{  background: var(--primary-color-light); }
+.button.green-color:hover 	{  background: #439A43; }
 .button.red-color:hover 		{  background: #B72C42; }
+
+.button.outline.primary-color:hover	{ background: var(--primary-color); color: #FFFFFF; }
+.button.outline.green-color:hover 	{ background: var(--success-color); color: #FFFFFF; }
+.button.outline.red-color:hover 		{ background: var(--error-color); color: #FFFFFF; }
 
 /* -- Icon */
 .button .button-icon { margin-right: 5px; }
