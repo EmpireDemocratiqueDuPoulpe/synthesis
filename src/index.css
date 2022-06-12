@@ -2,7 +2,10 @@
 /* -- Colors */
 :root {
   --primary-color: #3D2683;
+  --primary-color-light: #604797;
   --primary-text-color: #2E2E2E;
+
+  --border-color: #D3D3D3;
 
   --error-color: #D3495F;
   --warning-color: #F0AD4E;
