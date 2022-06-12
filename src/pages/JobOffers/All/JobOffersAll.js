@@ -23,7 +23,7 @@ function JobOffersAll() {
 				<Button link={{ to: "/jobs/offers/add" }} icon={<FontAwesomeIcon icon={solid("plus")}/>}>Ajouter</Button>
 			)}
 			
-			<Inputs.Checkbox value={expired} setValue={setExpired}>
+			<Inputs.Checkbox name="show-expired" value={expired} onChange={e => setExpired(e.target.checked)}>
 				Afficher les offres ayant expir&eacute;es
 			</Inputs.Checkbox>
 
