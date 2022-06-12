@@ -2,6 +2,7 @@
 /* -- Base input */
 .input {
 	display: inline-block;
+	width: 480px;
 }
 
 .input .input-wrapper {
@@ -9,7 +10,12 @@
 	flex-direction: row;
 	align-items: stretch;
 	justify-content: flex-start;
+	min-width: 0;
 }
+
+.input .input-wrapper .input-label { flex-shrink: 0; }
+.input .input-wrapper input,
+.input .input-wrapper select { flex-grow: 1; }
 
 .input .required-mark {
 	margin-left: 0.15em;
@@ -17,7 +23,7 @@
 }
 
 /* -- Input wrapper: Text like */
-.input .input-wrapper.text-like { flex-direction: row-reverse; }
+.input .input-wrapper.text-like { flex-direction: row-reverse; justify-content: flex-end; }
 
 .input .input-wrapper.text-like input,
 .input .input-wrapper.text-like select {
@@ -92,6 +98,7 @@
 
 /* -- Input: Checkbox */
 .input.checkbox {
+	width: auto;
 	height: 1em;
 	line-height: 1em;
 	padding: 0.5em;
@@ -104,6 +111,7 @@
 .input.checkbox.active { background: var(--success-color); color: #FFFFFF; border-color: #439A43; }
 
 .input.checkbox input {
+	flex-grow: 0;
 	position: relative;
 	width: 1em;
 	height: 1em;

@@ -191,20 +191,22 @@ function Select({ options, children, ...props }) {
 							defaultValue={props.defaultValue ?? []}
 							render={({ field: {onChange, onBlur, value, ref} }) => (
 								<ReactSelect
-									styles={{ control: (provided) => {
-										let longestText = "";
-										options.map(o => { longestText = (o.label.length > longestText.length) ? o.label : longestText; });
+									styles={{
+										container: (provided) => ({ ...provided, flexGrow: 1 }),
+										control: (provided) => {
+											let longestText = "";
+											options.map(o => { longestText = (o.label.length > longestText.length) ? o.label : longestText; });
 										
-										return (
-											{
-												...provided,
-												minWidth: `${(longestText.length / 1.5).toFixed()}em`,
-												border: "thin #D3D3D3 solid",
-												borderLeft: "none",
-												borderRadius: "0 5px 5px 0",
-											}
-										);
-									}}}
+											return (
+												{
+													...provided,
+													minWidth: `${(longestText.length / 1.5).toFixed()}em`,
+													border: "thin #D3D3D3 solid",
+													borderLeft: "none",
+													borderRadius: "0 5px 5px 0",
+												}
+											);
+										}}}
 									inputRef={ref}
 									value={options.filter(o => value.includes(o.value))}
 									options={options}
