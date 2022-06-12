@@ -1,11 +1,101 @@
 /* ---- Inputs ---------------------------------- */
-/* -- Checkbox */
-.input.checkbox {
+/* -- Base input */
+.input {
 	display: inline-block;
+}
+
+.input .input-wrapper {
+	display: flex;
+	flex-direction: row;
+	align-items: stretch;
+	justify-content: flex-start;
+}
+
+.input .required-mark {
+	margin-left: 0.15em;
+	color: var(--error-color);
+}
+
+/* -- Input wrapper: Text like */
+.input .input-wrapper.text-like { flex-direction: row-reverse; }
+
+.input .input-wrapper.text-like input,
+.input .input-wrapper.text-like select {
+	padding: 0 0.5em;
+	background: none;
+	border: thin var(--border-color) solid;
+	border-left: none;
+	border-radius: 0 5px 5px 0;
+	transition: border-color 150ms ease-in;
+}
+.input .input-wrapper.text-like input:focus,
+.input .input-wrapper.text-like select:focus,
+.input.multi .input-wrapper.text-like input:focus ~ input,
+.input.multi .input-wrapper.text-like select:focus ~ input { outline: none; border-color: var(--primary-color-light); }
+
+.input.multi .input-wrapper.text-like input:not(:first-of-type),
+.input.multi .input-wrapper.text-like select:not(:first-of-type) { border-radius: 0; }
+
+.input .input-wrapper.text-like .input-label {
+	display: inline-block;
+	padding: 0.5em;
+	border: thin var(--border-color) solid;
+	border-radius: 5px 0 0 5px;
+	transition: background 150ms ease-in, color 150ms ease-in, border-color 150ms ease-in;
+	overflow: hidden;
+}
+.input .input-wrapper.text-like input:focus ~ .input-label,
+.input .input-wrapper.text-like select:focus ~ .input-label {
+	background: var(--primary-color);
+	color: #FFFFFF;
+	border-color: var(--primary-color-light);
+}
+
+/* -- Input wrapper: Text */
+.input.text .input-label { cursor: text; }
+
+/* -- Input wrapper: Textarea */
+.input.textarea { width: 100%; }
+.input.textarea .input-wrapper { flex-direction: column-reverse; }
+
+.input.textarea textarea {
+	height: 3.5em;
+	padding: 1em;
+	border: thin var(--border-color) solid;
+	border-radius: 0 0 5px 5px;
+	resize: none;
+	transition: border-color 150ms ease-in;
+}
+.input.textarea.resizable textarea { resize: both; }
+
+.input.textarea textarea:focus { outline: none; border-color: var(--primary-color-light); }
+
+.input.textarea .input-label {
+	padding: 0.5em;
+	border-radius: 5px 5px 0 0;
+	transition: background 150ms ease-in, color 150ms ease-in;
+	cursor: text;
+}
+.input.textarea textarea:focus ~ .input-label {
+	background: var(--primary-color);
+	color: #FFFFFF;
+}
+
+/* -- Input wrapper: Address */
+.input.address .input-wrapper { flex-direction: row-reverse; }
+
+.input.address .input-label { cursor: text; order: 4; }
+
+.input.address input.postal-code { width: 6em; }
+.input.address input.city { width: 8em; }
+.input.address input.street { width: 10em; }
+
+/* -- Input: Checkbox */
+.input.checkbox {
 	height: 1em;
 	line-height: 1em;
 	padding: 0.5em;
-	border: thin #D3D3D3 solid;
+	border: thin var(--border-color) solid;
 	border-radius: 5px;
 	cursor: pointer;
 	transition: background 100ms ease-in, color 100ms ease-in, border-color 100ms ease-in;
@@ -13,19 +103,12 @@
 
 .input.checkbox.active { background: var(--success-color); color: #FFFFFF; border-color: #439A43; }
 
-.input.checkbox span {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: flex-start;
-}
-
 .input.checkbox input {
 	position: relative;
 	width: 1em;
 	height: 1em;
 	margin-right: 5px;
-	border: thin #D3D3D3 solid;
+	border: thin var(--border-color) solid;
 	-webkit-appearance: none;
 	-moz-appearance: none;
 	appearance: none;
@@ -50,7 +133,27 @@
 
 .input.checkbox .input-label {
 	padding-left: 5px;
-	border-left: thin #D3D3D3 solid;
+	border-left: thin var(--border-color) solid;
 	transition: border-color 100ms ease-in;
 }
 .input.checkbox.active .input-label { border-color: #439A43; }
+
+/* -- Input: File */
+.input.file input {
+	position: absolute;
+	width: 0.1em;
+	height: 0.1em;
+	opacity: 0;
+	overflow: hidden;
+	z-index: -1;
+}
+
+.input.file .input-label {
+	display: inline-block;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	overflow: hidden;
+	margin: 0;
+}
+
+.input.file .input-icon { margin-right: 0.4em; }
