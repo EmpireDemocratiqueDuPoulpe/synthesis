@@ -14,7 +14,7 @@ function SCTsAll() {
 	const [search, setSearch] = useState("");
 	const scts = useSCTs({
 		expand: [
-			(hasPermission(permissions.READ_CAMPUS) ? "campus" : ""), (hasPermission(permissions.READ_MODULES) ? "module~" : "")
+			(hasPermission(permissions.READ_CAMPUS) ? "campus~" : ""), (hasPermission(permissions.READ_MODULES) ? "module~" : "")
 		].filter(Boolean)
 	});
 	const modules = useModules({}, { enabled: sortBy === "modules" });
@@ -64,7 +64,7 @@ function SCTsAll() {
 										<td className="sct-last-name">{sct.last_name}</td>
 										<td className="sct-email">{sct.email}</td>
 										<td className="sct-birth-date">{sct.birth_date}</td>
-										{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{sct.campus.name}</td>}
+										{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{sct.campus?.name}</td>}
 										<td className="sct-region">{sct.region}</td>
 										{hasPermission(permissions.READ_MODULES) && (
 											<td className="sct-modules">
