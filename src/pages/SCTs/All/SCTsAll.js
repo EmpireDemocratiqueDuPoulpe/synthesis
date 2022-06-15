@@ -29,7 +29,7 @@ function SCTsAll() {
 	return (
 		<div className="SCTs SCTsAll">
 			<Inputs.Select
-				name="studentsSelect"
+				name="sctsSelect"
 				value={sortBy}
 				onChange={handleSortChange}
 				options={[
