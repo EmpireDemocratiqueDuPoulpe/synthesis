@@ -57,3 +57,58 @@ body {
     width: 100%;
   }
 }
+
+/* -- Table */
+
+.TableMainWrapper {
+  border: 1px var(--border-color) solid;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.TableMain {
+  border-collapse: collapse;
+  background: #fff;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+}
+
+.TableMain thead tr {
+  height: 60px;
+  background: var(--primary-color);
+}
+
+.TableMain th {
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  font-weight: unset;
+}
+
+.TableMain tbody tr {
+  height: 50px;
+  font-size: 15px;
+  color: var(--primary-text-color);
+  line-height: 1.2;
+  font-weight: unset;
+  transition: background-color 200ms;
+}
+
+.TableMain td, .TableMain th {
+  text-align: left;
+  padding: 0 20px;
+}
+
+.TableMain tbody tr:hover {
+  background-color: #ededed !important;
+}
+
+.TableMain tbody tr:nth-child(even) {
+  background-color: #f3f3f3;
+}
+
+.TableMain a {
+  text-decoration: none;
+  color: var(--secondary-color)
+}
