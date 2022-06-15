@@ -7,7 +7,7 @@ import SearchBar from "../../components/SearchBar/SearchBar.js";
 import Loader from "../../components/Loader/Loader.js";
 import { hasPassed, sortStudentsByPassed, sortObjectArr} from "../../global/Functions.js";
 import "./Resits.css";
-import Inputs from "../../components/Inputs/Inputs";
+import Inputs from "../../components/Inputs/Inputs.js";
 
 function Resits() {
 	/* ---- States ---------------------------------- */

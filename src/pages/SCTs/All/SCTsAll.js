@@ -6,7 +6,7 @@ import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import { sortObjectArr } from "../../../global/Functions.js";
-import Inputs from "../../../components/Inputs/Inputs";
+import Inputs from "../../../components/Inputs/Inputs.js";
 
 function SCTsAll() {
 	/* ---- States ---------------------------------- */
