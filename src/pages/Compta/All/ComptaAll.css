@@ -1,0 +1,57 @@
+.ComptaAll {
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+}
+
+.ComptaAll .student_list {
+    height: 100%;
+    width: 50%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    padding: 10px;
+    background-color: #f8f8f8;
+}
+
+.ComptaAll .student_list_item {
+    padding: 5px;
+    transition: background-color 200ms;
+    cursor: pointer;
+}
+
+.ComptaAll .student_list_item:not(:last-child) {
+    border-bottom: 5px solid black;
+}
+
+.ComptaAll .student_list_item:hover {
+    background-color: #ededed;
+}
+
+.ComptaAll .student_list_item p {
+    margin: 5px 0;
+}
+
+.ComptaAll .student_name {
+    font-weight: bold;
+}
+
+.ComptaAll .student_compta_infos {
+    background-color: #dcdcdc;
+    padding: 10px;
+    margin: 25px;
+    width: 30%;
+}
+
+.ComptaAll .student_compta_infos p {
+    margin: 5px 0;
+}
+
+.ComptaAll .remaining_red {
+    color: var(--error-color);
+    font-weight: bold;
+}
+
+.ComptaAll .remaining_green {
+    color: var(--success-color);
+    font-weight: bold;
+}
