@@ -22,7 +22,9 @@
 	overflow-y: auto;
 	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
 	box-shadow: 0 0 5px 0 rgba(0,0,0,0.25);
-	transition: top 250ms ease-in-out, opacity 150ms ease-in-out;
+	/*transition: top 250ms ease-in-out, opacity 150ms ease-in-out;*/
+	max-height: 300px;
+	transition: max-height 250ms ease-in-out, opacity 150ms ease-in-out;
 	z-index: -1;
 	left: 0;
 	right: 0;
@@ -34,7 +36,7 @@
 }
 
 .module_box.show .module_box-content{ opacity: 1; }
-.module_box.hide .module_box-content{ opacity: 0; }
+.module_box.hide .module_box-content{ opacity: 0; max-height: 0; }
 
 .module_box.show .module_box-content {
 	top: 110px !important;
