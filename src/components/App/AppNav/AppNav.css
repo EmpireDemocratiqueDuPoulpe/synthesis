@@ -25,7 +25,7 @@
 	left: 4vw; /* Same width as closed App-nav */
 	width: calc(100% - 4vw);
 }
-.App.light .App-nav::after  { background: #BFB2D5; }
+.App.light .App-nav::after  { background: #1A1038; }
 .App.dark .App-nav::after   { background: var(--dark-primary-color-darker); }
 
 /* -- App nav button */
@@ -56,9 +56,8 @@
 	height: 2em;
 	line-height: 2em;
 	white-space: nowrap;
+	text-decoration: none;
 }
-
-.App-nav .nav-links .nav-link a { text-decoration: none; }
 
 .App-nav .nav-links .link-label {
 	font-size: 0.75em;
@@ -77,5 +76,5 @@
 }
 
 /* - Link label */
-.App-nav .nav-links .nav-link .link-label { margin-left: 0.6em; padding-left: 0.8em; }
+.App-nav .nav-links .nav-link .link-label { margin-left: 0.6em; padding-left: 1em; }
 .App-nav .nav-links .nav-link:hover .link-label { background: rgba(255, 255, 255, 0.20); }
