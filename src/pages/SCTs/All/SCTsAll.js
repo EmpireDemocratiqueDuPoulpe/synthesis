@@ -81,7 +81,7 @@ function SCTsAll() {
 													{sct.modules.map(module => `${module.year}${module.name}`).join(", ")}
 												</td>
 											)}
-											<td className="sct-action"><Link to={`/sct/${sct.uuid}`}>Vers le profil</Link></td>
+											<td className="sct-action"><Link to={`/user/${sct.uuid}`}>Vers le profil</Link></td>
 										</tr>
 									))}
 								</tbody>
@@ -116,7 +116,7 @@ function SCTsAll() {
 													<td className="sct-birth-date">{sct.birth_date}</td>
 													{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{sct.campus.name}</td>}
 													<td className="sct-region">{sct.region}</td>
-													<td className="sct-action"><Link to={`/sct/${sct.uuid}`}>Vers le profil</Link></td>
+													<td className="sct-action"><Link to={`/user/${sct.uuid}`}>Vers le profil</Link></td>
 												</tr>
 											))}
 										</tbody>

@@ -1,5 +1,6 @@
 import Home from "../pages/Home/Home.js";
 import Login from "../pages/Login/Login.js";
+import Users from "../pages/Users/Users.js";
 import SCTs from "../pages/SCTs/SCTs.js";
 import Students from "../pages/Students/Students.js";
 import Planning from "../pages/Planning/Planning.js";
@@ -18,7 +19,10 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 export default [
 	// Authentication
 	{ path: "/login", element: Login, protected: false },
-	
+
+	// Users
+	{ path: "/user/:UUID", element: Users.byUUID, protected: true },
+
 	// SCTs
 	{
 		path: "/scts",
@@ -32,7 +36,6 @@ export default [
 	},
 	
 	// Students
-	{ path: "/student/:UUID", element: Students.byUUID, protected: true },
 	{
 		path: "/students/old",
 		element: Students.old,

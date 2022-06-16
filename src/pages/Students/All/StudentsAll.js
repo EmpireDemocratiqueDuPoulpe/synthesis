@@ -96,7 +96,7 @@ function StudentsAll() {
 													))}
 												</td>
 											)}
-											<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
+											<td className="student-action"><Link to={`/user/${student.uuid}`}>Vers le profil</Link></td>
 										</tr>
 									))}
 								</tbody>
@@ -147,7 +147,7 @@ function StudentsAll() {
 															<td className="student-modules">{student.hasPassed === null ? "N/A" : (student.hasPassed ? "✓" : "×")}</td>
 														</>
 													)}
-													<td className="student-action"><Link to={`/student/${student.uuid}`}>Vers le profil</Link></td>
+													<td className="student-action"><Link to={`/user/${student.uuid}`}>Vers le profil</Link></td>
 												</tr>
 											))}
 										</tbody>

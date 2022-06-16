@@ -6,7 +6,7 @@ export default {
 	users: {
 		logIn: new API.POST("/users/login"),
 		authenticate: new API.POST("/users/authenticate").mustThrow(false),
-		getAll: new API.GET("/users/all")
+		getByUUID: new API.GET("/users/by-uuid/{UUID}"),
 	},
 	permissions: {
 		getAll: new API.GET("/permissions/all")

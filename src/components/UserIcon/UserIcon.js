@@ -5,7 +5,7 @@ import "./UserIcon.css";
 
 function UserIcon({ user }) {
 	return (
-		<Link className="user-icon" to={user.position.name === "Étudiant" ? `/student/${user.uuid}` : "#"}>
+		<Link className="user-icon" to={`/user/${user.uuid}`}>
 			<img src={defaultAvatar} alt={`Profil de ${user.first_name} ${user.last_name}`}/>
 		</Link>
 	);

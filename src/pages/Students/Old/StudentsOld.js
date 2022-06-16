@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
 import useAuth from "../../../context/Auth/AuthContext.js";
 import useStudents from "../../../hooks/students/useStudents.js";
@@ -47,6 +48,7 @@ function StudentsOld() {
 							<th>Date de sortie</th>
 							{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
 							<th>R&eacute;gion</th>
+							<th>Actions</th>
 						</tr>
 					</thead>
 					
@@ -61,6 +63,7 @@ function StudentsOld() {
 								<td className="student-old-exit-date">{student.study.exit_date}</td>
 								{hasPermission(permissions.READ_CAMPUS) && <td className="student-old-campus">{student.campus.name}</td>}
 								<td className="student-old-region">{student.region}</td>
+								<td className="student-old-action"><Link to={`/user/${student.uuid}`}>Vers le profil</Link></td>
 							</tr>
 						))}
 					</tbody>
