@@ -24,7 +24,7 @@
 .App-nav::after {
 	left: 4vw; /* Same width as closed App-nav */
 	width: calc(100% - 4vw);
-	background: #E7E7E7;
+	background: #bfb2d5;
 }
 
 /* -- App nav button */
@@ -59,7 +59,10 @@
 
 .App-nav .nav-links .nav-link a { text-decoration: none; }
 
-.App-nav .nav-links .link-label { transition: 250ms color ease-in-out; }
+.App-nav .nav-links .link-label {
+	font-size: 0.75em;
+	transition: 250ms color ease-in-out;
+}
 .App-nav:not(.open) .nav-links .link-label { color: transparent; }
 
 /* - Link icon */
@@ -73,5 +76,5 @@
 }
 
 /* - Link label */
-.App-nav .nav-links .nav-link .link-label { margin-left: 0.5em; padding-left: 0.5em; }
-.App-nav .nav-links .nav-link:hover .link-label { background: rgba(0, 0, 0, 0.15); }
+.App-nav .nav-links .nav-link .link-label { margin-left: 0.6em; padding-left: 0.8em; }
+.App-nav .nav-links .nav-link:hover .link-label { background: rgba(255, 255, 255, 0.20); }
