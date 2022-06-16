@@ -8,19 +8,17 @@
 
 /* -- Job offer */
 .job-offer {
+	display: block;
 	padding: 10px;
 	border: thin solid #D3D3D3;
 	border-radius: 10px;
+	color: var(--primary-text-color);
+	text-decoration: none;
 	transition: background-color 100ms ease-in;
 }
 .job-offer:hover { background: #E7E7E7; }
 
 .job-offer.expired { opacity: 0.5; }
-
-.job-offer a {
-	color: var(--primary-text-color);
-	text-decoration: none;
-}
 
 .job-offer h3 { font-size: 1em; margin: 0 0 3px 0; }
 .job-offer p { margin: 0; }

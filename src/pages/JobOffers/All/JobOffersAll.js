@@ -34,25 +34,23 @@ function JobOffersAll() {
 						const expired = expDate ? (new Date() > expDate) : false;
 						
 						return (
-							<div key={`job-offer-${offer.job_offer_id}`} className={`job-offer${expired ? " expired" : ""}`}>
-								<Link to={`/jobs/offer/${offer.job_offer_id}`}>
-									<h3 className="job-offer-title">
-										{offer.title}
-										{expDate && <span className="job-offer-exp-date">{expDate.toLocaleDateString()} {expired ? " [EXPIRÉE]" : ""}</span>}
-									</h3>
-									<p className="job-offer-company">{offer.company_name}, {offer.city}, {offer.postal_code}</p>
-									<p className="job-offer-type">{offer.type}</p>
-									
-									<div className="job-offer-domains">
-										{offer.jobDomains.map((domain, index) => (
-											<span key={`job-offer-${offer.job_offer_id}-domain-${domain.job_domain_id}`}>
-												{domain.name}
-												{(index < (offer.jobDomains.length - 1)) ? ", " : ""}
-											</span>
-										))}
-									</div>
-								</Link>
-							</div>
+							<Link key={`job-offer-${offer.job_offer_id}`} className={`job-offer${expired ? " expired" : ""}`} to={`/jobs/offer/${offer.job_offer_id}`}>
+								<h3 className="job-offer-title">
+									{offer.title}
+									{expDate && <span className="job-offer-exp-date">{expDate.toLocaleDateString()} {expired ? " [EXPIRÉE]" : ""}</span>}
+								</h3>
+								<p className="job-offer-company">{offer.company_name}, {offer.city}, {offer.postal_code}</p>
+								<p className="job-offer-type">{offer.type}</p>
+
+								<div className="job-offer-domains">
+									{offer.jobDomains.map((domain, index) => (
+										<span key={`job-offer-${offer.job_offer_id}-domain-${domain.job_domain_id}`}>
+											{domain.name}
+											{(index < (offer.jobDomains.length - 1)) ? ", " : ""}
+										</span>
+									))}
+								</div>
+							</Link>
 						);
 					})}
 				</div>
