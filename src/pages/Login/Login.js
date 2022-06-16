@@ -4,6 +4,7 @@ import { useForm, FormProvider } from "react-hook-form";
 import useAuth, { states } from "../../context/Auth/AuthContext.js";
 import usePageDisplay from "../../context/PageDisplay/PageDisplay.js";
 import Inputs from "../../components/Inputs/Inputs.js";
+import MicrosoftLogin from "../../components/Button/MicrosoftLogin/MicrosoftLogin.js";
 import "./Login.css";
 
 function Login() {
@@ -42,6 +43,9 @@ function Login() {
 							<input className="button primary-color" type="submit" value="Se connecter"/>
 						</form>
 					</FormProvider>
+
+					<hr className="login-sep"/>
+					<MicrosoftLogin style="light" disabled/>
 				</div>
 			)}
 		</div>
