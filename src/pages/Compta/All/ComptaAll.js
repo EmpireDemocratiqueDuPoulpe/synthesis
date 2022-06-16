@@ -29,7 +29,7 @@ function ComptaAll() {
 							<div className="student_list_item" key={`student-compta-list-student-${student.user_id}`} onClick={() => selectStudent(student)} onKeyDown={e => clickOnEnter(e, selectStudent, student)} role="button" tabIndex={0}>
 								<p className="student_name">{student.first_name} {student.last_name}</p>
 								<p className="student_email">E-Mail: {student.email}</p>
-								<p className="student_campus">Campus: {student.campus.name}</p>
+								{student.campus && <p className="student_campus">Campus: {student.campus.name}</p>}
 								<p className="student_region">Pays: {student.region}</p>
 							</div>
 						))}
@@ -49,7 +49,7 @@ function ComptaAll() {
 									<p>Somme pay&eacute;e: {student.compta.paid} &euro;</p>
 									<p>Total restant: <span className={remainingClass}>{(remaining > 0) && "+"}{remaining} &euro;</span></p>
 									<br/>
-									<p className="student_campus">Campus: {student.campus.name}</p>
+									{student.campus && <p className="student_campus">Campus: {student.campus.name}</p>}
 									<p className="student_region">Pays: {student.region}</p>
 								</>
 							);
