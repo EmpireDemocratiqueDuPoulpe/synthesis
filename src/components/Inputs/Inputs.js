@@ -108,6 +108,50 @@ Textarea.propTypes = {
 };
 Textarea.defaultProps = { resize: true };
 
+function Email({ children, ...props }) {
+	/* ---- States ---------------------------------- */
+	const input = useInput({ props });
+	const required = useRequired(props);
+	
+	/* ---- Page content ---------------------------- */
+	return (
+		<label className="input email">
+			<span className="input-wrapper text-like">
+				<input type="email" {...input.props}/>
+				<span className="input-label">{children}{required}</span>
+			</span>
+		</label>
+	);
+}
+Email.propTypes = {
+	name: PropTypes.string.isRequired,
+	/* ONLY IF NOT USING */ value: PropTypes.any,
+	/* REACT-HOOK-FORM */ onChange: PropTypes.func,
+	children: PropTypes.node,
+};
+
+function Password({ children, ...props }) {
+	/* ---- States ---------------------------------- */
+	const input = useInput({ props });
+	const required = useRequired(props);
+	
+	/* ---- Page content ---------------------------- */
+	return (
+		<label className="input password">
+			<span className="input-wrapper text-like">
+				<input type="password" {...input.props}/>
+				<span className="input-label">{children}{required}</span>
+			</span>
+		</label>
+	);
+}
+Password.propTypes = {
+	name: PropTypes.string.isRequired,
+	/* ONLY IF NOT USING */ value: PropTypes.any,
+	/* REACT-HOOK-FORM */ onChange: PropTypes.func,
+	children: PropTypes.node,
+};
+
 function Address({ enable, children, ...props }) {
 	/* ---- States ---------------------------------- */
 	const inputStreet = useInput({ props: {...props, name: `${props.name}_street`} });
@@ -313,7 +357,7 @@ File.propTypes = {
  *****************************************************/
 
 export default {
-	/* TEXT */ Text, Textarea, Address,
+	/* TEXT */ Text, Textarea, Email, Password, Address,
 	/* DATE & TIME */ Date,
 	/* SELECT */ Select,
 	/* CHECKBOX & RADIO */ Checkbox,
