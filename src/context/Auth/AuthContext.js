@@ -33,7 +33,7 @@ export function AuthProvider({ maxAuthTry, children }) {
 			case states.DISCONNECTED:
 				return { ...state, status: states.DISCONNECTED, isConnected: false, error: null, user: null, permissions: [] };
 			case internalStates.FAILED_AUTH:
-				return { ...state, status: state.DISCONNECTED, isConnected: false, error: action.error, failedAuth: (state.failedAuth + 1), user: null, permissions: [] };
+				return { ...state, status: state.DISCONNECTED, isConnected: false, error: action.error ?? null, failedAuth: (state.failedAuth + 1), user: null, permissions: [] };
 			case internalStates.ERROR:
 				return { ...state, error: action.error };
 			case internalStates.DEL_ERROR:
