@@ -50,7 +50,7 @@ export default [
 		permissions: [ "READ_STUDENTS" ],
 		link: {
 			label: "Étudiants",
-			icon: { file: solid("graduation-cap") },
+			icon: { file: solid("address-book") },
 		},
 	},
 	
@@ -94,7 +94,7 @@ export default [
 		permissions: [ "READ_PLANNINGS" ],
 		link: {
 			label: "Planning",
-			icon: { file: solid("calendar") },
+			icon: { file: solid("calendar-days") },
 		},
 	},
 	
@@ -120,7 +120,7 @@ export default [
 			label: "Comptabilité",
 			if: (auth) => auth.user?.position.name === "Étudiant",
 			override: (auth) => `/comptabilite/${auth.user.uuid}`,
-			icon: { file: solid("receipt") },
+			icon: { file: solid("coins") },
 		},
 	},
 	{
@@ -131,7 +131,7 @@ export default [
 		link: {
 			label: "Comptabilité",
 			if: (auth) => auth.user?.position.name !== "Étudiant",
-			icon: { file: solid("receipt") },
+			icon: { file: solid("coins") },
 		},
 	},
 	
