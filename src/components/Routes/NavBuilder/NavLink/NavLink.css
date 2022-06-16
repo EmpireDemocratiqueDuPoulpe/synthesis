@@ -8,7 +8,8 @@
 }
 .nav-link:visited { color: inherit; }
 
-.nav-link.active .link-icon { color: #FF99CC !important; }
+.App.light .nav-link, .App.light .nav-link:visited { color: inherit; }
+.App.dark .nav-link, .App.dark .nav-link:visited { color: var(--dark-primary-text-color); }
 
 /* -- Icon */
 .nav-link .link-icon {

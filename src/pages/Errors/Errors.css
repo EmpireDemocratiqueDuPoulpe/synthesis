@@ -31,14 +31,16 @@
 /* -- Error message */
 .error-message {
 	font-size: 3em;
-	margin: 0 0 5px 0;
-	color: #D3495F;
+	margin: 0 0 0.5em 0;
 }
+.App.light .error-message { color: var(--secondary-color); }
+.App.dark .error-message { color: var(--dark-primary-text-color); }
 
 /* -- Error link */
-.error-link.secondary-link {
-	margin-top: 10px;
-	color: #17171D !important;
-	font-weight: 500 !important;
-}
-.error-link.secondary-link::before { background-color: #17171D !important; }
+.error-link.secondary-link { font-weight: 500 !important; }
+
+.App.light .error-link.secondary-link { color: var(--secondary-color); }
+.App.dark .error-link.secondary-link { color: var(--dark-primary-text-color); }
+
+.App.light .error-link.secondary-link::before { background-color: var(--secondary-color) !important; }
+.App.dark .error-link.secondary-link::before { background-color: var(--dark-primary-text-color) !important; }

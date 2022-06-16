@@ -10,6 +10,8 @@
 	min-height: 100vh;
 	overflow-x: hidden;
 }
+.App.light  { color: var(--primary-text-color); }
+.App.dark   { color: var(--dark-primary-text-color); }
 
 /* -- App navigation menu */
 .App .App-nav { flex-shrink: 0; }
@@ -25,20 +27,29 @@
 	align-items: stretch;
 	height: 40px;
 	padding-right: 20px;
-	background: #F1F1F1;
-	border-bottom: thin solid darkgray;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
 }
+.App.light .App-page .App-header  { border-bottom-color: darkgray; background: #F1F1F1 }
+.App.dark .App-page .App-header   { border-bottom-color: var(--dark-primary-color-darker); background: var(--dark-primary-color-darker) }
 
 .App .App-page .App-header .back-btn {
 	background: rgba(0, 0, 0, 0);
 	width: 40px;
 	background: none;
 	border: none;
-	border-right: thin solid darkgray;
+	border-right-width: thin;
+	border-right-style: solid;
 	transition: background-color 100ms ease-in-out;
 }
+.App .App-page .App-header .back-btn:disabled   { opacity: 0.5; }
 .App .App-page .App-header .back-btn:not(:disabled) { cursor: pointer; }
-.App .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(0, 0, 0, 0.10); }
+
+.App.light .App-page .App-header .back-btn  { border-right-color: darkgray; color: var(--primary-text-color); }
+.App.dark .App-page .App-header .back-btn   { border-right-color: transparent; color: var(--dark-primary-text-color); }
+
+.App.light .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(0, 0, 0, 0.10); }
+.App.dark .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.10); }
 
 .App .App-page .App-header .header-user {
 	position: relative;
@@ -61,4 +72,7 @@
 	width: 100%;
 	height: calc(100% - 41px); /* 41px: Height of the App-header plus its border */
 }
-.App .App-page .padding { padding: 25px 35px; }
+.App .App-page .App-body.padding { padding: 25px 35px; }
+
+.App.light .App-page .App-body  { background: var(--bg-color); }
+.App.dark .App-page .App-body   { background: var(--dark-bg-color); }

@@ -1,6 +1,7 @@
 /* ---- Global ---------------------------------- */
 /* -- Colors */
 :root {
+  --bg-color: #FFFFFF;
   --primary-color: #3D2683;
   --primary-color-light: #604797;
   --primary-text-color: #2E2E2E;
@@ -8,6 +9,11 @@
   --secondary-text-color: #012169;
 
   --border-color: #D3D3D3;
+
+  --dark-bg-color: #392A48;
+  --dark-primary-color: #3D2683;
+  --dark-primary-color-darker: #221838;
+  --dark-primary-text-color: #EAEAEA;
 
   --error-color: #D3495F;
   --warning-color: #F0AD4E;
@@ -17,7 +23,6 @@
 
 /* -- Body */
 body {
-  color: var(--primary-text-color);
   margin: 0;
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
     "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
@@ -36,7 +41,7 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 .secondary-link,
 .secondary-link-wrapper a {
   position: relative;
-  color: #0275D8;
+  color: var(--secondary-color);
   font-weight: 600;
   text-decoration: none;
 }
@@ -66,57 +71,61 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 
 /* -- Table */
 .TableMainWrapper {
-  border: 1px var(--border-color) solid;
+  border-width: thin;
+  border-style: solid;
   border-radius: 10px;
   overflow: hidden;
 }
+.App.light .TableMainWrapper { border-color: var(--border-color); }
+.App.dark .TableMainWrapper { border-color: var(--primary-color); }
 
 .TableMain {
-  border-collapse: collapse;
-  background: #fff;
+  position: relative;
   width: 100%;
   margin: 0 auto;
-  position: relative;
+  border-collapse: collapse;
 }
+.App.light .TableMain { background: var(--bg-color); }
+.App.dark .TableMain { background: var(--dark-bg-color); }
 
 .TableMain thead tr {
-  height: 60px;
-  background: var(--primary-color);
+  height: 55px;
 }
+.App.light .TableMain thead tr { background: var(--primary-color); }
+.App.dark .TableMain thead tr { background: var(--primary-color); }
 
-.TableMain th {
-  font-size: 18px;
-  color: #fff;
+.TableMain thead th {
   line-height: 1.2;
   font-weight: unset;
 }
+.App.light .TableMain thead th { color: var(--dark-primary-text-color); }
+.App.dark .TableMain thead th { color: var(--dark-primary-text-color); }
 
 .TableMain tbody tr {
-  height: 50px;
-  font-size: 15px;
-  color: var(--primary-text-color);
+  height: 43px;
+  font-size: 0.9em;
   line-height: 1.2;
-  font-weight: unset;
-  transition: background-color 200ms;
+  transition: background-color 150ms ease-in;
 }
+.App.light .TableMain tbody tr { color: var(--primary-text-color); }
+.App.dark .TableMain tbody tr { color: var(--dark-primary-text-color); }
 
 .TableMain td, .TableMain th {
   text-align: left;
-  padding: 0 20px;
+  padding: 0 1.3em;
 }
 
-.TableMain tbody tr:hover {
-  background-color: #ededed !important;
-}
+.App.light .TableMain tbody tr:nth-child(even) { background-color: #F3F3F3; }
+.App.dark .TableMain tbody tr:nth-child(even) { background-color: var(--dark-primary-color-darker); }
 
-.TableMain tbody tr:nth-child(even) {
-  background-color: #f3f3f3;
-}
+.App.light .TableMain tbody tr:hover { background-color: #EDEDED; }
+.App.dark .TableMain tbody tr:hover { background-color: #433856; }
 
 .TableMain a {
   text-decoration: none;
-  color: var(--secondary-color)
 }
+.App.light .TableMain a { color: var(--secondary-color); }
+.App.dark .TableMain a { color: #FFF409; }
 
 /* -- Fonts */
 /* - Segoe UI */

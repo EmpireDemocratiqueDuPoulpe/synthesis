@@ -19,7 +19,7 @@ function App() {
 	/* ---- Page content ---------------------------- */
 	// TODO: Choose between french/english urls
 	return (
-		<div className="App">
+		<div className="App light">
 			{pageDisplay.navMenu && <AppNav/>}
 			
 			<div className="App-page">

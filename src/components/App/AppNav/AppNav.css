@@ -24,8 +24,9 @@
 .App-nav::after {
 	left: 4vw; /* Same width as closed App-nav */
 	width: calc(100% - 4vw);
-	background: #bfb2d5;
 }
+.App.light .App-nav::after  { background: #BFB2D5; }
+.App.dark .App-nav::after   { background: var(--dark-primary-color-darker); }
 
 /* -- App nav button */
 .App-nav .app-nav-btn {
