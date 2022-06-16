@@ -1,5 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import useAuth, { states } from "../../context/Auth/AuthContext.js";
+import usePageDisplay from "../../context/PageDisplay/PageDisplay.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import AppNav from "../../components/App/AppNav/AppNav.js";
@@ -13,27 +14,30 @@ function App() {
 	const location = useLocation();
 	const navigate = useNavigate();
 	const { status, user } = useAuth();
+	const pageDisplay = usePageDisplay();
 	
 	/* ---- Page content ---------------------------- */
 	// TODO: Choose between french/english urls
 	return (
 		<div className="App">
-			<AppNav/>
+			{pageDisplay.navMenu && <AppNav/>}
 			
 			<div className="App-page">
-				<div className="App-header">
-					<button className="back-btn" onClick={() => navigate(-1)} disabled={location.pathname === "/"}>
-						<FontAwesomeIcon icon={solid("arrow-left-long")} size="1x"/>
-					</button>
-					
-					{status === states.CONNECTED && (
-						<div className="header-user">
-							<UserIcon user={user}/>
-						</div>
-					)}
-				</div>
+				{pageDisplay.header && (
+					<div className="App-header">
+						<button className="back-btn" onClick={() => navigate(-1)} disabled={location.pathname === "/"}>
+							<FontAwesomeIcon icon={solid("arrow-left-long")} size="1x"/>
+						</button>
+						
+						{status === states.CONNECTED && (
+							<div className="header-user">
+								<UserIcon user={user}/>
+							</div>
+						)}
+					</div>
+				)}
 				
-				<div className="App-body">
+				<div className={`App-body ${pageDisplay.padding ? "padding" : "no-padding"}`}>
 					<RoutesBuilder routes={Routes}/>
 				</div>
 			</div>

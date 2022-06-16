@@ -60,5 +60,5 @@
 	box-sizing: border-box;
 	width: 100%;
 	height: calc(100% - 41px); /* 41px: Height of the App-header plus its border */
-	padding: 25px 35px;
 }
+.App .App-page .padding { padding: 25px 35px; }

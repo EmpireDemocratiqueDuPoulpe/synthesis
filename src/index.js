@@ -6,6 +6,7 @@ import { QueryClient, QueryClientProvider } from "react-query";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { MessageProvider } from "./context/Message/MessageContext.js";
 import { AuthProvider } from "./context/Auth/AuthContext.js";
+import { PageDisplayProvider } from "./context/PageDisplay/PageDisplay.js";
 import App from "./pages/App/App.js";
 // import reportWebVitals from "./reportWebVitals.js";
 import "normalize.css";
@@ -18,13 +19,15 @@ ReactDOM.render(
 		<CookiesProvider>
 			<MessageProvider>
 				<AuthProvider>
-					<QueryClientProvider client={queryClient}>
-						<React.StrictMode>
-							<App/>
-						</React.StrictMode>
-
-						<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: {opacity: 0.5} }}/>
-					</QueryClientProvider>
+					<PageDisplayProvider>
+						<QueryClientProvider client={queryClient}>
+							<React.StrictMode>
+								<App/>
+							</React.StrictMode>
+							
+							<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: {opacity: 0.5} }}/>
+						</QueryClientProvider>
+					</PageDisplayProvider>
 				</AuthProvider>
 			</MessageProvider>
 		</CookiesProvider>
