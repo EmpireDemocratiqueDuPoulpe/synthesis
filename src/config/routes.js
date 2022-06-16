@@ -109,7 +109,7 @@ export default [
 		permissions: [ "MANAGE_ABSENCES" ],
 		link: {
 			label: "Absences",
-			icon: { file: solid("circle-notch") },
+			icon: { file: solid("calendar-xmark") },
 		},
 	},
 	
@@ -168,7 +168,7 @@ export default [
 		permissions: [ "READ_STUDENTS_JOBS" ],
 		link: {
 			label: "Stages/Alternances",
-			icon: { file: solid("newspaper") },
+			icon: { file: solid("file-contract") },
 		},
 	},
 	
