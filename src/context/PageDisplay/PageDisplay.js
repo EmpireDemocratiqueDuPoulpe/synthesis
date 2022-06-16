@@ -1,14 +1,13 @@
-import { createContext, useContext, useReducer, useEffect } from "react";
+import { createContext, useContext, useReducer, useMemo, useCallback, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 import { isEqual } from "lodash-es";
-import isFirstRender from "../../hooks/isFirstRender/isFirstRender.js";
 
 /*****************************************************
  * Constants
  *****************************************************/
 
-const internalStates = { UPDATE_CONF: "UPDATE_CONF", RESET: "RESET" };
+const internalStates = { SET_PATH: "SET_PATH", UPDATE_CONF: "UPDATE_CONF", RESET: "RESET" };
 
 const initialState = { navMenu: true, header: true, padding: true };
 
@@ -21,37 +20,57 @@ const PageDisplayContext = createContext(null);
 export function PageDisplayProvider({ children }) {
 	/* ---- States ---------------------------------- */
 	const location = useLocation();
-	const firstRender = isFirstRender();
 	const [config, dispatch] = useReducer((state, action) => {
 		switch (action.type) {
-			case internalStates.UPDATE_CONF:
-				return { ...state, ...action.conf };
+			case internalStates.SET_PATH:
+				return { ...state, path: action.path };
+			case internalStates.UPDATE_CONF: {
+				const { path, ...newConf } = action.conf;
+
+				if (path) {
+					console.warn("PageDisplayProvider: The path cannot be changed.");
+				}
+
+				return { ...state, ...newConf };
+			}
 			case internalStates.RESET:
-				return initialState;
+				return { ...initialState, path: action.path };
 			default:
 				throw new Error("PageDisplayProvider: Invalid action.type!");
 		}
 	}, initialState, undefined);
 	
-	/* ---- Effects --------------------------------- */
-	useEffect(() => { if (!firstRender) reset(); }, [firstRender, location]);
-	
 	/* ---- Functions ------------------------------- */
-	const updateConfig = newConf => {
+	const setPath = path => {
+		dispatch({ type: internalStates.SET_PATH, path });
+	};
+
+	const updateConfig = useCallback(newConf => {
 		const mergedConf = { ...config, ...newConf };
-		
+
 		if (!isEqual(config, mergedConf)) {
 			dispatch({ type: internalStates.UPDATE_CONF, conf: newConf });
 		}
-	};
+	}, [config]);
 	
-	const reset = () => {
-		dispatch({ type: internalStates.RESET });
-	};
+	const reset = useCallback(newPath => {
+		if (newPath !== config.path) {
+			dispatch({ type: internalStates.RESET, path: newPath });
+		}
+	}, [config.path]);
+
+	/* ---- Effects --------------------------------- */
+	useEffect(() => setPath(location.pathname), [location.pathname]);
+	useEffect(() => reset(location.pathname), [reset, location.pathname]);
 	
 	/* ---- Page content ---------------------------- */
+	const contextValue = useMemo(
+		() => ({ ...config, update: updateConfig, reset }),
+		[config, updateConfig, reset]
+	);
+
 	return (
-		<PageDisplayContext.Provider value={{ ...config, update: updateConfig, reset }}>
+		<PageDisplayContext.Provider value={contextValue}>
 			{children}
 		</PageDisplayContext.Provider>
 	);
