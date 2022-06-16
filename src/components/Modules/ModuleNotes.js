@@ -9,6 +9,7 @@ import "./ModuleNotes.css";
 function ModuleNotes({ module }) {
 	/* ---- States ---------------------------------- */
 	const [isCollapsed, setCollapse] = useState(true);
+	const notes_nb = module.notes.length;
 
 	const classes = useClassName(hook => {
 		hook.set("module_box");
@@ -35,18 +36,18 @@ function ModuleNotes({ module }) {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className={classes}>
-			<div className="note_root" onClick={handleClick} onKeyDown={e => clickOnEnter(e, handleClick)} role="button" tabIndex={0}>
+			<div className="note_root" onClick={notes_nb > 0 ? handleClick : undefined } onKeyDown={e => clickOnEnter(e, handleClick)} role="button" tabIndex={0}>
 				<div className="note_ects_img">
 					<span className="note_ects">{calcECTS(module).hasPassed ? (
 						<FontAwesomeIcon className="note_icon passed" icon={solid("circle-check")} size="xl"/>
 					) : (
 						<FontAwesomeIcon className="note_icon failed" icon={solid("circle-xmark")} size="xl"/>
 					)}</span>
-					<span>{isCollapsed ? (
+					<span>{notes_nb > 0 ? (isCollapsed ? (
 						<FontAwesomeIcon className="module_box_icon" icon={solid("plus")} size="xl"/>
 					) : (
 						<FontAwesomeIcon className="module_box_icon" icon={solid("minus")} size="xl"/>
-					)}</span>
+					)) : ""}</span>
 				</div>
 				<div className="note_infos">
 					<span className="module_box-title" >{module.long_name ?? "LOREM IPSUM DIVAETO"}</span>
