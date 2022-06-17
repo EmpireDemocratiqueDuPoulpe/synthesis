@@ -22,7 +22,7 @@
 	right: 0;
 	left: 0;
 	padding: 0 18px;
-	background-color: #EDEDED;
+	background-color: #f9f9f9;
 	border-radius: 0 0 10px 10px;
 	-moz-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
 	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
@@ -40,7 +40,7 @@
 .module_box .note_root {
 	display: flex;
 	flex-direction: row;
-	background-color: #EDEDED;
+	background-color: #f9f9f9;
 	border-radius: 10px;
 	-moz-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
 	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
@@ -75,7 +75,7 @@
 }
 
 .module_box .note_misc span {
-	background-color: white;
+	background-color: var(--bg-color);
 	margin: 0 10px;
 	padding: 10px;
 	border-radius: 10px;
