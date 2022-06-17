@@ -8,11 +8,15 @@
 
 /* -- Profile boxes */
 .UsersByUUID .profile .profile-box:not(.no-decoration) {
+	padding: 20px;
 	background: #FFFFFF;
 	-moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
+
+.UsersByUUID .profile .profile-box h2,
+.UsersByUUID .profile .profile-box h3 { margin-top: 0; }
 
 /* - Row 1 */
 .UsersByUUID .profile .profile-box.buttons-box { grid-row: 1; grid-column: 1 / -1; }
@@ -38,7 +42,10 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	align-items: stretch;
+	padding: 0;
 }
+
+.UsersByUUID .profile .profile-box.campus-box .campus-infos { padding: 20px 20px 0 20px; }
 
 .UsersByUUID .profile .profile-box.campus-box .map-box {
 	flex-grow: 1;
