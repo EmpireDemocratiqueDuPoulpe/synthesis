@@ -1,4 +1,5 @@
 import { useState } from "react";
+import useAuth from "../../../context/Auth/AuthContext.js";
 import useClassName from "../../../hooks/className/useClassName.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -9,6 +10,7 @@ import "./AppNav.css";
 function AppNav() {
 	/* ---- States ---------------------------------- */
 	const [isOpen, setOpen] = useState(false);
+	const auth = useAuth();
 	const classes = useClassName(hook => {
 		hook.set("App-nav");
 		hook.setIf(isOpen, "open");
@@ -21,6 +23,9 @@ function AppNav() {
 				<FontAwesomeIcon icon={isOpen ? solid("xmark") : solid("bars")}/>
 			</button>
 			<NavBuilder routes={Routes}/>
+			<button className="app-nav-btn logout-btn" onClick={() => auth.setDisconnected()}>
+				<FontAwesomeIcon icon={solid("right-from-bracket")}/>
+			</button>
 		</nav>
 	);
 }

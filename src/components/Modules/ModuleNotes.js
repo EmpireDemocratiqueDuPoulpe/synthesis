@@ -9,7 +9,7 @@ import "./ModuleNotes.css";
 function ModuleNotes({ module }) {
 	/* ---- States ---------------------------------- */
 	const [isCollapsed, setCollapse] = useState(true);
-	const notes_nb = module.notes.length;
+	const notes_nb = module.notes?.length ?? 0;
 
 	const classes = useClassName(hook => {
 		hook.set("module_box");
@@ -43,11 +43,11 @@ function ModuleNotes({ module }) {
 					) : (
 						<FontAwesomeIcon className="note_icon failed" icon={solid("circle-xmark")} size="xl"/>
 					)}</span>
-					<span>{notes_nb > 0 ? (isCollapsed ? (
+					<span>{notes_nb > 0 && (isCollapsed ? (
 						<FontAwesomeIcon className="module_box_icon" icon={solid("plus")} size="xl"/>
 					) : (
 						<FontAwesomeIcon className="module_box_icon" icon={solid("minus")} size="xl"/>
-					)) : ""}</span>
+					))}</span>
 				</div>
 				<div className="note_infos">
 					<span className="module_box-title" >{module.long_name ?? "LOREM IPSUM DIVAETO"}</span>

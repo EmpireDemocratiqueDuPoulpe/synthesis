@@ -1,6 +1,9 @@
 /* ---- App navigation menu --------------------- */
 /* -- Container */
 .App-nav {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
 	position: relative;
 	width: 4vw;
 	font-size: 1.35em;
@@ -78,3 +81,7 @@
 /* - Link label */
 .App-nav .nav-links .nav-link .link-label { margin-left: 0.6em; padding-left: 1em; }
 .App-nav .nav-links .nav-link:hover .link-label { background: rgba(255, 255, 255, 0.20); }
+.App-nav .logout-btn {
+	margin-top: auto;
+	margin-bottom: 20px;
+}
