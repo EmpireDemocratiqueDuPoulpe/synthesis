@@ -137,6 +137,31 @@ export function isoStrToDate(isoStr) {
 }
 
 /*****************************************************
+ * Numbers
+ *****************************************************/
+
+export function toNumeralAdjective(number, feminine = false) {
+	if (typeOf(number) !== "number") return null;
+	
+	switch (number) {
+		case 1:
+			return feminine ? "re" : "er";
+		case 2:
+			return feminine ? "de" : "d";
+		default:
+			return "e";
+	}
+}
+
+/*****************************************************
+ * Strings
+ *****************************************************/
+
+export function capitalize(str) {
+	return (str && (str[0].toUpperCase() + str.slice(1))) || "";
+}
+
+/*****************************************************
  * Bytes
  *****************************************************/
 
