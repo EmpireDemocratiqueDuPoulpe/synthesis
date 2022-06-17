@@ -3,14 +3,14 @@ import { useParams } from "react-router-dom";
 import useClassName from "../../../hooks/className/useClassName.js";
 import useUsers from "../../../hooks/users/useUsers.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { regular, solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Loader from "../../../components/Loader/Loader.js";
 import Button from "../../../components/Button/Button.js";
 import { DeckGL } from "@deck.gl/react";
 import { MapView, COORDINATE_SYSTEM } from "@deck.gl/core";
 import { TileLayer } from "@deck.gl/geo-layers";
 import { BitmapLayer, IconLayer } from "@deck.gl/layers";
-import { calcECTS, sortDate, isoStrToDate, capitalize } from "../../../global/Functions.js";
+import { calcECTS, sortDate, isoStrToDate, toNumeralAdjective, capitalize } from "../../../global/Functions.js";
 import teamsIcon from "../../../assets/images/teams_icon/Teams-16x16.png";
 import mapPin from "../../../assets/images/map_pin/map_pin_atlas.png";
 import pinMapping from "../../../assets/images/map_pin/map_pin_mapping.json";
@@ -179,31 +179,45 @@ function UsersByUUID() {
 					{(user.data.study || user.data.modules) && (
 						<div className="profile-box study-box">
 							{user.data.study && (
-								<>
+								<div className="study-infos">
 									<h3>Études</h3>
-									<p>Arriv&eacute; en: {user.data.study.entry_level}{user.data.study.entry_date && ` le ${user.data.study.entry_date}`}</p>
-									<p>{user.data.study.exit_level || user.data.study.exit_date ? (
-										`Parti${user.data.study.exit_level && ` en ${user.data.study.exit_level}`}${user.data.study.exit_date && ` le ${user.data.study.exit_date}`}`
-									) : `En ${user.data.study.current_level}`}</p>
-								</>
+									<p>
+										Arriv&eacute; en {user.data.study.entry_level}<sup>{toNumeralAdjective(user.data.study.entry_level, true)}</sup> année
+										{user.data.study.entry_date && ` le ${isoStrToDate(user.data.study.entry_date).toLocaleDateString()}`}.
+									</p>
+									
+									{(user.data.study.exit_level || user.data.study.exit_date) ? (
+										<p>
+											Parti
+											{user.data.study.exit_level && (<> en {user.data.study.exit_level}<sup>{toNumeralAdjective(user.data.study.exit_level, true)}</sup> année</>)}
+											{user.data.study.exit_date && (<> le {isoStrToDate(user.data.study.exit_date).toLocaleDateString()}</>)}
+											.
+										</p>
+									) : (
+										<p>Actuellement en {user.data.study.current_level}<sup>{toNumeralAdjective(user.data.study.current_level, true)}</sup> année.</p>
+									)}
+								</div>
 							)}
 
 							{user.data.modules && (
-								<div>
-									<h4>Modules</h4>
-									<ul>
+								<div className="module-box">
+									<h3>Modules</h3>
+									
+									<ul className="module-list">
 										{user.data.modules.map(module => (
-											<li key={`user-profile-module-${module.module_id}`}>
-												{module.year}{module.name}{(module.notes && module.notes.length > 0) && (
-													<>
-													- {calcECTS(module).ects}/{module.ects} ECTS
-														<ul>
-															{module.notes && (module.notes.map(note => (
-																<li key={`user-profile-module-${module.module_id}-note-${note.note_id}`}>{note.note}/20</li>
-															)))}
-														</ul>
-													</>
-												)}
+											<li key={`user-profile-module-${module.module_id}`} className="user-module">
+												{module.year}{module.name}{(module.notes && module.notes.length > 0) && (() => {
+													const result = calcECTS(module);
+													
+													return (
+														<span className={`user-module-status ${result.hasPassed ? "passed" : "not-passed"}`}>
+															{result.hasPassed
+																? <FontAwesomeIcon icon={solid("circle-check")} size="1x"/>
+																: <FontAwesomeIcon icon={regular("circle-xmark")} size="1x"/>
+															}
+														</span>
+													);
+												})()}
 											</li>
 										))}
 									</ul>

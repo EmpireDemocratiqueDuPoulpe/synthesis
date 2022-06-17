@@ -92,3 +92,57 @@
 	text-decoration: none;
 	color: #000000;
 }
+
+/* -- Study box : Modules */
+.UsersByUUID .profile .profile-box.study-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: stretch;
+	gap: 30px;
+}
+
+.UsersByUUID .profile .profile-box.study-box .study-infos { flex-shrink: 0; }
+
+.UsersByUUID .profile .profile-box.study-box .module-box {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: stretch;
+	max-height: calc(40px * 6); /* 6 * (Height of a module) */
+}
+
+.UsersByUUID .profile .profile-box.study-box .module-box .module-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	overflow-y: auto;
+}
+
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: calc(100% - 10px);
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+	background: transparent;
+	transition: background 100ms ease-in;
+	cursor: default;
+}
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module:not(:last-child) {
+	border-bottom: thin var(--border-color) solid;
+}
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module:hover {
+	background-color: rgba(0, 0, 0, 0.04);
+}
+
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status {
+	font-size: 1.25em;
+}
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status.passed { color: var(--success-color); }
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status.not-passed { color: var(--error-color); }
