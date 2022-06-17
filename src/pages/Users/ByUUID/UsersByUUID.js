@@ -51,7 +51,7 @@ function UsersByUUID() {
 			hook.setIf(!!user.data.jobs, "has-jobs");
 			hook.setIf(!!user.data.compta, "has-compta");
 		}
-	}, [user]);
+	}, [user.isUsable(), user.data]);
 
 	const [initialView, setInitialView] = useState(INITIAL_VIEW);
 	const tileLayer = new TileLayer({
@@ -153,8 +153,11 @@ function UsersByUUID() {
 
 					{user.data.campus && (
 						<div className="profile-box campus-box">
-							<div>
-								<h3>Campus de {user.data.campus.name}</h3>
+							<div className="campus-infos">
+								{(() => {
+									const isVirtual = user.data.campus.name === "Distanciel";
+									return <h3>Campus {!isVirtual && "de "}{isVirtual ? user.data.campus.name.toLowerCase() : user.data.campus.name}</h3>;
+								})()}
 								<p>{user.data.campus.address_street}, {user.data.campus.address_city} ({user.data.campus.address_postal_code})</p>
 							</div>
 
