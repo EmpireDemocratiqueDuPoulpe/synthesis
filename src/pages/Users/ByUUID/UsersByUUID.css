@@ -1,0 +1,60 @@
+/* ---- UserByUUID ------------------------------ */
+/* -- Profile */
+.UsersByUUID .profile {
+	display: grid;
+	grid-template-columns: 2.5fr 1fr;
+	grid-gap: 15px;
+}
+
+/* -- Profile boxes */
+.UsersByUUID .profile .profile-box:not(.no-decoration) {
+	background: #FFFFFF;
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+/* - Row 1 */
+.UsersByUUID .profile .profile-box.buttons-box { grid-row: 1; grid-column: 1 / -1; }
+
+/* - Row 2 */
+.UsersByUUID .profile .profile-box.base-infos-box { grid-row: 2; grid-column: 1 / span 1; }
+.UsersByUUID .profile .profile-box.campus-box { grid-row: 2; grid-column: 2 / span 1; }
+
+.UsersByUUID .profile:not(.has-campus) .profile-box.base-infos-box { grid-column: 1 / span 2; }
+
+/* - Row 3 */
+.UsersByUUID .profile .profile-box.study-box { grid-row: 3; grid-column: 1 / span 1; }
+.UsersByUUID .profile .profile-box.jobs-box { grid-row: 3; grid-column: 2 / span 1; }
+
+.UsersByUUID .profile:not(.has-jobs) .profile-box.study-box { grid-column: 1 / span 2; }
+
+/* - Row 4 */
+.UsersByUUID .profile .profile-box.compta-box { grid-row: 4; grid-column: 2 / span 1; }
+
+/* -- Campus box */
+.UsersByUUID .profile .profile-box.campus-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+}
+
+.UsersByUUID .profile .profile-box.campus-box .map-box {
+	flex-grow: 1;
+	position: relative;
+}
+
+.UsersByUUID .profile .profile-box.campus-box .map-box .copyright {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	font-size: 0.7em;
+	padding: 0 5px;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.UsersByUUID .profile .profile-box.campus-box .map-box .copyright a {
+	text-decoration: none;
+	color: #000000;
+}
