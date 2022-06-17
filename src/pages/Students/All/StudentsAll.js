@@ -5,9 +5,11 @@ import useStudents from "../../../hooks/students/useStudents.js";
 import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
-import { hasPassed, sortStudentsByPassed, sortObjectArr } from "../../../global/Functions.js";
+import { hasPassed, sortStudentsByPassed, sortObjectArr, filterObj } from "../../../global/Functions.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
 import "./StudentAll.css";
+
+const searchableColumns = ["first_name", "last_name", "birth_date", "study.current_level", "email", "campus.name", "region"];
 
 function StudentsAll() {
 	/* ---- States ---------------------------------- */
@@ -49,7 +51,7 @@ function StudentsAll() {
 				Trier par
 			</Inputs.Select>
 			
-			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
+			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<>
@@ -71,7 +73,7 @@ function StudentsAll() {
 								</thead>
 
 								<tbody>
-									{students.data.sort((a, b) => sortObjectArr(sortBy, a, b)).map(student => (
+									{students.data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search)).map(student => (
 										<tr key={`students-list-student-${student.user_id}`}>
 											<td className="student-first-name">{student.first_name}</td>
 											<td className="student-last-name">{student.last_name}</td>

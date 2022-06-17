@@ -25,7 +25,7 @@ function StudentsOld() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Students StudentsOld">
-			<h2>Liste des anciens étudiants</h2>
+			<h2 className="page_title">Liste des anciens étudiants</h2>
 			<Inputs.Select
 				name="studentsSelect"
 				value={sortBy}

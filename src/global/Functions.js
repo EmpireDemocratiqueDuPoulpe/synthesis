@@ -96,6 +96,22 @@ export function sortDate(date1, date2) {
 }
 
 /*****************************************************
+ * Filtering
+ *****************************************************/
+
+export function filterObj(obj, props, search) {
+	return Object.keys(obj).some(k => {
+		const fullKey = props.filter(p => p.includes(k));
+
+		if (fullKey.length === 0) {
+			return false;
+		}
+
+		return `${get(obj, fullKey[0], "")}`.toLowerCase().includes(search.toLowerCase());
+	});
+}
+
+/*****************************************************
  * Date
  *****************************************************/
 
