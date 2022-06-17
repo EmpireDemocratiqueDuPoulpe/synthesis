@@ -17,7 +17,7 @@ function ModuleNotes({ module }) {
 		hook.setIfElse(isCollapsed, "plus_icon", "minus_icon", "icon");
 	}, [isCollapsed]);
 
-	const notes_height = module.notes.length * 3;
+	// const notes_height = module.notes.length * 3;
 	useEffect(() => {
 		const module_boxes = document.querySelectorAll(".module_box.hide");
 
@@ -57,7 +57,7 @@ function ModuleNotes({ module }) {
 					</div>
 				</div>
 			</div>
-			<div className="module_box-content" style={{ top: `calc(-${notes_height}em + 110px)`, height: `${notes_height}em` }}>
+			<div className="module_box-content">
 				{module.notes.map(note => (
 					<p key={`notes-list-module-${module.module_id}-note-${note.note_id}`}>{note.note}</p>
 				))}
