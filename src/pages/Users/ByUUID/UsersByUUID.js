@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import useAuth from "../../../context/Auth/AuthContext.js";
 import useUsers from "../../../hooks/users/useUsers.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -10,12 +9,8 @@ import teamsIcon from "../../../assets/images/teams_icon/Teams-16x16.png";
 function UsersByUUID() {
 	/* ---- States ---------------------------------- */
 	const { UUID } = useParams();
-	const { hasPermission, permissions } = useAuth();
-	const user = useUsers({ UUID, expand: [
-		(hasPermission(permissions.READ_CAMPUS) ? "campus~" : ""), "study~",
-		(hasPermission(permissions.READ_MODULES) ? "module~" : ""), (hasPermission(permissions.READ_ECTS) ? "ects~" : ""),
-		(hasPermission(permissions.READ_STUDENTS_JOBS) ? "job~" : ""), (hasPermission(permissions.READ_COMPTA) ? "compta~" : ""),
-	].filter(Boolean)
+	const user = useUsers({
+		UUID, expand: [ "campus~", "study~", "module~", "ects~", "job~", "compta~" ]
 	});
 
 	/* ---- Page content ---------------------------- */
@@ -43,7 +38,7 @@ function UsersByUUID() {
 						<p>{user.data.region}</p>
 					</div>
 
-					{(hasPermission(permissions.READ_CAMPUS) && user.data.campus) && (
+					{user.data.campus && (
 						<div>
 							<h3>Campus de {user.data.campus.name}</h3>
 							<p>{user.data.campus.address_street}, {user.data.campus.address_city} ({user.data.campus.address_postal_code})</p>
@@ -62,13 +57,13 @@ function UsersByUUID() {
 								</>
 							)}
 
-							{(hasPermission(permissions.READ_MODULES) && user.data.modules) && (
+							{user.data.modules && (
 								<div>
 									<h4>Modules</h4>
 									<ul>
 										{user.data.modules.map(module => (
 											<li key={`user-profile-module-${module.module_id}`}>
-												{module.year}{module.name}{hasPermission(permissions.READ_ECTS) && (
+												{module.year}{module.name}{(module.notes && module.notes.length > 0) && (
 													<>
 													- {calcECTS(module).ects}/{module.ects} ECTS
 														<ul>
@@ -86,7 +81,7 @@ function UsersByUUID() {
 						</div>
 					)}
 
-					{(hasPermission(permissions.READ_STUDENTS_JOBS) && user.data.jobs) && (
+					{user.data.jobs && (
 						<div>
 							<h3>Stages et alternances</h3>
 
@@ -98,6 +93,21 @@ function UsersByUUID() {
 									</li>
 								))}
 							</ul>
+						</div>
+					)}
+
+					{user.data.compta && (
+						<div>
+							<h3>Comptabilit&eacute;</h3>
+							<p>Type de paiement: {user.data.compta.payment_type}</p>
+							<p>Somme d&ucirc;e : {user.data.compta.payment_due} &euro;</p>
+							<p>Somme pay&eacute;e : {user.data.compta.paid} &euro;</p>
+							{(() => {
+								const remaining = user.data.compta.payment_due - user.data.compta.paid;
+								const remainingColor = remaining > 0 ? "remaining_red" : "remaining_green";
+
+								return <p className={remainingColor}>Balance : {(remaining > 0) && "+"}{remaining} &euro;</p>;
+							})()}
 						</div>
 					)}
 				</>
