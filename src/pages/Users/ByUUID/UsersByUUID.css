@@ -52,6 +52,17 @@
 	position: relative;
 }
 
+.UsersByUUID .profile .profile-box.campus-box .map-box.no-map { background: rgba(0, 0, 0, 0.25); }
+.UsersByUUID .profile .profile-box.campus-box .map-box.no-map::after {
+	content: "Aucune carte n'est disponible.";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	text-align: center;
+	font-size: 0.9em;
+	transform: translate(-50%, -50%);
+}
+
 .UsersByUUID .profile .profile-box.campus-box .map-box .copyright {
 	position: absolute;
 	right: 0;

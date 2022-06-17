@@ -85,7 +85,7 @@ function UsersByUUID() {
 				new IconLayer({
 					id: `${properties.id}-icons`,
 					coordinateSystem: COORDINATE_SYSTEM.LNGLAT,
-					data: (user.isUsable() && user.data.campus)
+					data: (user.isUsable() && user.data.campus && user.data.campus.geo_position)
 						? [{name: user.data.campus.name, address: `${user.data.campus.address_street}, ${user.data.campus.address_postal_code}, ${user.data.campus.address_city}`, coordinates: [user.data.campus.geo_position.coordinates[1], user.data.campus.geo_position.coordinates[0]]}]
 						: [],
 					pickable: false,
@@ -102,7 +102,7 @@ function UsersByUUID() {
 	});
 
 	const updateView = useCallback(() => {
-		if (user.isUsable() && user.data.campus) {
+		if (user.isUsable() && user.data.campus && user.data.campus.geo_position) {
 			const lat = user.data.campus.geo_position.coordinates[0];
 			const lon = user.data.campus.geo_position.coordinates[1];
 
@@ -158,15 +158,17 @@ function UsersByUUID() {
 									const isVirtual = user.data.campus.name === "Distanciel";
 									return <h3>Campus {!isVirtual && "de "}{isVirtual ? user.data.campus.name.toLowerCase() : user.data.campus.name}</h3>;
 								})()}
-								<p>{user.data.campus.address_street}, {user.data.campus.address_city} ({user.data.campus.address_postal_code})</p>
+								<p>{user.data.campus.address_street}{user.data.campus.address_city && `, ${user.data.campus.address_city}`}{user.data.campus.address_postal_code && `(${user.data.campus.address_postal_code})`}</p>
 							</div>
 
-							<div className="map-box">
-								<DeckGL layers={[tileLayer]} views={new MapView({ repeat: true })} initialViewState={initialView} controller={true}>
-									<div className="copyright">
-										&copy; <a href="http://www.openstreetmap.org/copyright" rel="noreferrer" target="blank">OpenStreetMap contributors</a>
-									</div>
-								</DeckGL>
+							<div className={`map-box${user.data.campus.geo_position ? "" : " no-map"}`}>
+								{user.data.campus.geo_position && (
+									<DeckGL layers={[tileLayer]} views={new MapView({ repeat: true })} initialViewState={initialView} controller={true}>
+										<div className="copyright">
+											&copy; <a href="http://www.openstreetmap.org/copyright" rel="noreferrer" target="blank">OpenStreetMap contributors</a>
+										</div>
+									</DeckGL>
+								)}
 							</div>
 						</div>
 					)}
