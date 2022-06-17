@@ -31,7 +31,7 @@ function Planning() {
 		}
 	});
 	const [campusesOptions, setCampusesOptions] = useState([]);
-	const [selectedCampuses, setSelectedCampuses] = useState(user.campus ? [user.campus.campus_id] : []);
+	const [selectedCampuses, setSelectedCampuses] = useState(user.campus ? [{ value: user.campus.campus_id, label: user.campus.name}] : []);
 
 	const eventTypesOptions = [
 		{ value: "module", label: "Cours" },
@@ -40,11 +40,10 @@ function Planning() {
 	const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypesOptions);
 
 	const planning = usePlanning({ years: selectedYears.map(y => y.value), eventTypes: selectedEventTypes.map(e => e.value), campuses: selectedCampuses.map(c => c.value)});
-
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Planning">
-			<h2>Planning</h2>
+			<h2 className="page_title">Planning</h2>
 
 			{(!planning.isUsable() || !campuses.isUsable()) ? ((planning.isLoading || campuses.isLoading) && <Loader/>) : (
 				<div>

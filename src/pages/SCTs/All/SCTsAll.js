@@ -28,6 +28,7 @@ function SCTsAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="SCTs SCTsAll">
+			<h2 className="page_title">Liste des SCTs</h2>
 			<Inputs.Select
 				name="sctsSelect"
 				value={sortBy}

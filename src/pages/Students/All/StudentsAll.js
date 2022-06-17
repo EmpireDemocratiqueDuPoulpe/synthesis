@@ -30,7 +30,7 @@ function StudentsAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Students StudentsAll">
-			<h2>Liste des étudiants</h2>
+			<h2 className="page_title">Liste des étudiants</h2>
 			<Inputs.Select
 				name="studentsSelect"
 				value={sortBy}

@@ -19,6 +19,7 @@ function JobOffersAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="JobOffers JobOffersAll">
+			<h2 className="page_title">Offres d&apos;emploi</h2>
 			{hasPermission(permissions.EDIT_INTERNSHIP_OFFERS) && (
 				<Button link={{ to: "/jobs/offers/add" }} icon={<FontAwesomeIcon icon={solid("plus")}/>}>Ajouter</Button>
 			)}

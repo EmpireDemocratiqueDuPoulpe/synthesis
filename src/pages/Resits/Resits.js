@@ -27,6 +27,7 @@ function Resits() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Resits">
+			<h2 className="page_title">Resits</h2>
 			<Inputs.Select
 				name="resitsSelect"
 				value={sortBy}

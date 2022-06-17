@@ -22,41 +22,45 @@ function ComptaAll() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Compta ComptaAll">
-			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
-				<>
-					<div className="student_list">
-						{students.data.map(student => (
-							<div className="student_list_item" key={`student-compta-list-student-${student.user_id}`} onClick={() => selectStudent(student)} onKeyDown={e => clickOnEnter(e, selectStudent, student)} role="button" tabIndex={0}>
-								<p className="student_name">{student.first_name} {student.last_name}</p>
-								<p className="student_email">E-Mail: {student.email}</p>
-								{student.campus && <p className="student_campus">Campus: {student.campus.name}</p>}
-								<p className="student_region">Pays: {student.region}</p>
-							</div>
-						))}
-					</div>
-					
-					<div className="student_compta_infos">
-						{selectedStudent && (() => {
-							const student = students.data.filter(s => s.user_id === selectedStudent)[0];
-							const remaining = student.compta.payment_due - student.compta.paid;
-							const remainingClass = remaining > 0 ? "remaining_red" : "remaining_green";
-
-							return (
-								<>
+			<h2 className="page_title">Comptabilité</h2>
+			<div className="student_list_root">
+				{!students.isUsable() ? (students.isLoading && <Loader/>) : (
+					<>
+						<div className="student_list">
+							{students.data.map(student => (
+								<div className="student_list_item" key={`student-compta-list-student-${student.user_id}`} onClick={() => selectStudent(student)} onKeyDown={e => clickOnEnter(e, selectStudent, student)} role="button" tabIndex={0}>
 									<p className="student_name">{student.first_name} {student.last_name}</p>
-									<p>Type de paiement: {student.compta.payment_type}</p>
-									<p>Somme dûe: {student.compta.payment_due} &euro;</p>
-									<p>Somme pay&eacute;e: {student.compta.paid} &euro;</p>
-									<p>Total restant: <span className={remainingClass}>{(remaining > 0) && "+"}{remaining} &euro;</span></p>
-									<br/>
+									<p className="student_email">E-Mail: {student.email}</p>
 									{student.campus && <p className="student_campus">Campus: {student.campus.name}</p>}
 									<p className="student_region">Pays: {student.region}</p>
-								</>
-							);
-						})()}
-					</div>
-				</>
-			)}
+								</div>
+							))}
+						</div>
+
+						<div className="student_compta_infos">
+							{selectedStudent && (() => {
+								const student = students.data.filter(s => s.user_id === selectedStudent)[0];
+								const remaining = student.compta.payment_due - student.compta.paid;
+								const remainingClass = remaining > 0 ? "remaining_red" : "remaining_green";
+
+								return (
+									<>
+										<p className="student_name">{student.first_name} {student.last_name}</p>
+										<p>Type de paiement: {student.compta.payment_type}</p>
+										<p>Somme dûe: {student.compta.payment_due} &euro;</p>
+										<p>Somme pay&eacute;e: {student.compta.paid} &euro;</p>
+										<p>Total restant: <span className={remainingClass}>{(remaining > 0) && "+"}{remaining} &euro;</span></p>
+										<br/>
+										{student.campus && <p className="student_campus">Campus: {student.campus.name}</p>}
+										<p className="student_region">Pays: {student.region}</p>
+									</>
+								);
+							})()}
+						</div>
+					</>
+				)}
+			</div>
+
 		</div>
 	);
 }

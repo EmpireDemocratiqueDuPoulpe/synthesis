@@ -67,7 +67,7 @@ function Modules() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Modules">
-			<h2>Liste des cours</h2>
+			<h2 className="page_title">Liste des cours</h2>
 
 			{!modules.isUsable() ? (modules.isLoading && <Loader/>) : (
 				<div>

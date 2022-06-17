@@ -23,7 +23,7 @@ function Notes() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Notes">
-			<h2>Notes de {user.first_name} {user.last_name}</h2>
+			<h2 className="page_title">Notes de {user.first_name} {user.last_name}</h2>
 			<h3>Campus de {user.campus.name}</h3>
 			
 			{(!notes.isUsable()) ? (notes.isLoading && <Loader/>) : (

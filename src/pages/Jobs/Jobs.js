@@ -20,6 +20,7 @@ function Jobs() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Jobs">
+			<h2 className="page_title">Stages/alternances</h2>
 			<Inputs.Select
 				name="jobsSelect"
 				value={sortBy}

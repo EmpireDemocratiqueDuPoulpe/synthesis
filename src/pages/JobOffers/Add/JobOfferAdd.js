@@ -48,7 +48,7 @@ function JobOfferAdd() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="JobOffers JobOfferAdd">
-			<h2>Ajouter une offre d&apos;emploi</h2>
+			<h2 className="page_title">Ajouter une offre d&apos;emploi</h2>
 			{!jobDomains.isUsable() ? (jobDomains.isLoading && <Loader/>) : (
 				<FormProvider {...form}>
 					<form onSubmit={form.handleSubmit(handleSubmit)} encType="multipart/form-data">

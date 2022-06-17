@@ -1,5 +1,11 @@
 .ComptaAll {
     display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.ComptaAll .student_list_root {
+    display: flex;
     flex-direction: row;
     height: 100%;
 }

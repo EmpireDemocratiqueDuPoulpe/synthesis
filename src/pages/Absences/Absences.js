@@ -49,7 +49,7 @@ function Absences() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Planning">
-			<h2>Planning</h2>
+			<h2 className="page_title">Absences</h2>
 
 			{(!absences.isUsable() || !campuses.isUsable() || !students.isUsable()) ? ((absences.isLoading || campuses.isLoading || students.isLoading) && <Loader/>) : (
 				<div>
