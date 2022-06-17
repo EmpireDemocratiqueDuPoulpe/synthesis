@@ -33,25 +33,27 @@ function StudentsAll() {
 	return (
 		<div className="Students StudentsAll">
 			<h2 className="page_title">Liste des étudiants</h2>
-			<Inputs.Select
-				name="studentsSelect"
-				value={sortBy}
-				onChange={handleSortChange}
-				options={[
-					{value:"first_name", label:"Prénom"},
-					{value:"last_name", label:"Nom"},
-					{value:"email", label:"Adresse email"},
-					{value:"birthdate", label:"Date de naissance", disabled: true},
-					(hasPermission(permissions.READ_CAMPUS) ? ({value:"campus.name", label:"Campus"}) : null),
-					{value:"region", label:"Région"},
-					(hasPermission(permissions.READ_MODULES) ? ({value: "modules", label: "Modules"}) : null)
-				].filter(Boolean)}
-				disabled={sortBy !== "modules" ? (!students.isUsable()) : (!students.isUsable() || !modules.isUsable())}
-			>
-				Trier par
-			</Inputs.Select>
-			
-			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
+			<div className="filters-root">
+				<Inputs.Select
+					name="studentsSelect"
+					value={sortBy}
+					onChange={handleSortChange}
+					options={[
+						{value:"first_name", label:"Prénom"},
+						{value:"last_name", label:"Nom"},
+						{value:"email", label:"Adresse email"},
+						{value:"birthdate", label:"Date de naissance", disabled: true},
+						(hasPermission(permissions.READ_CAMPUS) ? ({value:"campus.name", label:"Campus"}) : null),
+						{value:"region", label:"Région"},
+						(hasPermission(permissions.READ_MODULES) ? ({value: "modules", label: "Modules"}) : null)
+					].filter(Boolean)}
+					disabled={sortBy !== "modules" ? (!students.isUsable()) : (!students.isUsable() || !modules.isUsable())}
+				>
+					Trier par
+				</Inputs.Select>
+
+				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
+			</div>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<>

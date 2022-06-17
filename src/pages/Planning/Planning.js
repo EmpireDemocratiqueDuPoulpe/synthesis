@@ -7,6 +7,7 @@ import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
 import "kalend/dist/styles/index.css";
 import "./Planning.css";
+//import Inputs from "../../components/Inputs/Inputs.js";
 
 function Planning() {
 	/* ---- States ---------------------------------- */
@@ -48,6 +49,15 @@ function Planning() {
 			{(!planning.isUsable() || !campuses.isUsable()) ? ((planning.isLoading || campuses.isLoading) && <Loader/>) : (
 				<div>
 					<span>Année(s)</span>
+					{/*<Inputs.Select
+						name="planningSelect"
+						value={selectedYears}
+						onChange={setSelectedYears}
+						options={yearsOptions}
+						multiple
+					>
+						Année(s)
+					</Inputs.Select>*/}
 					<Select
 						options={yearsOptions}
 						defaultValue={selectedYears}

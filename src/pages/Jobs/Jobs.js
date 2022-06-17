@@ -3,8 +3,10 @@ import { Link } from "react-router-dom";
 import useStudents from "../../hooks/students/useStudents.js";
 import Loader from "../../components/Loader/Loader.js";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
-import { sortObjectArr, isoStrToDate } from "../../global/Functions.js";
+import {sortObjectArr, isoStrToDate, filterObj} from "../../global/Functions.js";
 import Inputs from "../../components/Inputs/Inputs.js";
+
+const searchableColumns = ["first_name", "last_name", "birth_date", "study.current_level", "email", "jobs[0].company_name", "jobs[0].start_date", "jobs[0].end_date", "jobs[0].type", "region"];
 
 function Jobs() {
 	/* ---- States ---------------------------------- */
@@ -21,27 +23,29 @@ function Jobs() {
 	return (
 		<div className="Jobs">
 			<h2 className="page_title">Stages/alternances</h2>
-			<Inputs.Select
-				name="jobsSelect"
-				value={sortBy}
-				onChange={handleSortChange}
-				options={[
-					{value:"first_name", label:"Prénom"},
-					{value:"last_name", label:"Nom"},
-					{value:"email", label:"Adresse email"},
-					{value:"study.current_level", label:"Niveau actuel"},
-					{value:"region", label:"Région"},
-					{value:"jobs[0].type", label:"Stage/Alternance"},
-					{value:"jobs[0].company_name", label:"Entreprise"},
-					{value:"jobs[0].start_date", label:"Date de début"},
-					{value:"jobs[0].end_date", label:"Date de fin"}
-				].filter(Boolean)}
-				disabled={!students.isUsable()}
-			>
-				Trier par
-			</Inputs.Select>
-			
-			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
+			<div className="filters-root">
+				<Inputs.Select
+					name="jobsSelect"
+					value={sortBy}
+					onChange={handleSortChange}
+					options={[
+						{value:"first_name", label:"Prénom"},
+						{value:"last_name", label:"Nom"},
+						{value:"email", label:"Adresse email"},
+						{value:"study.current_level", label:"Niveau actuel"},
+						{value:"region", label:"Région"},
+						{value:"jobs[0].type", label:"Stage/Alternance"},
+						{value:"jobs[0].company_name", label:"Entreprise"},
+						{value:"jobs[0].start_date", label:"Date de début"},
+						{value:"jobs[0].end_date", label:"Date de fin"}
+					].filter(Boolean)}
+					disabled={!students.isUsable()}
+				>
+					Trier par
+				</Inputs.Select>
+
+				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
+			</div>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<div>
@@ -63,7 +67,7 @@ function Jobs() {
 							</thead>
 
 							<tbody>
-								{students.data.sort((a, b) => sortObjectArr(sortBy, a, b)).map(student => (
+								{students.data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search)).map(student => (
 									<tr key={`hired-students-list-student-${student.user_id}`}>
 										<td className="hired-student-first-name">{student.first_name}</td>
 										<td className="hired-student-last-name">{student.last_name}</td>
