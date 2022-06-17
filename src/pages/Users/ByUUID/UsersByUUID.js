@@ -10,6 +10,7 @@ import { DeckGL } from "@deck.gl/react";
 import { MapView, COORDINATE_SYSTEM } from "@deck.gl/core";
 import { TileLayer } from "@deck.gl/geo-layers";
 import { BitmapLayer, IconLayer } from "@deck.gl/layers";
+import { Scrollbars } from "react-custom-scrollbars-2";
 import { calcECTS, sortDate, isoStrToDate, toNumeralAdjective, capitalize } from "../../../global/Functions.js";
 import teamsIcon from "../../../assets/images/teams_icon/Teams-16x16.png";
 import mapPin from "../../../assets/images/map_pin/map_pin_atlas.png";
@@ -204,22 +205,24 @@ function UsersByUUID() {
 									<h3>Modules</h3>
 									
 									<ul className="module-list">
-										{user.data.modules.map(module => (
-											<li key={`user-profile-module-${module.module_id}`} className="user-module">
-												{module.year}{module.name}{(module.notes && module.notes.length > 0) && (() => {
-													const result = calcECTS(module);
-													
-													return (
-														<span className={`user-module-status ${result.hasPassed ? "passed" : "not-passed"}`}>
-															{result.hasPassed
-																? <FontAwesomeIcon icon={solid("circle-check")} size="1x"/>
-																: <FontAwesomeIcon icon={regular("circle-xmark")} size="1x"/>
-															}
-														</span>
-													);
-												})()}
-											</li>
-										))}
+										<Scrollbars className="module-list-scrollbars" style={{ height: (40 * 5) /* 5 * (Height of a module) */ }}>
+											{user.data.modules.map(module => (
+												<li key={`user-profile-module-${module.module_id}`} className="user-module">
+													{module.year}{module.name}{(module.notes && module.notes.length > 0) && (() => {
+														const result = calcECTS(module);
+														
+														return (
+															<span className={`user-module-status ${result.hasPassed ? "passed" : "not-passed"}`}>
+																{result.hasPassed
+																	? <FontAwesomeIcon icon={solid("circle-check")} size="1x"/>
+																	: <FontAwesomeIcon icon={regular("circle-xmark")} size="1x"/>
+																}
+															</span>
+														);
+													})()}
+												</li>
+											))}
+										</Scrollbars>
 									</ul>
 								</div>
 							)}

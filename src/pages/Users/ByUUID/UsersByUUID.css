@@ -110,14 +110,12 @@
 	flex-direction: column;
 	justify-content: stretch;
 	align-items: stretch;
-	max-height: calc(40px * 6); /* 6 * (Height of a module) */
 }
 
 .UsersByUUID .profile .profile-box.study-box .module-box .module-list {
 	margin: 0;
 	padding: 0;
 	list-style: none;
-	overflow-y: auto;
 }
 
 .UsersByUUID .profile .profile-box.study-box .module-box .user-module {
@@ -126,7 +124,7 @@
 	flex-direction: row;
 	justify-content: space-between;
 	align-items: center;
-	width: calc(100% - 10px);
+	width: calc(100% - 15px);
 	height: 40px;
 	line-height: 40px;
 	padding: 0 15px;
