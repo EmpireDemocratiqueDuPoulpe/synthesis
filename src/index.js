@@ -25,7 +25,7 @@ ReactDOM.render(
 								<App/>
 							</React.StrictMode>
 							
-							<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: {opacity: 0.5} }}/>
+							<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: {opacity: 0.5, marginBottom: "50px"} }}/>
 						</QueryClientProvider>
 					</PageDisplayProvider>
 				</AuthProvider>
