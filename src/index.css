@@ -39,6 +39,7 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 }
 
 /* -- Special classes */
+/* - Link */
 .primary-link {
   color: var(--primary-color-light);
 }
@@ -74,7 +75,7 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   }
 }
 
-/* -- Table */
+/* - Table */
 .TableMainWrapper {
   border-width: thin;
   border-style: solid;
