@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Loader from "../../../components/Loader/Loader.js";
 import Button from "../../../components/Button/Button.js";
-import DeckGL from "@deck.gl/react";
+import { DeckGL } from "@deck.gl/react";
 import { MapView, COORDINATE_SYSTEM } from "@deck.gl/core";
 import { TileLayer } from "@deck.gl/geo-layers";
 import { BitmapLayer, IconLayer } from "@deck.gl/layers";
-import { calcECTS, sortDate, isoStrToDate } from "../../../global/Functions.js";
+import { calcECTS, sortDate, isoStrToDate, capitalize } from "../../../global/Functions.js";
 import teamsIcon from "../../../assets/images/teams_icon/Teams-16x16.png";
 import mapPin from "../../../assets/images/map_pin/map_pin_atlas.png";
 import pinMapping from "../../../assets/images/map_pin/map_pin_mapping.json";
@@ -51,6 +51,7 @@ function UsersByUUID() {
 			hook.setIf(!!user.data.jobs, "has-jobs");
 			hook.setIf(!!user.data.compta, "has-compta");
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [user.isUsable(), user.data]);
 
 	const [initialView, setInitialView] = useState(INITIAL_VIEW);
@@ -74,7 +75,7 @@ function UsersByUUID() {
 		minZoom: 0,
 
 		maxZoom: 19,
-		tileSize: 192,
+		tileSize: 160,
 		zoomOffset: devicePixelRatio === 1 ? -1 : 0,
 
 		renderSubLayers: properties => {
@@ -94,13 +95,14 @@ function UsersByUUID() {
 					getIcon: () => "marker",
 					getPosition: i => i.coordinates,
 					getSize: () => 3,
-					getColor: () => [255, 0, 0],
+					getColor: () => [241, 49, 43],
 					sizeScale: 10,
 				})
 			];
 		},
 	});
-
+	
+	/* ---- Functions ------------------------------- */
 	const updateView = useCallback(() => {
 		if (user.isUsable() && user.data.campus && user.data.campus.geo_position) {
 			const lat = user.data.campus.geo_position.coordinates[0];
@@ -111,7 +113,9 @@ function UsersByUUID() {
 			}
 		}
 	}, [initialView, user]);
-
+	
+	/* ---- Effects --------------------------------- */
+	// eslint-disable-next-line react-hooks/exhaustive-deps
 	useEffect(() => updateView(), [user.data?.campus?.campus_id]);
 
 	/* ---- Page content ---------------------------- */
@@ -138,16 +142,15 @@ function UsersByUUID() {
 					</div>
 
 					<div className="profile-box base-infos-box">
-						<h2>{user.data.first_name} {user.data.last_name}</h2>
-						<p>{user.data.position.name}</p>
-						<p>{user.data.email}</p>
+						<h2>{user.data.first_name} {user.data.last_name} <span className="user-position normal-font">{user.data.position.name}</span></h2>
+						<a className="secondary-link" href={`mailto:${user.data.email}`}>{user.data.email}</a>
 
 						<div>
 							<h3>Informations</h3>
-							<p>{user.data.birth_date}</p>
-							<p>{user.data.street_address}</p>
-							<p>{user.data.gender}</p>
-							<p>{user.data.region}</p>
+							{user.data.birth_date && <p><span className="info-label">Date de naissance :</span> {isoStrToDate(user.data.birth_date).toLocaleDateString()}</p>}
+							{user.data.address_street && <p><span className="info-label">Adresse :</span> {user.data.address_street}{user.data.address_city && `, ${user.data.address_city}`}{user.data.address_postal_code && ` (${user.data.address_postal_code})`}</p>}
+							{user.data.gender && <p><span className="info-label">Sexe :</span> {capitalize(user.data.gender)}</p>}
+							{user.data.region && <p><span className="info-label">R&eacute;gion :</span> {user.data.region}</p>}
 						</div>
 					</div>
 
@@ -158,7 +161,7 @@ function UsersByUUID() {
 									const isVirtual = user.data.campus.name === "Distanciel";
 									return <h3>Campus {!isVirtual && "de "}{isVirtual ? user.data.campus.name.toLowerCase() : user.data.campus.name}</h3>;
 								})()}
-								<p>{user.data.campus.address_street}{user.data.campus.address_city && `, ${user.data.campus.address_city}`}{user.data.campus.address_postal_code && `(${user.data.campus.address_postal_code})`}</p>
+								<p>{user.data.campus.address_street}{user.data.campus.address_city && `, ${user.data.campus.address_city}`}{user.data.campus.address_postal_code && ` (${user.data.campus.address_postal_code})`}</p>
 							</div>
 
 							<div className={`map-box${user.data.campus.geo_position ? "" : " no-map"}`}>

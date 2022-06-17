@@ -18,6 +18,8 @@
 .UsersByUUID .profile .profile-box h2,
 .UsersByUUID .profile .profile-box h3 { margin-top: 0; }
 
+.UsersByUUID .profile .profile-box .info-label { font-weight: bold; }
+
 /* - Row 1 */
 .UsersByUUID .profile .profile-box.buttons-box { grid-row: 1; grid-column: 1 / -1; }
 
@@ -35,6 +37,20 @@
 
 /* - Row 4 */
 .UsersByUUID .profile .profile-box.compta-box { grid-row: 4; grid-column: 2 / span 1; }
+
+/* -- Base infos box */
+.UsersByUUID .profile .profile-box.base-infos-box h2 { margin-bottom: 0; }
+
+.UsersByUUID .profile .profile-box.base-infos-box .user-position {
+	font-size: 0.7em;
+	font-weight: normal;
+	color: var(--primary-color-light);
+}
+
+.UsersByUUID .profile .profile-box.base-infos-box h2 + a {
+	display: inline-block;
+	margin: 1em 0 1.5em 0;
+}
 
 /* -- Campus box */
 .UsersByUUID .profile .profile-box.campus-box {
