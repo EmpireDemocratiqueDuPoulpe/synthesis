@@ -1,19 +1,18 @@
-.UserPolicies .p-style {
-    margin-left: 30px;
+/* ---- UserPolicies ---------------------------- */
+/* -- Page */
+.UserPolicies { text-align: justify; }
+
+/* -- Content */
+.UserPolicies .policies-box {
+    background: #FFFFFF;
+    padding: 35px;
 }
 
-.UserPolicies {
-    text-align: justify;
-}
+.UserPolicies h2:first-child { margin-top: 0; }
+.UserPolicies h2:not(:first-child) { margin-top: 75px; }
+.UserPolicies h3 { margin-top: 50px; }
 
-.UserPolicies h3 {
-    margin-top: 50px;
-}
+.UserPolicies .p-style { margin-left: 30px; }
+.UserPolicies .bold { text-decoration: underline; }
 
-.UserPolicies h2:not(:first-child) {
-    margin-top: 75px;
-}
-
-.UserPolicies .bold {
-    text-decoration: underline;
-}
+.UserPolicies .policies-box > *:last-child > p:last-of-type { margin-bottom: 0; }
