@@ -5,6 +5,7 @@ import Loader from "../../components/Loader/Loader.js";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
 import Inputs from "../../components/Inputs/Inputs.js";
 import Table from "../../components/Table/Table.js";
+import TableFilters from "../../components/Table/TableFilters/TableFilters.js";
 import { sortObjectArr, isoStrToDate, filterObj } from "../../global/Functions.js";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "study.current_level", "email", "jobs[0].company_name", "jobs[0].start_date", "jobs[0].end_date", "jobs[0].type", "region"];
@@ -28,7 +29,7 @@ function Jobs() {
 	return (
 		<div className="Jobs">
 			<h2 className="page_title">Stages/alternances</h2>
-			<div className="filters-root">
+			<TableFilters>
 				<Inputs.Select
 					name="jobsSelect"
 					value={sortBy}
@@ -48,9 +49,9 @@ function Jobs() {
 				>
 					Trier par
 				</Inputs.Select>
-
+				
 				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
-			</div>
+			</TableFilters>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<div>

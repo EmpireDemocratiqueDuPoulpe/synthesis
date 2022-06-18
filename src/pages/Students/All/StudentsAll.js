@@ -7,6 +7,7 @@ import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
 import Table from "../../../components/Table/Table.js";
+import TableFilters from "../../../components/Table/TableFilters/TableFilters.js";
 import { hasPassed, sortStudentsByPassed, sortObjectArr, filterObj } from "../../../global/Functions.js";
 import "./StudentAll.css";
 
@@ -38,7 +39,7 @@ function StudentsAll() {
 	return (
 		<div className="Students StudentsAll">
 			<h2 className="page_title">Liste des étudiants</h2>
-			<div className="filters-root">
+			<TableFilters>
 				<Inputs.Select
 					name="studentsSelect"
 					value={sortBy}
@@ -56,9 +57,9 @@ function StudentsAll() {
 				>
 					Trier par
 				</Inputs.Select>
-
+				
 				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
-			</div>
+			</TableFilters>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<>

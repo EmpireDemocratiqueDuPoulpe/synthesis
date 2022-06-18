@@ -6,6 +6,7 @@ import useCampuses from "../../hooks/campuses/useCampuses.js";
 import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
 import Inputs from "../../components/Inputs/Inputs.js";
+import TableFilters from "../../components/Table/TableFilters/TableFilters.js";
 import "kalend/dist/styles/index.css";
 import "./Planning.css";
 
@@ -49,38 +50,24 @@ function Planning() {
 
 			{(!planning.isUsable() || !campuses.isUsable()) ? ((planning.isLoading || campuses.isLoading) && <Loader/>) : (
 				<div>
-					<div>
+					<TableFilters>
 						<FormProvider {...form}>
 							<form className="filters-root">
-								<Inputs.Select
-									name="yearsSelect"
-									defaultValue={selectedYears}
-									options={yearsOptions}
-									multiple
-								>
-									Année(s)
+								<Inputs.Select name="yearsSelect" defaultValue={selectedYears} options={yearsOptions} multiple>
+									Promo
 								</Inputs.Select>
-
-								<Inputs.Select
-									name="campusesSelect"
-									defaultValue={selectedCampuses}
-									options={campusesOptions}
-									multiple
-								>
+								
+								<Inputs.Select name="campusesSelect" defaultValue={selectedCampuses} options={campusesOptions} multiple>
 									Campus
 								</Inputs.Select>
-
-								<Inputs.Select
-									name="eventsSelect"
-									defaultValue={selectedEventTypes}
-									options={eventTypesOptions}
-									multiple
-								>
-									Type(s) d&apos;évènement(s)
+								
+								<Inputs.Select name="eventsSelect" defaultValue={selectedEventTypes} options={eventTypesOptions} multiple>
+									Type d&apos;évènement
 								</Inputs.Select>
 							</form>
 						</FormProvider>
-					</div>
+					</TableFilters>
+					
 					<Kalend
 						events={planning.data.map((event)=> ({
 							id: event.planning_id,

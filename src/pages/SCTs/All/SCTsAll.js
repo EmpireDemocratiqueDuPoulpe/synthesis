@@ -7,6 +7,7 @@ import Loader from "../../../components/Loader/Loader.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import Table from "../../../components/Table/Table.js";
+import TableFilters from "../../../components/Table/TableFilters/TableFilters.js";
 import { filterObj, sortObjectArr } from "../../../global/Functions.js";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "email", "campus.name", "region"];
@@ -36,7 +37,7 @@ function SCTsAll() {
 	return (
 		<div className="SCTs SCTsAll">
 			<h2 className="page_title">Liste des SCTs</h2>
-			<div className="filters-root">
+			<TableFilters>
 				<Inputs.Select
 					name="sctsSelect"
 					value={sortBy}
@@ -55,9 +56,9 @@ function SCTsAll() {
 				>
 					Trier par
 				</Inputs.Select>
-
+				
 				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
-			</div>
+			</TableFilters>
 			
 			{!scts.isUsable() ? (scts.isLoading && <Loader/>) : (
 				<>

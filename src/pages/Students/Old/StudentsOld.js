@@ -6,6 +6,7 @@ import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
 import Table from "../../../components/Table/Table.js";
+import TableFilters from "../../../components/Table/TableFilters/TableFilters.js";
 import { sortObjectArr, filterObj } from "../../../global/Functions.js";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "study.exit_level", "study.exit_date", "email", "campus.name", "region"];
@@ -34,7 +35,7 @@ function StudentsOld() {
 		<div className="Students StudentsOld">
 			<h2 className="page_title">Liste des anciens étudiants</h2>
 
-			<div className="filters-root">
+			<TableFilters>
 				<Inputs.Select
 					name="studentsSelect"
 					value={sortBy}
@@ -47,15 +48,15 @@ function StudentsOld() {
 						{value:"study.current_level", label:"Niveau actuel"},
 						(hasPermission(permissions.READ_CAMPUS) ? ({value: "campus.name", label: "Campus"}) : null),
 						{value:"region", label:"Région"}
-
+						
 					].filter(Boolean)}
 					disabled={!students.isUsable()}
 				>
 					Trier par
 				</Inputs.Select>
-
+				
 				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
-			</div>
+			</TableFilters>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
 				<Table data={sortAndFilter(students.data)} keyProp="user_id" header={

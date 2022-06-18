@@ -7,6 +7,7 @@ import SearchBar from "../../components/SearchBar/SearchBar.js";
 import Loader from "../../components/Loader/Loader.js";
 import Inputs from "../../components/Inputs/Inputs.js";
 import Table from "../../components/Table/Table.js";
+import TableFilters from "../../components/Table/TableFilters/TableFilters.js";
 import { hasPassed, sortStudentsByPassed, sortObjectArr, filterObj } from "../../global/Functions.js";
 import "./Resits.css";
 
@@ -35,7 +36,7 @@ function Resits() {
 	return (
 		<div className="Resits">
 			<h2 className="page_title">Resits</h2>
-			<div className="filters-root">
+			<TableFilters>
 				<Inputs.Select
 					name="resitsSelect"
 					value={sortBy}
@@ -54,9 +55,9 @@ function Resits() {
 				>
 					Trier par
 				</Inputs.Select>
-
+				
 				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
-			</div>
+			</TableFilters>
 			
 			{!resitStudents.isUsable() ? (resitStudents.isLoading && <Loader/>) : (
 				<>

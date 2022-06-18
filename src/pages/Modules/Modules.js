@@ -1,51 +1,32 @@
 import { useState } from "react";
-import Select from "react-select";
+import { useForm, FormProvider } from "react-hook-form";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useModules from "../../hooks/modules/useModules.js";
 import Loader from "../../components/Loader/Loader.js";
 import Module from "../../components/Modules/Module.js";
+import TableFilters from "../../components/Table/TableFilters/TableFilters.js";
+import Inputs from "../../components/Inputs/Inputs.js";
 import "kalend/dist/styles/index.css";
 import "./Modules.css";
+
+const yearsOptions = [
+	{ value: 1, label: "A.Sc.1" },
+	{ value: 2, label: "A.Sc.2" },
+	{ value: 3, label: "B.Sc" },
+	{ value: 4, label: "M.Eng.1" },
+	{ value: 5, label: "M.Eng.2" }
+];
 
 function Modules() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-	const [yearsOptions] = useState([
-		{ value: 1, label: "A.Sc.1" },
-		{ value: 2, label: "A.Sc.2" },
-		{ value: 3, label: "B.Sc" },
-		{ value: 4, label: "M.Eng.1" },
-		{ value: 5, label: "M.Eng.2" }
-	]);
-	const [selectedYears, setSelectedYears] = useState(
-		user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions
-	);
-	const modules = useModules({ years: selectedYears.map(y => y.value) });
-	//////////////////////////////////////////
-	/*const elements = document.querySelectorAll(".module");
-
-	window.addEventListener("scroll", function() {
-		elements.forEach(function ( element){
-			var position = element.getBoundingClientRect();
-
-			if(position.top < window.innerHeight && position.bottom >= 0) {
-				if(element.classList.contains("hide_module")){
-					element.classList.remove("hide_module");
-				}
-				if(!element.classList.contains("show_module")){
-					element.classList.add("show_module");
-				}
-			}else{
-				if(!element.classList.contains("hide_module")){
-					element.classList.add("hide_module");
-				}
-				if(element.classList.contains("show_module")){
-					element.classList.remove("show_module");
-				}
-			}
-		});
-	});*/
-
+	const form = useForm();
+	const filters = form.watch();
+	
+	const [selectedYears] = useState(user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions);
+	const modules = useModules({ years: filters.years });
+	
+	/* ---- Functions ------------------------------- */
 	const generateModules = modules => {
 		const modulesByYear = [];
 		const promos = ["B.Eng.1", "B.Eng.2", "B.Eng.3", "M.Eng.1", "M.Eng.2"];
@@ -71,13 +52,16 @@ function Modules() {
 
 			{!modules.isUsable() ? (modules.isLoading && <Loader/>) : (
 				<div>
-					{!user.study ? null : (
-						<Select
-							options={yearsOptions}
-							defaultValue={selectedYears}
-							onChange={setSelectedYears}
-							isMulti/>
-					)}
+					<TableFilters>
+						<FormProvider {...form}>
+							<form>
+								<Inputs.Select name="years" options={yearsOptions} defaultValue={selectedYears} multiple>
+									Promo
+								</Inputs.Select>
+							</form>
+						</FormProvider>
+					</TableFilters>
+					
 					<div>
 						<div>
 							{generateModules(modules.data).map(year => (
