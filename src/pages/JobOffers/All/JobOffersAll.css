@@ -1,4 +1,6 @@
 /* ---- Job offers list ------------------------- */
+.JobOffersAll .button { display: inline; }
+
 /* -- Job offers list */
 .job-offers {
 	margin-top: 10px;

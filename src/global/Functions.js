@@ -45,6 +45,15 @@ export function clickOnEnter(e, callback, ...callbackArgs) {
 	else callback(e);
 }
 
+export function eventOnElement(callback, ...callbackArgs) {
+	return {
+		onClick: () => callback(...callbackArgs),
+		onKeyDown: e => clickOnEnter(e, callback, ...callbackArgs),
+		role: "button",
+		tabIndex: 0
+	};
+}
+
 /*****************************************************
  * Types
  *****************************************************/

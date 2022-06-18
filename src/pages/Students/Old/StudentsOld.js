@@ -4,8 +4,9 @@ import useAuth from "../../../context/Auth/AuthContext.js";
 import useStudents from "../../../hooks/students/useStudents.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
+import Inputs from "../../../components/Inputs/Inputs.js";
+import Table from "../../../components/Table/Table.js";
 import { sortObjectArr, filterObj } from "../../../global/Functions.js";
-import Inputs from "../../../components/Inputs/Inputs";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "study.exit_level", "study.exit_date", "email", "campus.name", "region"];
 
@@ -22,6 +23,10 @@ function StudentsOld() {
 	/* ---- Functions ------------------------------- */
 	const handleSortChange = event => {
 		setSortBy(event.target.value);
+	};
+	
+	const sortAndFilter = data => {
+		return data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search));
 	};
 	
 	/* ---- Page content ---------------------------- */
@@ -53,39 +58,31 @@ function StudentsOld() {
 			</div>
 			
 			{!students.isUsable() ? (students.isLoading && <Loader/>) : (
-				<div className="TableMainWrapper">
-					<table className="TableMain">
-						<thead>
-							<tr>
-								<th>Pr&eacute;nom</th>
-								<th>Nom</th>
-								<th>Adresse e-mail</th>
-								<th>Date de naissance</th>
-								<th>Niveau de sortie</th>
-								<th>Date de sortie</th>
-								{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
-								<th>R&eacute;gion</th>
-								<th>Actions</th>
-							</tr>
-						</thead>
-
-						<tbody>
-							{students.data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search)).map(student => (
-								<tr key={`students-old-list-student-${student.user_id}`}>
-									<td className="student-old-first-name">{student.first_name}</td>
-									<td className="student-old-last-name">{student.last_name}</td>
-									<td className="student-old-email">{student.email}</td>
-									<td className="student-old-birth-date">{student.birth_date}</td>
-									<td className="student-old-exit-level">{student.study.exit_level}</td>
-									<td className="student-old-exit-date">{student.study.exit_date}</td>
-									{hasPermission(permissions.READ_CAMPUS) && <td className="student-old-campus">{student.campus.name}</td>}
-									<td className="student-old-region">{student.region}</td>
-									<td className="student-old-action"><Link to={`/user/${student.uuid}`}>Vers le profil</Link></td>
-								</tr>
-							))}
-						</tbody>
-					</table>
-				</div>
+				<Table data={sortAndFilter(students.data)} keyProp="user_id" header={
+					<>
+						<th>Pr&eacute;nom</th>
+						<th>Nom</th>
+						<th>Adresse e-mail</th>
+						<th>Date de naissance</th>
+						<th>Niveau de sortie</th>
+						<th>Date de sortie</th>
+						{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
+						<th>R&eacute;gion</th>
+						<th>Actions</th>
+					</>
+				} body={row => (
+					<>
+						<td className="student-old-first-name">{row.first_name}</td>
+						<td className="student-old-last-name">{row.last_name}</td>
+						<td className="student-old-email">{row.email}</td>
+						<td className="student-old-birth-date">{row.birth_date}</td>
+						<td className="student-old-exit-level">{row.study.exit_level}</td>
+						<td className="student-old-exit-date">{row.study.exit_date}</td>
+						{hasPermission(permissions.READ_CAMPUS) && <td className="student-old-campus">{row.campus.name}</td>}
+						<td className="student-old-region">{row.region}</td>
+						<td className="student-old-action"><Link to={`/user/${row.uuid}`}>Vers le profil</Link></td>
+					</>
+				)}/>
 			)}
 		</div>
 	);

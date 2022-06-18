@@ -8,7 +8,6 @@
 	width: 100%;
 	max-width: 100vw;
 	min-height: 100vh;
-	overflow-x: hidden;
 }
 .App.light  { color: var(--primary-text-color); }
 .App.dark   { color: var(--dark-primary-text-color); }

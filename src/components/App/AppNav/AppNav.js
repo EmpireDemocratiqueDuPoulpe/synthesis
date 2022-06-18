@@ -19,13 +19,17 @@ function AppNav() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<nav className={classes}>
-			<button className="app-nav-btn" onClick={() => setOpen(!isOpen)}>
-				<FontAwesomeIcon icon={isOpen ? solid("xmark") : solid("bars")}/>
-			</button>
-			<NavBuilder routes={Routes}/>
-			<button className="app-nav-btn logout-btn" onClick={() => auth.setDisconnected()}>
-				<FontAwesomeIcon icon={solid("right-from-bracket")}/>
-			</button>
+			<div className="App-nav-fixed">
+				<button className="app-nav-btn" onClick={() => setOpen(!isOpen)}>
+					<FontAwesomeIcon icon={isOpen ? solid("xmark") : solid("bars")}/>
+				</button>
+				
+				<NavBuilder routes={Routes}/>
+				
+				<button className="app-nav-btn logout-btn" onClick={() => auth.setDisconnected()}>
+					<FontAwesomeIcon icon={solid("right-from-bracket")}/>
+				</button>
+			</div>
 		</nav>
 	);
 }
