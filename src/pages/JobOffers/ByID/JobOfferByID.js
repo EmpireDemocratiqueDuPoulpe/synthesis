@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
@@ -13,43 +13,39 @@ import Button from "../../../components/Button/Button.js";
 import { isoStrToDate, formatBytes } from "../../../global/Functions.js";
 import { API } from "../../../config/config.js";
 import "./JobOfferByID.css";
+import Inputs from "../../../components/Inputs/Inputs";
+import {FormProvider, useForm} from "react-hook-form";
 
 function JobOfferByID() {
 	/* ---- States ---------------------------------- */
 	const { jobOfferID } = useParams();
 	const { permissions, hasPermission } = useAuth();
 	const [isUpdating, setIsUpdating] = useState(false);
-	const [updatedOffer, setUpdatedOffer] = useState({});
-	const jobOffer = useJobOffers({ id: jobOfferID }, {
-		onSuccess: data => {
-			// eslint-disable-next-line no-unused-vars
-			const { attachements, ...offer } = data;
-			offer.domains = offer.jobDomains.map(jD => jD.job_domain_id);
-			delete offer.jobDomains;
-			
-			setUpdatedOffer(offer);
+	const form = useForm();
+	const jobOffer = useJobOffers({ id: jobOfferID }, {});
+	useEffect(() => {
+		if (jobOffer.isUsable()) {
+			form.reset({
+				job_offer_id: jobOffer.data.job_offer_id,
+				title: jobOffer.data.title,
+				type: jobOffer.data.type,
+				company_name: jobOffer.data.company_name,
+				address_city: jobOffer.data.city,
+				address_postal_code: jobOffer.data.postal_code,
+				expiration_date: isoStrToDate(jobOffer.data.expiration_date).toLocaleDateString("fr-FR").split("/").reverse().join("-"),
+				domains: jobOffer.data.jobDomains.map(jd => jd.job_domain_id),
+				content: jobOffer.data.content,
+			});
 		}
-	});
+	}, [form, jobOffer.data]);
+
 	const jobDomains = useJobDomains({}, { enabled: isUpdating });
 	const navigate = useNavigate();
 
 	/* ---- Functions ------------------------------- */
-	const handleChange = event => {
-		const value = event.target.type === "checkbox" ? event.target.checked : event.target.value;
-		setUpdatedOffer(prevState => ({ ...prevState, [event.target.name]: value }));
-	};
 	
-	const handleDomainsChange = event => {
-		setUpdatedOffer(prevState => ({
-			...prevState,
-			[event.target.name]: Array.from(event.target.selectedOptions, (opt => opt.value))
-		}));
-	};
-	
-	const handleUpdate = event => {
-		event.preventDefault();
-		
-		jobOffer.update.mutate(updatedOffer, {
+	const handleUpdate = data => {
+		jobOffer.update.mutate(data, {
 			onSuccess: () => setIsUpdating(false)
 		});
 	};
@@ -73,52 +69,39 @@ function JobOfferByID() {
 					)}
 					
 					{isUpdating ? (
-						<form onSubmit={handleUpdate}>
-							<label>
-								Titre*
-								<input type="text" name="title" value={updatedOffer.title ?? ""} onChange={handleChange} required/>
-							</label>
-							
-							<label>
-								Type*
-								<select name="type" value={updatedOffer.type ?? ""} onChange={handleChange} required>
-									<option value="stage">Stage</option>
-									<option value="alternance">Alternance</option>
-								</select>
-							</label>
-							
-							<label>
-								Entreprise*
-								<input type="text" name="company_name" value={updatedOffer.company_name ?? ""} onChange={handleChange} required/>
-							</label>
-							
-							<label>
-								Adresse
-								<input type="text" name="city" placeholder="Ville" value={updatedOffer.city ?? ""} onChange={handleChange}/>
-								<input type="text" name="postal_code" placeholder="Code postal" value={updatedOffer.postal_code ?? ""} onChange={handleChange}/>
-							</label>
-							
-							<label>
-								Date d&apos;expiration
-								<input type="date" name="expiration_date" value={updatedOffer.expiration_date ?? ""} onChange={handleChange}/>
-							</label>
-							
-							<label>
-								Domaines
-								<select name="domains" value={updatedOffer.domains ?? []} onChange={handleDomainsChange} multiple>
-									{jobDomains.data.map(jobDomain => (
-										<option key={`job-offer-domain-${jobDomain.job_domain_id}`} value={jobDomain.job_domain_id}>{jobDomain.name}</option>
-									))}
-								</select>
-							</label>
-							
-							<label>
-								Message
-								<textarea name="content" value={updatedOffer.content ?? ""} onChange={handleChange}/>
-							</label>
-							
-							<input type="submit" value="Mettre à jour"/>
-						</form>
+						<FormProvider {...form}>
+							<form onSubmit={form.handleSubmit(handleUpdate)}>
+								<Inputs.Text name="title" required>
+									Titre
+								</Inputs.Text>
+
+								<Inputs.Select name="type" options={[ {value: "stage", label: "Stage"}, {value: "alternance", label: "Alternance"} ]} required>
+									Type
+								</Inputs.Select>
+
+								<Inputs.Text name="company_name" required>
+									Entreprise
+								</Inputs.Text>
+
+								<Inputs.Address name="address">
+									Adresse
+								</Inputs.Address>
+
+								<Inputs.Date name="expiration_date">
+									Date d&apos;expiration
+								</Inputs.Date>
+
+								<Inputs.Select name="domains" options={jobDomains.data.map(jd => ({ value: jd.job_domain_id, label: jd.name }))} multiple>
+									Domaines
+								</Inputs.Select>
+
+								<Inputs.Textarea name="content" resize={false}>
+									Message
+								</Inputs.Textarea>
+
+								<input type="submit" className="button" value="Mettre à jour"/>
+							</form>
+						</FormProvider>
 					) : (
 						<>
 							<h3 className="job-offer-title">{jobOffer.data.title}</h3>
