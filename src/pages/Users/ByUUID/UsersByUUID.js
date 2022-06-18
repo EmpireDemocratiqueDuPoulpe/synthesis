@@ -48,8 +48,8 @@ function UsersByUUID() {
 		if (user.isUsable()) {
 			hook.setIf(!!user.data.campus, "has-campus");
 			hook.setIf(!!user.data.study, "has-study");
-			hook.setIf(!!user.data.modules, "has-modules");
-			hook.setIf(!!user.data.jobs, "has-jobs");
+			hook.setIf((user.data.modules && !!user.data.modules.length), "has-modules");
+			hook.setIf((user.data.jobs && !!user.data.jobs.length), "has-jobs");
 			hook.setIf(!!user.data.compta, "has-compta");
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -177,7 +177,7 @@ function UsersByUUID() {
 						</div>
 					)}
 
-					{(user.data.study || user.data.modules) && (
+					{(user.data.study || (user.data.modules && !!user.data.modules.length)) && (
 						<div className="profile-box study-box">
 							{user.data.study && (
 								<div className="study-infos">
@@ -200,7 +200,7 @@ function UsersByUUID() {
 								</div>
 							)}
 
-							{user.data.modules && (
+							{(user.data.modules && !!user.data.modules.length) && (
 								<div className="module-box">
 									<h3>Modules</h3>
 									
@@ -229,7 +229,7 @@ function UsersByUUID() {
 						</div>
 					)}
 
-					{user.data.jobs && (
+					{(user.data.jobs && !!user.data.jobs.length) && (
 						<div className="profile-box jobs-box">
 							<h3>Stages et alternances</h3>
 
