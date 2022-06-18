@@ -4,9 +4,10 @@ import useAuth from "../../../context/Auth/AuthContext.js";
 import useSCTs from "../../../hooks/scts/useSCTs.js";
 import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
-import SearchBar from "../../../components/SearchBar/SearchBar.js";
-import {filterObj, sortObjectArr} from "../../../global/Functions.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
+import SearchBar from "../../../components/SearchBar/SearchBar.js";
+import Table from "../../../components/Table/Table.js";
+import { filterObj, sortObjectArr } from "../../../global/Functions.js";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "email", "campus.name", "region"];
 
@@ -21,6 +22,10 @@ function SCTsAll() {
 		].filter(Boolean)
 	});
 	const modules = useModules({}, { enabled: sortBy === "modules" });
+	
+	const sortAndFilter = data => {
+		return data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search));
+	};
 	
 	/* ---- Functions ------------------------------- */
 	const handleSortChange = event => {
@@ -57,76 +62,60 @@ function SCTsAll() {
 			{!scts.isUsable() ? (scts.isLoading && <Loader/>) : (
 				<>
 					{sortBy !== "modules" ? (
-						<div className="TableMainWrapper">
-							<table className="TableMain">
-								<thead>
-									<tr>
-										<th>Pr&eacute;nom</th>
-										<th>Nom</th>
-										<th>Adresse e-mail</th>
-										<th>Date de naissance</th>
-										{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
-										<th>R&eacute;gion</th>
-										{hasPermission(permissions.READ_MODULES) && <th>Modules</th>}
-										<th>Actions</th>
-									</tr>
-								</thead>
-
-								<tbody>
-									{scts.data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search)).map(sct => (
-										<tr key={`scts-list-sct-${sct.user_id}`}>
-											<td className="sct-first-name">{sct.first_name}</td>
-											<td className="sct-last-name">{sct.last_name}</td>
-											<td className="sct-email">{sct.email}</td>
-											<td className="sct-birth-date">{sct.birth_date}</td>
-											{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{sct.campus?.name}</td>}
-											<td className="sct-region">{sct.region}</td>
-											{hasPermission(permissions.READ_MODULES) && (
-												<td className="sct-modules">
-													{sct.modules.map(module => `${module.year}${module.name}`).join(", ")}
-												</td>
-											)}
-											<td className="sct-action"><Link to={`/user/${sct.uuid}`}>Vers le profil</Link></td>
-										</tr>
-									))}
-								</tbody>
-							</table>
-						</div>
+						<Table data={sortAndFilter(scts.data)} keyProp={"user_id"} header={
+							<>
+								<th>Pr&eacute;nom</th>
+								<th>Nom</th>
+								<th>Adresse e-mail</th>
+								<th>Date de naissance</th>
+								{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
+								<th>R&eacute;gion</th>
+								{hasPermission(permissions.READ_MODULES) && <th>Modules</th>}
+								<th>Actions</th>
+							</>
+						} body={row => (
+							<>
+								<td className="sct-first-name">{row.first_name}</td>
+								<td className="sct-last-name">{row.last_name}</td>
+								<td className="sct-email">{row.email}</td>
+								<td className="sct-birth-date">{row.birth_date}</td>
+								{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{row.campus?.name}</td>}
+								<td className="sct-region">{row.region}</td>
+								{hasPermission(permissions.READ_MODULES) && (
+									<td className="sct-modules">
+										{row.modules.map(module => `${module.year}${module.name}`).join(", ")}
+									</td>
+								)}
+								<td className="sct-action"><Link to={`/user/${row.uuid}`}>Vers le profil</Link></td>
+							</>
+						)}/>
 					) : (!modules.isUsable() ? (modules.isLoading && <Loader/>) : (modules.data.map(module => {
 						const s = scts.data.filter(s => s.modules.some(m => m.module_id === module.module_id));
 						
 						return s.length === 0 ? null : (
 							<div key={`scts-list-module-${module.module_id}`}>
 								<h2>{module.year}{module.name}</h2>
-								<div className="TableMainWrapper">
-									<table className="TableMain">
-										<thead>
-											<tr>
-												<th>Pr&eacute;nom</th>
-												<th>Nom</th>
-												<th>Adresse e-mail</th>
-												<th>Date de naissance</th>
-												{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
-												<th>R&eacute;gion</th>
-												<th>Actions</th>
-											</tr>
-										</thead>
-
-										<tbody>
-											{s.map(sct => (
-												<tr key={`scts-list-sct-${sct.user_id}`}>
-													<td className="sct-first-name">{sct.first_name}</td>
-													<td className="sct-last-name">{sct.last_name}</td>
-													<td className="sct-email">{sct.email}</td>
-													<td className="sct-birth-date">{sct.birth_date}</td>
-													{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{sct.campus.name}</td>}
-													<td className="sct-region">{sct.region}</td>
-													<td className="sct-action"><Link to={`/user/${sct.uuid}`}>Vers le profil</Link></td>
-												</tr>
-											))}
-										</tbody>
-									</table>
-								</div>
+								<Table data={sortAndFilter(s)} keyProp={"user_id"} perPage={5} header={
+									<>
+										<th>Pr&eacute;nom</th>
+										<th>Nom</th>
+										<th>Adresse e-mail</th>
+										<th>Date de naissance</th>
+										{hasPermission(permissions.READ_CAMPUS) && <th>Campus</th>}
+										<th>R&eacute;gion</th>
+										<th>Actions</th>
+									</>
+								} body={row => (
+									<>
+										<td className="sct-first-name">{row.first_name}</td>
+										<td className="sct-last-name">{row.last_name}</td>
+										<td className="sct-email">{row.email}</td>
+										<td className="sct-birth-date">{row.birth_date}</td>
+										{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{row.campus.name}</td>}
+										<td className="sct-region">{row.region}</td>
+										<td className="sct-action"><Link to={`/user/${row.uuid}`}>Vers le profil</Link></td>
+									</>
+								)}/>
 							</div>
 						);
 					})))}
