@@ -11,7 +11,7 @@ import { MapView, COORDINATE_SYSTEM } from "@deck.gl/core";
 import { TileLayer } from "@deck.gl/geo-layers";
 import { BitmapLayer, IconLayer } from "@deck.gl/layers";
 import { Scrollbars } from "react-custom-scrollbars-2";
-import { calcECTS, sortDate, isoStrToDate, toNumeralAdjective, capitalize } from "../../../global/Functions.js";
+import { calcECTS, sortDate, isoStrToDate, toCurrency, toNumeralAdjective, capitalize } from "../../../global/Functions.js";
 import teamsIcon from "../../../assets/images/teams_icon/Teams-16x16.png";
 import mapPin from "../../../assets/images/map_pin/map_pin_atlas.png";
 import pinMapping from "../../../assets/images/map_pin/map_pin_mapping.json";
@@ -265,14 +265,14 @@ function UsersByUUID() {
 					{user.data.compta && (
 						<div className="profile-box compta-box">
 							<h3>Comptabilit&eacute;</h3>
-							<p>Type de paiement: {user.data.compta.payment_type}</p>
-							<p>Somme d&ucirc;e : {user.data.compta.payment_due} &euro;</p>
-							<p>Somme pay&eacute;e : {user.data.compta.paid} &euro;</p>
+							<p><span className="info-label">Type de paiement :</span> {user.data.compta.payment_type}</p>
+							<p><span className="info-label">Somme d&ucirc;e :</span> {toCurrency(user.data.compta.payment_due)}</p>
+							<p><span className="info-label">Somme pay&eacute;e :</span> {toCurrency(user.data.compta.paid)}</p>
 							{(() => {
 								const remaining = user.data.compta.payment_due - user.data.compta.paid;
 								const remainingColor = remaining > 0 ? "remaining_red" : "remaining_green";
 
-								return <p className={remainingColor}>Balance : {(remaining > 0) && "+"}{remaining} &euro;</p>;
+								return <p><span className="info-label">Balance :</span> <span className={remainingColor}>{toCurrency(remaining, { plusSign: true, inverted: true })}</span></p>;
 							})()}
 						</div>
 					)}
