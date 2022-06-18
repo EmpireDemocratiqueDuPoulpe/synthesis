@@ -233,13 +233,31 @@ function UsersByUUID() {
 						<div className="profile-box jobs-box">
 							<h3>Stages et alternances</h3>
 
-							<ul>
-								{user.data.jobs.sort(sortDate).map(job => (
-									<li key={`user-profile-job-${job.job_id}`}>
-										<span>{job.type}: {job.company_name}</span> <br/>
-										<span>Du {isoStrToDate(job.start_date).toLocaleDateString()}{job.end_date && (` au ${isoStrToDate(job.end_date).toLocaleDateString()}`)}</span>
-									</li>
-								))}
+							<ul className="jobs-list">
+								<Scrollbars className="jobs-list-scrollbars" autoHeight>
+									{user.data.jobs.sort(sortDate).reverse().map(job => (
+										<li key={`user-profile-job-${job.job_id}`} className="user-job">
+											{(() => {
+												const startDate = isoStrToDate(job.start_date);
+												const endDate = isoStrToDate(job.end_date);
+												let year = startDate.getFullYear();
+												const type = job.type === "contratpro" ? "Contrat pro." : (job.type === "apprentissage" ? "Contrat d'apprentissage" : job.type);
+												
+												if (endDate.getFullYear() !== year) {
+													year += ` - ${endDate.getFullYear()}`;
+												}
+												
+												return (
+													<>
+														<p className="user-job-type"><span className="bold">{year} &#8212; {type} :</span></p>
+														<p className="user-job-company">Entreprise : {job.company_name}</p>
+														<p className="user-job-dates">Du {startDate.toLocaleDateString()}{job.end_date && (` au ${endDate.toLocaleDateString()}`)}</p>
+													</>
+												);
+											})()}
+										</li>
+									))}
+								</Scrollbars>
 							</ul>
 						</div>
 					)}

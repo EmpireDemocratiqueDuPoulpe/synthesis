@@ -93,7 +93,7 @@
 	color: #000000;
 }
 
-/* -- Study box : Modules */
+/* -- Study box */
 .UsersByUUID .profile .profile-box.study-box {
 	display: flex;
 	flex-direction: row;
@@ -132,15 +132,33 @@
 	transition: background 100ms ease-in;
 	cursor: default;
 }
-.UsersByUUID .profile .profile-box.study-box .module-box .user-module:not(:last-child) {
-	border-bottom: thin var(--border-color) solid;
-}
-.UsersByUUID .profile .profile-box.study-box .module-box .user-module:hover {
-	background-color: rgba(0, 0, 0, 0.04);
-}
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module:not(:last-child) { border-bottom: thin var(--border-color) solid; }
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module:hover { background-color: rgba(0, 0, 0, 0.04); }
 
-.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status {
-	font-size: 1.25em;
-}
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status { font-size: 1.25em; }
 .UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status.passed { color: var(--success-color); }
 .UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status.not-passed { color: var(--error-color); }
+
+/* -- Jobs box */
+.UsersByUUID .profile .profile-box.jobs-box .jobs-list {
+	padding: 0;
+	list-style: none;
+}
+
+.UsersByUUID .profile .profile-box.jobs-box .user-job {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: stretch;
+	font-size: 1em;
+	width: 100%;
+	padding: 10px 15px;
+}
+
+.UsersByUUID .profile .profile-box.jobs-box .user-job:not(:last-child) { border-bottom: thin var(--border-color) solid; }
+.UsersByUUID .profile .profile-box.jobs-box .user-job:hover { background-color: rgba(0, 0, 0, 0.04); }
+
+.UsersByUUID .profile .profile-box.jobs-box .user-job-type 		{ margin: 0 0 0.5em 0; }
+.UsersByUUID .profile .profile-box.jobs-box .user-job-company	{ margin: 0.3em 0; }
+.UsersByUUID .profile .profile-box.jobs-box .user-job-dates 	{ margin: 0; }
