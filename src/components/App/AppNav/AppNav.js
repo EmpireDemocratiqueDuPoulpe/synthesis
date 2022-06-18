@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import useAuth, { states } from "../../../context/Auth/AuthContext.js";
 import useClassName from "../../../hooks/className/useClassName.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -31,6 +32,10 @@ function AppNav() {
 						<FontAwesomeIcon icon={solid("right-from-bracket")}/>
 					</button>
 				)}
+				
+				<span className="user-policies-link">
+					<Link to="/policies">Politique de confidentialité</Link>
+				</span>
 			</div>
 		</nav>
 	);

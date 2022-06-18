@@ -97,6 +97,22 @@
 	margin-bottom: 20px;
 }
 
+/* -- Policies link */
+.App-nav .user-policies-link {
+	position: absolute;
+	right: 0;
+	bottom: 25px;
+	left: 4vw;
+	text-align: center;
+	font-size: 0.6em;
+	white-space: nowrap;
+	opacity: 0.65;
+}
+
+.App-nav .user-policies-link a {
+	color: #FFFFFF;
+}
+
 @media (max-width: 1000px) {
 	.App-nav li {
 		margin-left: 1vw;
