@@ -1,5 +1,5 @@
 import { useState } from "react";
-import useAuth from "../../../context/Auth/AuthContext.js";
+import useAuth, { states } from "../../../context/Auth/AuthContext.js";
 import useClassName from "../../../hooks/className/useClassName.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
@@ -26,9 +26,11 @@ function AppNav() {
 				
 				<NavBuilder routes={Routes}/>
 				
-				<button className="app-nav-btn logout-btn" onClick={() => auth.setDisconnected()}>
-					<FontAwesomeIcon icon={solid("right-from-bracket")}/>
-				</button>
+				{auth.status === states.CONNECTED && (
+					<button className="app-nav-btn logout-btn" onClick={() => auth.setDisconnected()}>
+						<FontAwesomeIcon icon={solid("right-from-bracket")}/>
+					</button>
+				)}
 			</div>
 		</nav>
 	);
