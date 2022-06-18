@@ -133,6 +133,9 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 .App.light .TableMain a { color: var(--secondary-color); }
 .App.dark .TableMain a { color: #FFF409; }
 
+/* -- Styles */
+.bold { font-weight: bold; }
+
 /* -- Fonts */
 /* - Segoe UI */
 @font-face {
