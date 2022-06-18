@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import Inputs from "../Inputs/Inputs.js";
 
 function SearchBar({ placeholder, value, setValue, disabled }) {
 	/* ---- Functions ------------------------------- */
@@ -9,7 +10,7 @@ function SearchBar({ placeholder, value, setValue, disabled }) {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="search-bar">
-			<input type="text" placeholder={placeholder} value={value} onChange={handleChange} disabled={disabled}/>
+			<Inputs.Text placeholder={placeholder} value={value} onChange={handleChange} disabled={disabled} name="search-bar">Rechercher</Inputs.Text>
 		</div>
 	);
 }

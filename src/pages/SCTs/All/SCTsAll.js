@@ -5,8 +5,10 @@ import useSCTs from "../../../hooks/scts/useSCTs.js";
 import useModules from "../../../hooks/modules/useModules.js";
 import Loader from "../../../components/Loader/Loader.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
-import { sortObjectArr } from "../../../global/Functions.js";
+import {filterObj, sortObjectArr} from "../../../global/Functions.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
+
+const searchableColumns = ["first_name", "last_name", "birth_date", "email", "campus.name", "region"];
 
 function SCTsAll() {
 	/* ---- States ---------------------------------- */
@@ -29,26 +31,28 @@ function SCTsAll() {
 	return (
 		<div className="SCTs SCTsAll">
 			<h2 className="page_title">Liste des SCTs</h2>
-			<Inputs.Select
-				name="sctsSelect"
-				value={sortBy}
-				onChange={handleSortChange}
-				options={[
-					{value:"first_name", label:"Prénom"},
-					{value:"last_name", label:"Nom"},
-					{value:"email", label:"Adresse email"},
-					{value:"birthdate", label:"Date de naissance", disabled: true},
-					{value:"study.current_level", label:"Niveau actuel"},
-					(hasPermission(permissions.READ_CAMPUS) ? ({value:"campus.name", label:"Campus"}) : null),
-					{value:"region", label:"Région"},
-					(hasPermission(permissions.READ_MODULES) ? ({value: "modules", label: "Modules"}) : null)
-				].filter(Boolean)}
-				disabled={sortBy !== "modules" ? (!scts.isUsable()) : (!scts.isUsable() || !modules.isUsable())}
-			>
-				Trier par
-			</Inputs.Select>
-			
-			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
+			<div className="filters-root">
+				<Inputs.Select
+					name="sctsSelect"
+					value={sortBy}
+					onChange={handleSortChange}
+					options={[
+						{value:"first_name", label:"Prénom"},
+						{value:"last_name", label:"Nom"},
+						{value:"email", label:"Adresse email"},
+						{value:"birthdate", label:"Date de naissance", disabled: true},
+						{value:"study.current_level", label:"Niveau actuel"},
+						(hasPermission(permissions.READ_CAMPUS) ? ({value:"campus.name", label:"Campus"}) : null),
+						{value:"region", label:"Région"},
+						(hasPermission(permissions.READ_MODULES) ? ({value: "modules", label: "Modules"}) : null)
+					].filter(Boolean)}
+					disabled={sortBy !== "modules" ? (!scts.isUsable()) : (!scts.isUsable() || !modules.isUsable())}
+				>
+					Trier par
+				</Inputs.Select>
+
+				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
+			</div>
 			
 			{!scts.isUsable() ? (scts.isLoading && <Loader/>) : (
 				<>
@@ -69,7 +73,7 @@ function SCTsAll() {
 								</thead>
 
 								<tbody>
-									{scts.data.sort((a, b) => sortObjectArr(sortBy, a, b)).map(sct => (
+									{scts.data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search)).map(sct => (
 										<tr key={`scts-list-sct-${sct.user_id}`}>
 											<td className="sct-first-name">{sct.first_name}</td>
 											<td className="sct-last-name">{sct.last_name}</td>

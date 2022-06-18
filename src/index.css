@@ -188,3 +188,11 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   background: #FFFFFF;
   box-shadow: 0 3px 6px rgb(0 0 0 / 16%), 0 3px 6px rgb(0 0 0 / 23%);
 }
+
+.filters-root {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 10px 0;
+  gap: 20px;
+}

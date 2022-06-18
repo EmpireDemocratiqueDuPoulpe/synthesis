@@ -5,9 +5,11 @@ import useResitStudents from "../../hooks/resits/useResitStudents.js";
 import useModules from "../../hooks/modules/useModules.js";
 import SearchBar from "../../components/SearchBar/SearchBar.js";
 import Loader from "../../components/Loader/Loader.js";
-import { hasPassed, sortStudentsByPassed, sortObjectArr} from "../../global/Functions.js";
+import {hasPassed, sortStudentsByPassed, sortObjectArr, filterObj} from "../../global/Functions.js";
 import "./Resits.css";
 import Inputs from "../../components/Inputs/Inputs.js";
+
+const searchableColumns = ["first_name", "last_name", "birth_date", "study.current_level", "email", "campus.name", "region"];
 
 function Resits() {
 	/* ---- States ---------------------------------- */
@@ -28,26 +30,28 @@ function Resits() {
 	return (
 		<div className="Resits">
 			<h2 className="page_title">Resits</h2>
-			<Inputs.Select
-				name="resitsSelect"
-				value={sortBy}
-				onChange={handleSortChange}
-				options={[
-					{value:"first_name", label:"Prénom"},
-					{value:"last_name", label:"Nom"},
-					{value:"email", label:"Adresse email"},
-					{value:"birthdate", label:"Date de naissance", disabled: true},
-					{value:"study.current_level", label:"Niveau actuel"},
-					(hasPermission(permissions.READ_CAMPUS) ? ({value:"campus.name", label:"Campus"}) : null),
-					{value:"region", label:"Région"},
-					(hasPermission(permissions.READ_MODULES) ? ({value: "modules", label: "Modules"}) : null)
-				].filter(Boolean)}
-				disabled={sortBy !== "modules" ? (!resitStudents.isUsable()) : (!resitStudents.isUsable() || !modules.isUsable())}
-			>
-				Trier par
-			</Inputs.Select>
-			
-			<SearchBar placeholder="Rechercher" value={search} setValue={setSearch} disabled/>
+			<div className="filters-root">
+				<Inputs.Select
+					name="resitsSelect"
+					value={sortBy}
+					onChange={handleSortChange}
+					options={[
+						{value:"first_name", label:"Prénom"},
+						{value:"last_name", label:"Nom"},
+						{value:"email", label:"Adresse email"},
+						{value:"birthdate", label:"Date de naissance", disabled: true},
+						{value:"study.current_level", label:"Niveau actuel"},
+						(hasPermission(permissions.READ_CAMPUS) ? ({value:"campus.name", label:"Campus"}) : null),
+						{value:"region", label:"Région"},
+						(hasPermission(permissions.READ_MODULES) ? ({value: "modules", label: "Modules"}) : null)
+					].filter(Boolean)}
+					disabled={sortBy !== "modules" ? (!resitStudents.isUsable()) : (!resitStudents.isUsable() || !modules.isUsable())}
+				>
+					Trier par
+				</Inputs.Select>
+
+				<SearchBar placeholder="Rechercher" value={search} setValue={setSearch}/>
+			</div>
 			
 			{!resitStudents.isUsable() ? (resitStudents.isLoading && <Loader/>) : (
 				<>
@@ -69,7 +73,7 @@ function Resits() {
 								</thead>
 
 								<tbody>
-									{resitStudents.data.sort((a, b) => sortObjectArr(sortBy, a, b)).map(resitStudent => (
+									{resitStudents.data.sort((a, b) => sortObjectArr(sortBy, a, b)).filter(o => filterObj(o, searchableColumns, search)).map(resitStudent => (
 										<tr key={`resit-students-list-student-${resitStudent.user_id}`}>
 											<td className="resit-student-first-name">{resitStudent.first_name}</td>
 											<td className="resit-student-last-name">{resitStudent.last_name}</td>
