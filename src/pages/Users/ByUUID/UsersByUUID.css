@@ -34,6 +34,8 @@
 .UsersByUUID .profile .profile-box.jobs-box { grid-row: 3; grid-column: 2 / span 1; }
 .UsersByUUID .profile .profile-box.compta-box { grid-row: 3; grid-column: 3 / span 1; }
 
+.UsersByUUID .profile:not(.has-jobs) .profile-box.study-box { grid-column: 1 / span 2; }
+
 /* -- Base infos box */
 .UsersByUUID .profile .profile-box.base-infos-box h2 { margin-bottom: 0; }
 

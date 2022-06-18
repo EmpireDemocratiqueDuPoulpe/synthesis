@@ -46,7 +46,7 @@ function Modules() {
 		});
 	});*/
 
-	const generateModules = (modules) => {
+	const generateModules = modules => {
 		const modulesByYear = [];
 		const promos = ["B.Eng.1", "B.Eng.2", "B.Eng.3", "M.Eng.1", "M.Eng.2"];
 
@@ -80,12 +80,12 @@ function Modules() {
 					)}
 					<div>
 						<div>
-							{ generateModules(modules.data).map(year => (
+							{generateModules(modules.data).map(year => (
 								<div key={year.year}>
 									<h3>{year.promo}</h3>
 									<div className="modules_list">{year.modules}</div>
 								</div>
-							)) }
+							))}
 						</div>
 					</div>
 				</div>
