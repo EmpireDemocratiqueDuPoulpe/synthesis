@@ -85,3 +85,24 @@
 	margin-top: auto;
 	margin-bottom: 20px;
 }
+
+@media (max-width: 1000px) {
+	.App-nav li {
+		margin-left: 1vw;
+	}
+	.App-nav {
+		width: 12vw;
+	}
+	.App-nav.open {
+		width: 80vw;
+	}
+	.App-nav::before {
+		width: 12vw;
+	}
+	.App-nav::after {
+		left: 12vw;
+	}
+	.app-nav-btn {
+		margin: 20px auto !important;
+	}
+}

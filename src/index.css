@@ -206,3 +206,21 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf) format("truetype");
   font-weight: 700;
 }
+
+/* -- MOBILE */
+@media (max-width: 1000px) {
+  .page_title {
+    font-size: 1.25em;
+  }
+  .TableMain {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .filters-root {
+    flex-direction: column !important;
+  }
+  .filters-root .input {
+    max-width: 69vw;
+  }
+}

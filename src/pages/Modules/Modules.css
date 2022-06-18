@@ -26,4 +26,34 @@
     display: grid;
     grid-template-columns: auto auto auto auto;
     padding: 0 5%;
+    overflow: auto;
+}
+
+@media (max-width: 1000px) {
+    .modules_list {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .modules_list .module_box {
+        margin: 20px 0;
+    }
+
+    .modules_list .module_box .note_ects_img {
+        display: none;
+    }
+
+    .modules_list .module_box .note_infos .note_misc {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    .modules_list .module_box .note_infos .note_misc .note_title{
+        margin: 0 !important;
+    }
+
+    .module_box-content {
+        top: auto;
+    }
 }

@@ -72,3 +72,15 @@
     width: 100%;
     margin: 5px 0 0 0;
 }
+
+@media (max-width: 1000px) {
+    .ComptaAll .student_list_root {
+        display: flex;
+        flex-direction: column-reverse;
+        gap: 0;
+    }
+
+    .ComptaAll .student_compta_infos {
+        width: 100%;
+    }
+}
