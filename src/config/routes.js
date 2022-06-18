@@ -115,18 +115,6 @@ export default [
 	
 	// Accounting
 	{
-		path: "/comptabilite/:UUID",
-		element: Compta.byUUID,
-		protected: true,
-		permissions: [ "READ_COMPTA" ],
-		link: {
-			label: "Comptabilité",
-			if: (auth) => auth.user?.position.name === "Étudiant",
-			override: (auth) => `/comptabilite/${auth.user.uuid}`,
-			icon: { file: solid("coins") },
-		},
-	},
-	{
 		path: "/comptabilite",
 		element: Compta.all,
 		protected: true,
