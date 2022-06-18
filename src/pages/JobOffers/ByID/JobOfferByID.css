@@ -54,3 +54,20 @@
 	padding: 10px 20px;
 	text-align: justify;
 }
+
+.edit_job_offer_style {
+	display: flex;
+	flex-direction: column;
+}
+
+.edit_job_offer_style .inputs_div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	gap: 20px;
+	margin: 10px 0;
+}
+
+.edit_job_offer_send {
+	margin-top: 20px;
+}

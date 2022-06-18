@@ -32,7 +32,7 @@ function JobOfferByID() {
 				company_name: jobOffer.data.company_name,
 				address_city: jobOffer.data.city,
 				address_postal_code: jobOffer.data.postal_code,
-				expiration_date: isoStrToDate(jobOffer.data.expiration_date).toLocaleDateString("fr-FR").split("/").reverse().join("-"),
+				expiration_date: jobOffer.data.expiration_date ? isoStrToDate(jobOffer.data.expiration_date).toLocaleDateString("fr-FR").split("/").reverse().join("-") : "",
 				domains: jobOffer.data.jobDomains.map(jd => jd.job_domain_id),
 				content: jobOffer.data.content,
 			});
@@ -70,36 +70,42 @@ function JobOfferByID() {
 					
 					{isUpdating ? (
 						<FormProvider {...form}>
-							<form onSubmit={form.handleSubmit(handleUpdate)}>
-								<Inputs.Text name="title" required>
-									Titre
-								</Inputs.Text>
+							<form onSubmit={form.handleSubmit(handleUpdate)} className="edit_job_offer_form">
+								<div className="edit_job_offer_style">
+									<div className="inputs_div">
+										<Inputs.Text name="title" required>
+											Titre
+										</Inputs.Text>
 
-								<Inputs.Select name="type" options={[ {value: "stage", label: "Stage"}, {value: "alternance", label: "Alternance"} ]} required>
-									Type
-								</Inputs.Select>
+										<Inputs.Select name="type" options={[ {value: "stage", label: "Stage"}, {value: "alternance", label: "Alternance"} ]} required>
+											Type
+										</Inputs.Select>
 
-								<Inputs.Text name="company_name" required>
-									Entreprise
-								</Inputs.Text>
+										<Inputs.Text name="company_name" required>
+											Entreprise
+										</Inputs.Text>
 
-								<Inputs.Address name="address">
-									Adresse
-								</Inputs.Address>
+										<Inputs.Date name="expiration_date">
+											Date d&apos;expiration
+										</Inputs.Date>
+									</div>
+									<div className="inputs_div">
+										<Inputs.Address name="address">
+											Adresse
+										</Inputs.Address>
 
-								<Inputs.Date name="expiration_date">
-									Date d&apos;expiration
-								</Inputs.Date>
+										<Inputs.Select name="domains" options={jobDomains.data.map(jd => ({ value: jd.job_domain_id, label: jd.name }))} multiple>
+											Domaines
+										</Inputs.Select>
+									</div>
+								</div>
+								<div>
+									<Inputs.Textarea name="content" resize={false}>
+										Message
+									</Inputs.Textarea>
 
-								<Inputs.Select name="domains" options={jobDomains.data.map(jd => ({ value: jd.job_domain_id, label: jd.name }))} multiple>
-									Domaines
-								</Inputs.Select>
-
-								<Inputs.Textarea name="content" resize={false}>
-									Message
-								</Inputs.Textarea>
-
-								<input type="submit" className="button" value="Mettre à jour"/>
+									<input type="submit" className="button edit_job_offer_send" value="Mettre à jour"/>
+								</div>
 							</form>
 						</FormProvider>
 					) : (
