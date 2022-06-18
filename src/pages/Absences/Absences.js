@@ -10,22 +10,21 @@ import "./Absences.css";
 import {FormProvider, useForm} from "react-hook-form";
 import Inputs from "../../components/Inputs/Inputs";
 
+const yearsOptions = [
+	{ value: 1, label: "B.Eng.1" },
+	{ value: 2, label: "B.Eng.2" },
+	{ value: 3, label: "B.Eng.3" },
+	{ value: 4, label: "M.Eng.1" },
+	{ value: 5, label: "M.Eng.2" }
+];
+
 function Absences() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
 	const form = useForm();
 	const filters = form.watch();
-
-	const yearsOptions = [
-		{ value: 1, label: "A.Sc.1" },
-		{ value: 2, label: "A.Sc.2" },
-		{ value: 3, label: "B.Sc" },
-		{ value: 4, label: "M.Eng.1" },
-		{ value: 5, label: "M.Eng.2" }
-	];
-	const [selectedYears] = useState(
-		user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions
-	);
+	
+	const [selectedYears] = useState(user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions);
 
 	const campuses = useCampuses({}, {
 		onSuccess: data => {
