@@ -16,3 +16,28 @@
     font-weight: bolder;
     text-align: center;
 }
+
+@media (max-width: 1000px) {
+    .notes_main {
+        display: flex;
+        flex-direction: column;
+        gap: 50px
+    }
+
+    .notes_main .module_box {
+        margin: 20px 0;
+    }
+
+    .notes_main .note_misc {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .notes_main .note_misc span {
+        margin: 0 !important;
+    }
+
+    .notes_main .module_box-title {
+        max-width: 15ch;
+    }
+}
