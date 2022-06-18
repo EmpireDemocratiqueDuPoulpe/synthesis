@@ -1,0 +1,19 @@
+.UserPolicies .p-style {
+    margin-left: 30px;
+}
+
+.UserPolicies {
+    text-align: justify;
+}
+
+.UserPolicies h3 {
+    margin-top: 50px;
+}
+
+.UserPolicies h2:not(:first-child) {
+    margin-top: 75px;
+}
+
+.UserPolicies .bold {
+    text-decoration: underline;
+}

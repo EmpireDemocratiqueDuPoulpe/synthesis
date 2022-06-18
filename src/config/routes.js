@@ -11,6 +11,7 @@ import JobOffers from "../pages/JobOffers/JobOffers.js";
 import Notes from "../pages/Notes/Notes.js";
 import Modules from "../pages/Modules/Modules.js";
 import Resits from "../pages/Resits/Resits.js";
+import UserPolicies from "../pages/UserPolicies/UserPolicies.js";
 import Errors from "../pages/Errors/Errors.js";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
@@ -169,6 +170,13 @@ export default [
 			label: "Accueil",
 			icon: { file: solid("house") },
 		},
+	},
+
+	// User Policies
+	{
+		path: "/policies",
+		element: UserPolicies,
+		protected: false,
 	},
 	
 	// Errors
