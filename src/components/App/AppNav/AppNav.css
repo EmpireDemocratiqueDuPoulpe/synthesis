@@ -1,20 +1,15 @@
 /* ---- App navigation menu --------------------- */
 /* -- Container */
 .App-nav {
-	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
 	position: relative;
 	width: 4vw;
-	font-size: 1.35em;
 	transition: 250ms width ease-in-out;
-	overflow-x: hidden;
 }
 .App-nav.open { width: 20vw; }
 
 .App-nav::before, .App-nav::after {
 	content: "";
-	position: absolute;
+	position: fixed;
 	top: 0;
 	height: 100%;
 	z-index: -1;
@@ -30,6 +25,20 @@
 }
 .App.light .App-nav::after  { background: #1A1038; }
 .App.dark .App-nav::after   { background: var(--dark-primary-color-darker); }
+
+.App-nav .App-nav-fixed {
+	position: sticky;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	font-size: 1.35em;
+	overflow-x: hidden;
+}
 
 /* -- App nav button */
 .App-nav .app-nav-btn {
@@ -81,6 +90,8 @@
 /* - Link label */
 .App-nav .nav-links .nav-link .link-label { margin-left: 0.6em; padding-left: 1em; }
 .App-nav .nav-links .nav-link:hover .link-label { background: rgba(255, 255, 255, 0.20); }
+
+/* -- Logout button */
 .App-nav .logout-btn {
 	margin-top: auto;
 	margin-bottom: 20px;
