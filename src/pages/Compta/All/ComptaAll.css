@@ -1,63 +1,74 @@
-.ComptaAll {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-}
-
+/* ---- ComptaAll ------------------------------- */
+/* -- Student list */
 .ComptaAll .student_list_root {
     display: flex;
     flex-direction: row;
-    height: 100%;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 15px;
 }
 
 .ComptaAll .student_list {
-    height: 100%;
-    width: 50%;
-    overflow-x: hidden;
-    overflow-y: scroll;
+    flex-grow: 1;
+    box-sizing: border-box;
+    width: 100%;
+    background-color: #FFFFFF;
     padding: 10px;
-    background-color: #f8f8f8;
 }
+
+.ComptaAll .student_list .campus-name {
+    font-size: 1.5em;
+    margin: 10px 0;
+    padding: 7px;
+    background: rgba(0, 0, 0, 0.07);
+}
+.ComptaAll .student_list .campus-name:first-child { margin-top: 0; }
 
 .ComptaAll .student_list_item {
-    padding: 5px;
-    transition: background-color 200ms;
+    padding: 5px 10px;
+    transition: background-color 100ms ease-in;
     cursor: pointer;
 }
+.ComptaAll .student_list_item:not(:last-child) { border-bottom: thin var(--border-color) solid; }
+.ComptaAll .student_list_item:hover { background-color: rgba(0, 0, 0, 0.04); }
 
-.ComptaAll .student_list_item:not(:last-child) {
-    border-bottom: 5px solid black;
-}
+.ComptaAll .student_list_item p { margin: 5px 0; }
 
-.ComptaAll .student_list_item:hover {
-    background-color: #ededed;
-}
+.ComptaAll .student_list_item .student_name { font-weight: bold; }
 
-.ComptaAll .student_list_item p {
-    margin: 5px 0;
-}
-
-.ComptaAll .student_name {
-    font-weight: bold;
-}
-
+/* -- Compta info */
 .ComptaAll .student_compta_infos {
-    background-color: #dcdcdc;
-    padding: 10px;
-    margin: 25px;
-    width: 30%;
+    flex-shrink: 0;
+    box-sizing: border-box;
+    position: relative;
+    width: 25%;
+    padding: 20px;
+    background-color: #FFFFFF;
+    -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
-.ComptaAll .student_compta_infos p {
-    margin: 5px 0;
+.ComptaAll .student_compta_infos.no-student { height: 260px; }
+.ComptaAll .student_compta_infos.no-student::after {
+    content: "Cliquez sur un étudiant pour consulter sa balance.";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    text-align: center;
+    font-size: 0.8em;
+    transform: translate(-50%, -50%);
 }
 
-.ComptaAll .remaining_red {
-    color: var(--error-color);
-    font-weight: bold;
-}
+.ComptaAll .student_compta_infos .student_name { margin-top: 0; }
 
-.ComptaAll .remaining_green {
-    color: var(--success-color);
-    font-weight: bold;
+.ComptaAll .student_compta_infos .remaining_red { color: var(--error-color); }
+.ComptaAll .student_compta_infos .remaining_green { color: var(--success-color); }
+
+
+.ComptaAll .student_compta_infos .button {
+    box-sizing: border-box;
+    text-align: center;
+    width: 100%;
+    margin: 5px 0 0 0;
 }
