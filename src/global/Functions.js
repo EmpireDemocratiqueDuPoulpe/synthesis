@@ -169,6 +169,15 @@ export function toNumeralAdjective(number, feminine = false) {
 	}
 }
 
+const toCurrencyOptions = { plusSign: false, inverted: false, currency: "EUR" };
+export function toCurrency(number, options = toCurrencyOptions) {
+	const opts = { ...toCurrencyOptions, ...options };
+	const amount = opts.inverted ? (Math.abs(number) * -1) : number;
+	const signStr = (opts.plusSign && (amount > 0)) ? "+" : "";
+	
+	return signStr + new Intl.NumberFormat("fr-FR", { style: "currency", currency: opts.currency }).format(amount);
+}
+
 /*****************************************************
  * Strings
  *****************************************************/
