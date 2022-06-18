@@ -150,6 +150,11 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
   justify-content: flex-start;
   margin: 10px 0;
   gap: 20px;
+  z-index: 1000;
+}
+
+.filters-root .input .input-wrapper > *:first-child {
+  z-index: 1000;
 }
 
 /* -- Styles */

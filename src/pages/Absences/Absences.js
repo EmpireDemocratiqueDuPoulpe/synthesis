@@ -1,5 +1,4 @@
 import { useState } from "react";
-import Select from "react-select";
 import useAuth from "../../context/Auth/AuthContext.js";
 import useAbsences from "../../hooks/absences/useAbsences.js";
 import useStudents from "../../hooks/students/useStudents.js";
@@ -8,10 +7,14 @@ import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
 import "kalend/dist/styles/index.css";
 import "./Absences.css";
+import {FormProvider, useForm} from "react-hook-form";
+import Inputs from "../../components/Inputs/Inputs";
 
 function Absences() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
+	const form = useForm();
+	const filters = form.watch();
 
 	const yearsOptions = [
 		{ value: 1, label: "A.Sc.1" },
@@ -20,7 +23,7 @@ function Absences() {
 		{ value: 4, label: "M.Eng.1" },
 		{ value: 5, label: "M.Eng.2" }
 	];
-	const [selectedYears, setSelectedYears] = useState(
+	const [selectedYears] = useState(
 		user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions
 	);
 
@@ -44,7 +47,7 @@ function Absences() {
 	const [studentsOptions, setStudentsOptions] = useState([]);
 	const [selectedStudent, setSelectedStudent] = useState(user.study ? [user.user_id] : []);
 
-	const absences = useAbsences({ userIDs: selectedStudent.map(s => s.value), years: selectedYears.map(y => y.value), campusIDs: selectedCampuses.map(c => c.value)});
+	const absences = useAbsences({ userIDs: filters.studentsSelect, years: filters.yearsSelect, campusIDs: filters.campusesSelect });
 
 	/* ---- Page content ---------------------------- */
 	return (
@@ -53,27 +56,38 @@ function Absences() {
 
 			{(!absences.isUsable() || !campuses.isUsable() || !students.isUsable()) ? ((absences.isLoading || campuses.isLoading || students.isLoading) && <Loader/>) : (
 				<div>
-					<span>Année(s)</span>
-					<Select
-						options={yearsOptions}
-						defaultValue={selectedYears}
-						onChange={setSelectedYears}
-						isMulti
-					/>
-					<span>Campus</span>
-					<Select
-						options={campusesOptions}
-						defaultValue={selectedCampuses}
-						onChange={setSelectedCampuses}
-						isMulti
-					/>
-					<span>Étudiant(s)</span>
-					<Select
-						options={studentsOptions}
-						defaultValue={selectedStudent}
-						onChange={setSelectedStudent}
-						isMulti
-					/>
+					<div>
+						<FormProvider {...form}>
+							<form className="filters-root">
+								<Inputs.Select
+									name="yearsSelect"
+									defaultValue={selectedYears}
+									options={yearsOptions}
+									multiple
+								>
+									Année(s)
+								</Inputs.Select>
+
+								<Inputs.Select
+									name="campusesSelect"
+									defaultValue={selectedCampuses}
+									options={campusesOptions}
+									multiple
+								>
+									Campus
+								</Inputs.Select>
+
+								<Inputs.Select
+									name="studentsSelect"
+									defaultValue={selectedStudent}
+									options={studentsOptions}
+									multiple
+								>
+									Étudiant(s)
+								</Inputs.Select>
+							</form>
+						</FormProvider>
+					</div>
 					<Kalend
 						events={absences.data.map((absence)=> ({
 							id: absence.absence_id,

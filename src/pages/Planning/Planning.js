@@ -1,28 +1,32 @@
 import { useState } from "react";
-import Select from "react-select";
+import { useForm, FormProvider } from "react-hook-form";
 import useAuth from "../../context/Auth/AuthContext.js";
 import usePlanning from "../../hooks/planning/usePlanning.js";
 import useCampuses from "../../hooks/campuses/useCampuses.js";
 import Loader from "../../components/Loader/Loader.js";
 import Kalend, { CalendarView } from "kalend";
+import Inputs from "../../components/Inputs/Inputs.js";
 import "kalend/dist/styles/index.css";
 import "./Planning.css";
-//import Inputs from "../../components/Inputs/Inputs.js";
+
+const yearsOptions = [
+	{ value: 1, label: "A.Sc.1" },
+	{ value: 2, label: "A.Sc.2" },
+	{ value: 3, label: "B.Sc" },
+	{ value: 4, label: "M.Eng.1" },
+	{ value: 5, label: "M.Eng.2" }
+];
+
+const eventTypesOptions = [
+	{ value: "module", label: "Cours" },
+	{ value: "misc", label: "Divers" }
+];
 
 function Planning() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-
-	const yearsOptions = [
-		{ value: 1, label: "A.Sc.1" },
-		{ value: 2, label: "A.Sc.2" },
-		{ value: 3, label: "B.Sc" },
-		{ value: 4, label: "M.Eng.1" },
-		{ value: 5, label: "M.Eng.2" }
-	];
-	const [selectedYears, setSelectedYears] = useState(
-		user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions
-	);
+	const form = useForm();
+	const filters = form.watch();
 
 	const campuses = useCampuses({}, {
 		onSuccess: data => {
@@ -31,16 +35,13 @@ function Planning() {
 			setSelectedCampuses(mappedData.filter(c => c.value === user.campus.campus_id));
 		}
 	});
+	const planning = usePlanning({ years: filters.yearsSelect, eventTypes: filters.eventsSelect, campuses: filters.campusesSelect});
+
+	const [selectedYears] = useState(user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions);
 	const [campusesOptions, setCampusesOptions] = useState([]);
 	const [selectedCampuses, setSelectedCampuses] = useState(user.campus ? [{ value: user.campus.campus_id, label: user.campus.name}] : []);
+	const [selectedEventTypes] = useState(eventTypesOptions);
 
-	const eventTypesOptions = [
-		{ value: "module", label: "Cours" },
-		{ value: "misc", label: "Divers" }
-	];
-	const [selectedEventTypes, setSelectedEventTypes] = useState(eventTypesOptions);
-
-	const planning = usePlanning({ years: selectedYears.map(y => y.value), eventTypes: selectedEventTypes.map(e => e.value), campuses: selectedCampuses.map(c => c.value)});
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Planning">
@@ -48,36 +49,38 @@ function Planning() {
 
 			{(!planning.isUsable() || !campuses.isUsable()) ? ((planning.isLoading || campuses.isLoading) && <Loader/>) : (
 				<div>
-					<span>Année(s)</span>
-					{/*<Inputs.Select
-						name="planningSelect"
-						value={selectedYears}
-						onChange={setSelectedYears}
-						options={yearsOptions}
-						multiple
-					>
-						Année(s)
-					</Inputs.Select>*/}
-					<Select
-						options={yearsOptions}
-						defaultValue={selectedYears}
-						onChange={setSelectedYears}
-						isMulti
-					/>
-					<span>Campus</span>
-					<Select
-						options={campusesOptions}
-						defaultValue={selectedCampuses}
-						onChange={setSelectedCampuses}
-						isMulti
-					/>
-					<span>Type(s) d&apos;évènement(s)</span>
-					<Select
-						options={eventTypesOptions}
-						defaultValue={selectedEventTypes}
-						onChange={setSelectedEventTypes}
-						isMulti
-					/>
+					<div>
+						<FormProvider {...form}>
+							<form className="filters-root">
+								<Inputs.Select
+									name="yearsSelect"
+									defaultValue={selectedYears}
+									options={yearsOptions}
+									multiple
+								>
+									Année(s)
+								</Inputs.Select>
+
+								<Inputs.Select
+									name="campusesSelect"
+									defaultValue={selectedCampuses}
+									options={campusesOptions}
+									multiple
+								>
+									Campus
+								</Inputs.Select>
+
+								<Inputs.Select
+									name="eventsSelect"
+									defaultValue={selectedEventTypes}
+									options={eventTypesOptions}
+									multiple
+								>
+									Type(s) d&apos;évènement(s)
+								</Inputs.Select>
+							</form>
+						</FormProvider>
+					</div>
 					<Kalend
 						events={planning.data.map((event)=> ({
 							id: event.planning_id,
@@ -102,7 +105,6 @@ function Planning() {
 						isNewEventOpen={false}
 					/>
 				</div>
-
 			)}
 
 		</div>
