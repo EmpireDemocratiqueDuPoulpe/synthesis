@@ -20,10 +20,11 @@ const yearsOptions = [
 function Modules() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-	const form = useForm();
+	
+	const [selectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : yearsOptions);
+	const form = useForm({ defaultValues: { years: selectedYears.map(y => y.value) }});
 	const filters = form.watch();
 	
-	const [selectedYears] = useState(user.study ? yearsOptions.filter(yo => yo.value <= user.study.current_level) : yearsOptions);
 	const modules = useModules({ years: filters.years });
 	
 	/* ---- Functions ------------------------------- */
@@ -55,7 +56,7 @@ function Modules() {
 					<TableFilters>
 						<FormProvider {...form}>
 							<form>
-								<Inputs.Select name="years" options={yearsOptions} defaultValue={selectedYears} multiple>
+								<Inputs.Select name="years" options={yearsOptions} multiple>
 									Promo
 								</Inputs.Select>
 							</form>

@@ -20,11 +20,12 @@ const yearsOptions = [
 function Notes() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
-	const form = useForm();
+	
+	const [selectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : []);
+	const form = useForm({ defaultValues: { years: selectedYears.map(y => y.value) }});
 	const filters = form.watch();
 	const ects = { current: 0, total: 0 };
 	
-	const [selectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : []);
 	const notes = useNotesOfUser({ userID: user.user_id, years: filters.years });
 	
 	/* ---- Page content ---------------------------- */
@@ -38,7 +39,7 @@ function Notes() {
 					<TableFilters>
 						<FormProvider {...form}>
 							<form>
-								<Inputs.Select name="years" options={user.study ? yearsOptions.filter(o => o.value <= user.study.current_level) : yearsOptions} defaultValue={selectedYears} multiple>
+								<Inputs.Select name="years" options={user.study ? yearsOptions.filter(o => o.value <= user.study.current_level) : yearsOptions} multiple>
 									Promo
 								</Inputs.Select>
 							</form>
