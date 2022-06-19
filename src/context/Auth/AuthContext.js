@@ -52,7 +52,7 @@ export function AuthProvider({ maxAuthTry, children }) {
 	};
 
 	const setDisconnected = useCallback(() => {
-		removeCookie("tokenPayload", { path: "/" });
+		removeCookie("tokenPayload", { path: "/", domain: API.domain, sameSite: "none", secure: true });
 		dispatch({ type: states.DISCONNECTED });
 	}, [removeCookie]);
 
