@@ -1,8 +1,12 @@
 import API from "../global/Endpoint.js";
 
+// const domain = "localhost:8443";
+const domain = "synthesis-api.v6.rocks";
+
 export default {
-	url: "https://localhost:8443/v1",
-	files: "https://localhost:8443/files",
+	domain,
+	url: `https://${domain}/v1`,
+	files: `https://${domain}/files`,
 	users: {
 		logIn: new API.POST("/users/login"),
 		authenticate: new API.POST("/users/authenticate").mustThrow(false),

@@ -1,24 +1,73 @@
-import "./Home.css";
 import useAuth from "../../context/Auth/AuthContext.js";
 import Card from "../../components/Card/Card.js";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import tableImg from "../../assets/images/table.png";
 import notesImg from "../../assets/images/notes.png";
 import modulesImg from "../../assets/images/modules.png";
 import calendarImg from "../../assets/images/calendar.png";
 import jobsImg from "../../assets/images/jobs.png";
 import absencesImg from "../../assets/images/absences.png";
-
-//import jobs from "../../assets/images/jobs.png";
+import download from "downloadjs";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import Button from "../../components/Button/Button.js";
+import { API } from "../../config/config.js";
+import "./Home.css";
 
 function Home() {
-	const auth = useAuth();
-	const { hasPermission, permissions } = useAuth();
+	/* ---- States ---------------------------------- */
+	const { user, hasPermission, permissions } = useAuth();
+
+	/* ---- Functions ------------------------------- */
+	const downloadBackup = () => {
+		const opts = {
+			method: "GET",
+			headers: { "Accept": "application/json", "Brokilone": "Miam le bon bois" },
+			mode: "cors",
+			credentials: "include",
+		};
+
+		fetch(`${API.url}/backups/download-latest`, opts)
+			.then(resp => resp.blob())
+			.then(data => download(data, "synthesis-backup.tar.gz", "application/gzip"));
+	};
 
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Home">
-			<h1 className="page_title">Home</h1>
+			<h1>Home</h1>
+
+			{(user.position.name === "Admin. plateforme") && (
+				<>
+					<div className="home-box">
+						<h2>Exporter/importer des données</h2>
+						<p>
+							L&apos;exportation et l&apos;importation des donn&eacute;es permettent de travailler avec les fichiers .csv
+							utilis&eacute;s pour le chargement automatisé des données par l&apos;ETL.
+						</p>
+
+						<div className="buttons-box">
+							<Button icon={<FontAwesomeIcon icon={solid("download")}/>} outlined disabled>Exporter</Button>
+							<Button icon={<FontAwesomeIcon icon={solid("upload")}/>} outlined disabled>Importer</Button>
+						</div>
+					</div>
+
+					<div className="home-box">
+						<h2>Sauvegarder/restaurer la base de données</h2>
+						<p>
+							Si nécessaire, les boutons ci-dessous permettent de sauvegarder et de restaurer des données directement depuis
+							la base de données. Là où les fichiers .csv permettent de g&eacute;rer facilement les donn&eacute;es ins&eacute;r&eacute;es
+							dans la base de donn&eacute;es, ces fichiers de sauvegarde contiennent des donn&eacute;es au format SQL, apr&egrave;s le
+							traitement de ces derni&egrave;res par le serveur.
+						</p>
+
+						<div className="buttons-box">
+							<Button icon={<FontAwesomeIcon icon={solid("download")}/>} onClick={downloadBackup} outlined>Exporter</Button>
+							<Button icon={<FontAwesomeIcon icon={solid("upload")}/>} outlined disabled>S&eacute;lectionner un fichier</Button>
+						</div>
+					</div>
+				</>
+			)}
+
 			<div className="dashboard">
 				{hasPermission(permissions.READ_SCTS) && (
 					<Card link={"/scts"} fa_icon={solid("chalkboard-user")} logo={tableImg} title={"Liste des SCTs"}>
@@ -60,7 +109,7 @@ function Home() {
 						Naviguer sur<br/>le calendrier des absences
 					</Card>
 				)}
-				{(hasPermission(permissions.READ_COMPTA) && auth.user?.position.name !== "Étudiant" )&& (
+				{(hasPermission(permissions.READ_COMPTA) && user.position.name !== "Étudiant" )&& (
 					<Card link={"/comptabilite"} fa_icon={solid("coins")} logo={tableImg} title={"Comptabilité"}>
 						Visualiser la comptabilit&eacute; de tous les &eacute;tudiants
 					</Card>

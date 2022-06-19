@@ -12,6 +12,8 @@
 	cursor: pointer;
 }
 
+.button.disabled { opacity: 0.5; cursor: not-allowed; }
+
 /* -- Idle color */
 .button.primary-color	{ background: var(--primary-color); border-color: var(--primary-color); color: #FFFFFF; }
 .button.green-color 	{ background: var(--success-color); border-color: var(--success-color); color: #FFFFFF; }
@@ -22,13 +24,13 @@
 .button.outlined.red-color 		{ background: none; color: var(--error-color); }
 
 /* -- Hover color */
-.button.primary-color:hover	{  background: var(--primary-color-light); border-color: var(--primary-color-light); }
-.button.green-color:hover 	{  background: #439A43; border-color:  #439A43; }
-.button.red-color:hover 		{  background: #B72C42; border-color: #B72C42; }
+.button.primary-color:not(.disabled):hover	{  background: var(--primary-color-light); border-color: var(--primary-color-light); }
+.button.green-color:not(.disabled):hover 		{  background: #439A43; border-color:  #439A43; }
+.button.red-color:not(.disabled):hover 			{  background: #B72C42; border-color: #B72C42; }
 
-.button.outlined.primary-color:hover	{ background: var(--primary-color); border-color: var(--primary-color); color: #FFFFFF; }
-.button.outlined.green-color:hover 	{ background: var(--success-color); border-color: var(--success-color); color: #FFFFFF; }
-.button.outlined.red-color:hover 		{ background: var(--error-color); border-color: var(--error-color); color: #FFFFFF; }
+.button.outlined.primary-color:not(.disabled):hover	{ background: var(--primary-color); border-color: var(--primary-color); color: #FFFFFF; }
+.button.outlined.green-color:not(.disabled):hover 	{ background: var(--success-color); border-color: var(--success-color); color: #FFFFFF; }
+.button.outlined.red-color:not(.disabled):hover 		{ background: var(--error-color); border-color: var(--error-color); color: #FFFFFF; }
 
 /* -- Icon */
 .button .button-icon {
