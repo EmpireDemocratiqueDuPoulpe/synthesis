@@ -8,6 +8,7 @@ import UserIcon from "../../components/UserIcon/UserIcon.js";
 import RoutesBuilder from "../../components/Routes/RoutesBuilder/RoutesBuilder.js";
 import { eventOnElement } from "../../global/Functions.js";
 import { Routes } from "../../config/config.js";
+import { ReactComponent as AppLogo } from "../../assets/images/synthesis_icon/synthesis_text.svg";
 import "./App.css";
 
 function App() {
@@ -29,6 +30,8 @@ function App() {
 						<button className="back-btn" onClick={() => navigate(-1)} disabled={location.pathname === "/"}>
 							<FontAwesomeIcon icon={solid("arrow-left-long")} size="1x"/>
 						</button>
+						
+						<AppLogo className="app-logo"/>
 						
 						{status === states.CONNECTED && (
 							<div className="header-settings">

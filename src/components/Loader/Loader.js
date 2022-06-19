@@ -2,7 +2,7 @@ function Loader() {
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="loader">
-			CHARGEMENT EN COURS... ATTENDS (STP)
+			CHARGEMENT EN COURS...
 		</div>
 	);
 }

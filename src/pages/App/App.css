@@ -50,6 +50,8 @@
 .App.light .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(0, 0, 0, 0.10); }
 .App.dark .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.10); }
 
+.App .App-page .App-header .app-logo { margin: 5px 0; }
+
 .App .App-page .App-header .header-settings {
 	display: flex;
 	flex-direction: row;

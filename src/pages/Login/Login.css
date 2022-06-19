@@ -20,6 +20,18 @@
 	transform: translate(-50%, -50%);
 }
 
+.Login .login-box .app-logo {
+	position: relative;
+	width: 100%;
+	height: 0;
+}
+.Login .login-box .app-logo svg {
+	position: absolute;
+	top: -20px;
+	right: 0;
+	max-height: 80px;
+}
+
 .Login .login-box h1 {
 	margin: 0 0 40px 0;
 }

@@ -5,6 +5,7 @@ import useAuth, { states } from "../../context/Auth/AuthContext.js";
 import usePageDisplay from "../../context/PageDisplay/PageDisplay.js";
 import Inputs from "../../components/Inputs/Inputs.js";
 import MicrosoftLogin from "../../components/Button/MicrosoftLogin/MicrosoftLogin.js";
+import { ReactComponent as AppLogo } from "../../assets/images/synthesis_icon/synthesis.svg";
 import "./Login.css";
 
 function Login() {
@@ -28,6 +29,11 @@ function Login() {
 		<div className="Login">
 			{(auth.status === states.CONNECTED) ? <Navigate to="/" replace/> : (
 				<div className="login-box">
+					
+					<div className="app-logo">
+						<AppLogo/>
+					</div>
+					
 					<h1>Connexion</h1>
 
 					<FormProvider {...form}>
