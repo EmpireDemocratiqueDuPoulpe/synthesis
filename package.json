@@ -1,10 +1,10 @@
 {
   "name": "campus-booster-en-mieux",
   "version": "0.1.0",
-  "author": "TODO",
+  "author": "Hulloux Guillaume - Lecomte Alexis - Leplae Louan - Pawlowski Maxence",
   "repository": {
     "type": "git",
-    "url": "https://github.com/EmpireDemocratiqueDuPoulpe/campus-booster-en-mieux"
+    "url": "https://github.com/EmpireDemocratiqueDuPoulpe/synthesis"
   },
   "private": true,
   "dependencies": {
@@ -35,13 +35,16 @@
     "url-join": "^4.0.1",
     "web-vitals": "^2.1.4"
   },
+  "main": "src/electron-starter.js",
+  "homepage": "./",
   "scripts": {
     "start": "react-app-rewired start",
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src/",
-    "lint-no-crlf": "eslint --rule \"linebreak-style: 0\" ./src/"
+    "lint-no-crlf": "eslint --rule \"linebreak-style: 0\" ./src/",
+    "electron": "electron ."
   },
   "eslintConfig": {
     "extends": [
@@ -64,6 +67,7 @@
   "devDependencies": {
     "babel-plugin-macros": "^3.1.0",
     "customize-cra": "^1.0.0",
+    "electron": "^19.0.4",
     "eslint": "^8.8.0",
     "eslint-plugin-import": "^2.25.4",
     "eslint-plugin-jsx-a11y": "^6.5.1",
