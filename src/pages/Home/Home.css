@@ -1,0 +1,14 @@
+/* ---- Home ------------------------------------ */
+/* -- Boxes */
+.Home .home-box {
+	background: #FFFFFF;
+	margin: 0 20px;
+	padding: 20px;
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+.Home .home-box:not(:last-child) { margin-bottom: 15px; }
+
+.Home .home-box h2 { margin-top: 0; }
+.Home .home-box .button { margin-bottom: 0; }
