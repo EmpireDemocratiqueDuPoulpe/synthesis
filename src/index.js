@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { CookiesProvider } from "react-cookie";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from "react-query/devtools";
+/* import { ReactQueryDevtools } from "react-query/devtools"; */
 import { MessageProvider } from "./context/Message/MessageContext.js";
 import { AuthProvider } from "./context/Auth/AuthContext.js";
 import { PageDisplayProvider } from "./context/PageDisplay/PageDisplay.js";
@@ -25,7 +25,7 @@ ReactDOM.render(
 								<App/>
 							</React.StrictMode>
 							
-							<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: {opacity: 0.5, marginBottom: "50px"} }}/>
+							{/*<ReactQueryDevtools initialIsOpen={false} toggleButtonProps={{ style: {opacity: 0.5, marginBottom: "50px"} }}/>*/}
 						</QueryClientProvider>
 					</PageDisplayProvider>
 				</AuthProvider>
