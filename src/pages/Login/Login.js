@@ -9,7 +9,7 @@ import "./Login.css";
 
 function Login() {
 	/* ---- States ---------------------------------- */
-	const form = useForm({ defaultValues: {email: "jay.rate@forni.te", password: "Mot De P4sse"} });
+	const form = useForm();
 	const auth = useAuth();
 	const pageDisplay = usePageDisplay();
 	
