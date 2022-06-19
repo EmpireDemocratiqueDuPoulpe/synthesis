@@ -9,7 +9,9 @@ import { isEqual } from "lodash-es";
 
 const internalStates = { SET_PATH: "SET_PATH", UPDATE_CONF: "UPDATE_CONF", RESET: "RESET" };
 
-const initialState = { navMenu: true, header: true, padding: true };
+const themes = ["light", "dark"];
+const storedTheme = localStorage.getItem("theme");
+const initialState = { theme: (themes.includes(storedTheme) ? storedTheme : themes[0]), navMenu: true, header: true, padding: true };
 
 const PageDisplayContext = createContext(null);
 
@@ -34,7 +36,7 @@ export function PageDisplayProvider({ children }) {
 				return { ...state, ...newConf };
 			}
 			case internalStates.RESET:
-				return { ...initialState, path: action.path };
+				return { ...initialState, theme: state.theme, path: action.path };
 			default:
 				throw new Error("PageDisplayProvider: Invalid action.type!");
 		}
@@ -53,6 +55,13 @@ export function PageDisplayProvider({ children }) {
 		}
 	}, [config]);
 	
+	const switchTheme = useCallback(() => {
+		const newTheme = config.theme === "light" ? "dark" : "light";
+		localStorage.setItem("theme", newTheme);
+		
+		updateConfig({ theme: newTheme });
+	}, [config.theme, updateConfig]);
+	
 	const reset = useCallback(newPath => {
 		if (newPath !== config.path) {
 			dispatch({ type: internalStates.RESET, path: newPath });
@@ -65,8 +74,8 @@ export function PageDisplayProvider({ children }) {
 	
 	/* ---- Page content ---------------------------- */
 	const contextValue = useMemo(
-		() => ({ ...config, update: updateConfig, reset }),
-		[config, updateConfig, reset]
+		() => ({ ...config, update: updateConfig, switchTheme, reset }),
+		[config, updateConfig, switchTheme, reset]
 	);
 
 	return (

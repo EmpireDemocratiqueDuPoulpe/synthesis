@@ -6,6 +6,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import AppNav from "../../components/App/AppNav/AppNav.js";
 import UserIcon from "../../components/UserIcon/UserIcon.js";
 import RoutesBuilder from "../../components/Routes/RoutesBuilder/RoutesBuilder.js";
+import { eventOnElement } from "../../global/Functions.js";
 import { Routes } from "../../config/config.js";
 import "./App.css";
 
@@ -19,7 +20,7 @@ function App() {
 	/* ---- Page content ---------------------------- */
 	// TODO: Choose between french/english urls
 	return (
-		<div className="App light">
+		<div className={`App ${pageDisplay.theme}`}>
 			{pageDisplay.navMenu && <AppNav/>}
 			
 			<div className="App-page">
@@ -30,8 +31,14 @@ function App() {
 						</button>
 						
 						{status === states.CONNECTED && (
-							<div className="header-user">
-								<UserIcon user={user}/>
+							<div className="header-settings">
+								<div className="header-user">
+									<UserIcon user={user}/>
+								</div>
+								
+								<div className="header-theme" {...eventOnElement(pageDisplay.switchTheme)}>
+									<FontAwesomeIcon icon={pageDisplay.theme === "light" ? solid("moon") : solid("sun")}/>
+								</div>
 							</div>
 						)}
 					</div>
