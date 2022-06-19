@@ -23,6 +23,10 @@ function JobOfferByID() {
 	const [isUpdating, setIsUpdating] = useState(false);
 	const form = useForm();
 	const jobOffer = useJobOffers({ id: jobOfferID }, {});
+	const jobDomains = useJobDomains({}, { enabled: isUpdating });
+	const navigate = useNavigate();
+
+	/* ---- Effects --------------------------------- */
 	useEffect(() => {
 		if (jobOffer.isUsable()) {
 			form.reset({
@@ -37,13 +41,10 @@ function JobOfferByID() {
 				content: jobOffer.data.content,
 			});
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [form, jobOffer.data]);
-
-	const jobDomains = useJobDomains({}, { enabled: isUpdating });
-	const navigate = useNavigate();
-
-	/* ---- Functions ------------------------------- */
 	
+	/* ---- Functions ------------------------------- */
 	const handleUpdate = data => {
 		jobOffer.update.mutate(data, {
 			onSuccess: () => setIsUpdating(false)
