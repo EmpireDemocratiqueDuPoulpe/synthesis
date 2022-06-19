@@ -16,6 +16,7 @@
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
     "deck.gl": "^8.7.11",
+    "downloadjs": "^1.4.7",
     "kalend": "^0.14.2",
     "lodash-es": "^4.17.21",
     "normalize.css": "^8.0.1",
