@@ -12,3 +12,21 @@
 
 .Home .home-box h2 { margin-top: 0; }
 .Home .home-box .button { margin-bottom: 0; }
+
+/* -- Dashboard */
+.dashboard {
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    gap: 30px;
+    margin: 0 50px;
+    justify-content: center;
+}
+
+.dashboard_card {
+    width: 25vw;
+    height: 20vh;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgb(0 0 0 / 12%), 0 1px 2px rgb(0 0 0 / 24%);
+}

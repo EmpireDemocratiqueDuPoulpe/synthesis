@@ -1,0 +1,40 @@
+.card_link {
+    text-decoration: none;
+}
+
+.card_header {
+    border-radius: 10px 10px 0 0;
+    height: 40%;
+    background-color: var(--primary-color);
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+.card_header h2 {
+    color: var(--bg-color);
+    margin: 0;
+}
+
+.card_body {
+    height: 60%;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 60px;
+}
+
+.card_logo {
+    width: auto;
+    image-rendering: pixelated;
+    height: 75%;
+}
+
+.card_description {
+    text-align: left;
+}
