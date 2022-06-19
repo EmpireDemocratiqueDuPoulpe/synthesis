@@ -18,17 +18,25 @@ function Home() {
 	const { user, hasPermission, permissions } = useAuth();
 
 	/* ---- Functions ------------------------------- */
-	const downloadBackup = () => {
+	const downloadFile = (endpoint, fileName, mimeType) => {
 		const opts = {
 			method: "GET",
 			headers: { "Accept": "application/json", "Brokilone": "Miam le bon bois" },
 			mode: "cors",
 			credentials: "include",
 		};
-
-		fetch(`${API.url}/backups/download-latest`, opts)
+		
+		fetch(`${API.url}${endpoint}`, opts)
 			.then(resp => resp.blob())
-			.then(data => download(data, "synthesis-backup.tar.gz", "application/gzip"));
+			.then(data => download(data, fileName, mimeType));
+	};
+	
+	const downloadETLData = () => {
+		downloadFile("/etl/download", "etl-data.zip", "application/zip");
+	};
+	
+	const downloadBackup = () => {
+		downloadFile("/backups/download-latest", "synthesis-backup.tar.gz", "application/gzip");
 	};
 
 	/* ---- Page content ---------------------------- */
@@ -46,7 +54,7 @@ function Home() {
 						</p>
 
 						<div className="buttons-box">
-							<Button icon={<FontAwesomeIcon icon={solid("download")}/>} outlined disabled>Exporter</Button>
+							<Button icon={<FontAwesomeIcon icon={solid("download")}/>} onClick={downloadETLData} outlined>Exporter</Button>
 							<Button icon={<FontAwesomeIcon icon={solid("upload")}/>} outlined disabled>Importer</Button>
 						</div>
 					</div>
