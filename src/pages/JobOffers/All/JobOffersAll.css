@@ -18,6 +18,11 @@
 	text-decoration: none;
 	transition: background-color 100ms ease-in;
 }
+
+.App.dark .job-offer {
+	color: white;
+}
+
 .job-offer:hover { background: #E7E7E7; }
 
 .job-offer.expired { opacity: 0.5; }

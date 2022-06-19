@@ -16,3 +16,8 @@
 .UserPolicies .bold { text-decoration: underline; }
 
 .UserPolicies .policies-box > *:last-child > p:last-of-type { margin-bottom: 0; }
+
+.App.dark .policies-box {
+    color: white;
+    background-color: var(--dark-primary-color-darker);
+}

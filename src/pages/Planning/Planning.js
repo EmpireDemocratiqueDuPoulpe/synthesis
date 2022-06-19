@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm, FormProvider } from "react-hook-form";
 import useAuth from "../../context/Auth/AuthContext.js";
+import usePageDisplay from "../../context/PageDisplay/PageDisplay.js";
 import usePlanning from "../../hooks/planning/usePlanning.js";
 import useCampuses from "../../hooks/campuses/useCampuses.js";
 import Loader from "../../components/Loader/Loader.js";
@@ -26,6 +27,7 @@ const eventTypesOptions = [
 function Planning() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
+	const pageDisplay = usePageDisplay();
 	const form = useForm();
 	const filters = form.watch();
 
@@ -85,6 +87,7 @@ function Planning() {
 						disabledViews={[CalendarView.DAY]}
 						timeFormat={"24"}
 						weekDayStart={"Monday"}
+						isDark={pageDisplay.theme === "dark"}
 						//showWeekNumbers={true}
 						calendarIDsHidden={["planning"]}
 						language={"fr"}

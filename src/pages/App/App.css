@@ -9,8 +9,8 @@
 	max-width: 100vw;
 	min-height: 100vh;
 }
-.App.light  { color: var(--primary-text-color); }
-.App.dark   { color: var(--dark-primary-text-color); }
+.App.light  { color: var(--primary-text-color) !important; }
+.App.dark   { color: var(--dark-primary-text-color) !important; }
 
 /* -- App navigation menu */
 .App .App-nav { flex-shrink: 0; }

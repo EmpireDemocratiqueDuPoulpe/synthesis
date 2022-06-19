@@ -45,7 +45,7 @@
 }
 
 .App.light .table .table-wrapper table tbody tr:nth-child(even) { background: #FFFFFF; }
-.App.dark .table .table-wrapper table tbody tr:nth-child(even) { background: #FFFFFF; }
+.App.dark .table .table-wrapper table tbody tr:nth-child(even) { background: #4d358b; }
 
 .App.light .table .table-wrapper table tbody tr:nth-child(odd) { background: #F0F0F0; }
 .App.dark .table .table-wrapper table tbody tr:nth-child(odd) { background: var(--dark-primary-color-darker); }

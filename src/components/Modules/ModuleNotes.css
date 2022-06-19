@@ -47,6 +47,15 @@
 	box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
 	cursor: pointer;
 }
+
+.App.dark .module_box .note_root, .App.dark .module_box-content {
+	background-color: var(--dark-primary-color-darker);
+}
+
+.App.dark .module_box-title {
+	color: white;
+}
+
 .module_box.show .note_root { border-radius: 10px 10px 0 0; }
 
 .module_box .note_ects {

@@ -236,6 +236,10 @@ function Select({ options, children, ...props }) {
 							render={({ field: {onChange, onBlur, value, ref} }) => (
 								<ReactSelect
 									styles={{
+										option: provided => ({
+											...provided,
+											color: "#2E2E2E"
+										}),
 										container: (provided) => ({ ...provided, flexGrow: 1 }),
 										control: (provided) => {
 											let longestText = "";

@@ -134,6 +134,9 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
 .App.dark .TableMain a { color: #FFF409; }
 
 /* -- Page title */
+.App.dark .page_title { color: var(--dark-primary-text-color); background: var(--dark-primary-color-darker) }
+.App.light .page_title { background: #FFFFFF }
+
 .page_title {
   margin-top: 0;
   padding: 20px;

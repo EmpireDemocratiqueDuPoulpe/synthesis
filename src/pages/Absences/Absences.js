@@ -1,5 +1,6 @@
 import { useState } from "react";
 import useAuth from "../../context/Auth/AuthContext.js";
+import usePageDisplay from "../../context/PageDisplay/PageDisplay.js";
 import useAbsences from "../../hooks/absences/useAbsences.js";
 import useStudents from "../../hooks/students/useStudents.js";
 import useCampuses from "../../hooks/campuses/useCampuses.js";
@@ -21,6 +22,7 @@ const yearsOptions = [
 function Absences() {
 	/* ---- States ---------------------------------- */
 	const { user } = useAuth();
+	const pageDisplay = usePageDisplay();
 	const form = useForm();
 	const filters = form.watch();
 	
@@ -104,6 +106,7 @@ function Absences() {
 						disabledViews={[CalendarView.DAY]}
 						timeFormat={"24"}
 						weekDayStart={"Monday"}
+						isDark={pageDisplay.theme === "dark"}
 						//showWeekNumbers={true}
 						calendarIDsHidden={["absences"]}
 						language={"fr"}

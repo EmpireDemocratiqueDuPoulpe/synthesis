@@ -19,6 +19,11 @@
     margin: 0;
 }
 
+.App.light .dashboard_card { background-color: #FFFFFF; }
+.App.dark .dashboard_card { background-color: var(--dark-primary-color-darker) }
+.App.dark .dashboard_card p { color:  white; }
+
+
 .card_body {
     height: 60%;
     position: relative;
