@@ -1,0 +1,143 @@
+/* ---- Table ----------------------------------- */
+/* -- Wrapper */
+.table .table-wrapper {
+	border-width: thin;
+	border-style: solid;
+	border-radius: 0px;
+	overflow: hidden;
+}
+.App.light .table .table-wrapper	{ border-color: var(--border-color); }
+.App.dark .table .table-wrapper 	{ border-color: var(--primary-color); }
+
+/* -- Table element */
+.table .table-wrapper table {
+	position: relative;
+	width: 100%;
+	margin: 0 auto;
+	border-collapse: collapse;
+}
+/*.App.light .table .table-wrapper table { background: var(--bg-color); }
+.App.dark .table .table-wrapper table { background: var(--dark-bg-color); }*/
+
+/* -- Table head */
+.table .table-wrapper table thead tr { height: 50px; }
+.App.light .table .table-wrapper table thead tr	{ background: var(--primary-color); }
+.App.dark .table .table-wrapper table thead tr 	{ background: var(--primary-color); }
+
+.table .table-wrapper table thead th { font-weight: normal; }
+.App.light .table .table-wrapper table thead th	{ color: var(--dark-primary-text-color); }
+.App.dark .table .table-wrapper table thead th 	{ color: var(--dark-primary-text-color); }
+
+/* -- Table body */
+.table .table-wrapper table tbody tr {
+	height: 40px;
+	font-size: 0.9em;
+	transition: background 150ms ease-in;
+}
+.App.light .table .table-wrapper table tbody tr	{ color: var(--primary-text-color); }
+.App.dark .table .table-wrapper table tbody tr 	{ color: var(--dark-primary-text-color); }
+
+/* -- Table rows */
+.table .table-wrapper table th,
+.table .table-wrapper table td {
+	text-align: left;
+	padding: 0 1.3em;
+}
+
+.App.light .table .table-wrapper table tbody tr:nth-child(even) { background: #FFFFFF; }
+.App.dark .table .table-wrapper table tbody tr:nth-child(even) { background: #4d358b; }
+
+.App.light .table .table-wrapper table tbody tr:nth-child(odd) { background: #F0F0F0; }
+.App.dark .table .table-wrapper table tbody tr:nth-child(odd) { background: var(--dark-primary-color-darker); }
+
+.App.light .table .table-wrapper table tbody tr:nth-child(even):hover { background: #DCDCDC; }
+.App.dark .table .table-wrapper table tbody tr:nth-child(even):hover { background: #DCDCDC; }
+
+.App.light .table .table-wrapper table tbody tr:nth-child(odd):hover { background: #DCDCDC; }
+.App.dark .table .table-wrapper table tbody tr:nth-child(odd):hover { background: #DCDCDC; }
+
+/* -- Links */
+.table .table-wrapper table a { text-decoration: none; }
+.App.light .table .table-wrapper table a	{ color: var(--secondary-color); }
+.App.dark .table .table-wrapper table a 	{ color: #FFF409; }
+
+/* -- Table widgets */
+.table .table-widgets {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 0 15px;
+}
+
+/* -- Position */
+.table .table-position {
+	font-size: 0.9em;
+}
+
+/* -- Pagination */
+.table .table-pagination {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: stretch;
+	gap: 0.75em;
+	height: 2em;
+	font-size: 1em;
+	margin: 0.5em 0;
+}
+
+.table .table-widgets .table-pagination { margin-left: auto; margin-right: 0; }
+
+.table .table-pagination .pagination-item {
+	box-sizing: border-box;
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	width: 2em;
+	height: 100%;
+	line-height: 2em; /* Height of .table-pagination */
+	padding: 0;
+	/*background: #FFFFFF;
+	border-top: thin solid;
+	border-right: thin solid;
+	border-bottom: thin solid;
+	border-left-style: none;*/
+	cursor: pointer;
+	-ms-user-select: none;
+	-moz-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+	z-index: 1;
+}
+/*.table .table-pagination .pagination-item:first-child { border-left: thin solid; }*/
+
+.table .table-pagination .pagination-item::before {
+	content: "";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 100%;
+	height: 100%;
+	padding: 3px;
+	border-radius: 50%;
+	background: transparent;
+	opacity: 0.3;
+	transition: background 100ms ease-in;
+	transform: translate(-50%, -50%);
+	z-index: -1;
+}
+.table .table-pagination .pagination-item:hover::before,
+.table .table-pagination .pagination-item.curr-page::before { background: var(--primary-color); }
+.table .table-pagination .pagination-item.curr-page { color: #FFFFFF; }
+
+.table .table-pagination .pagination-item.curr-page::before { opacity: 1; }
+
+/*.App.light .table .table-pagination .pagination-item { border-color: var(--border-color); }
+.App.dark .table .table-pagination .pagination-item { border-color: var(--border-color); }
+
+.table .table-pagination .pagination-item.to-first { background: var(--primary-color); border-right: none; color: #FFFFFF; }
+.table .table-pagination .pagination-item.to-prev { background: var(--primary-color-light); border-right: none; color: #FFFFFF; }
+.table .table-pagination .pagination-item.curr-page { background: var(--secondary-color); color: #FFFFFF; }
+.table .table-pagination .pagination-item.to-next { background: var(--primary-color-light); border-right: none; color: #FFFFFF; }
+.table .table-pagination .pagination-item.to-last { background: var(--primary-color); color: #FFFFFF; }*/

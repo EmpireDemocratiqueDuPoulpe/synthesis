@@ -1,55 +1,64 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useForm, FormProvider } from "react-hook-form";
 import useAuth from "../../context/Auth/AuthContext.js";
-import Collapsible from "../../components/Collapsible/Collapsible.js";
-import { API } from "../../config/config.js";
+import useNotesOfUser from "../../hooks/notes/useNotesOfUser.js";
+import ModuleNotes from "../../components/Modules/ModuleNotes.js";
+import Loader from "../../components/Loader/Loader.js";
+import TableFilters from "../../components/Table/TableFilters/TableFilters.js";
+import Inputs from "../../components/Inputs/Inputs.js";
+import { calcECTS } from "../../global/Functions.js";
 import "./Notes.css";
-import useMessage from "../../context/Message/MessageContext.js";
+
+const yearsOptions = [
+	{ value: 1, label: "B.Eng.1" },
+	{ value: 2, label: "B.Eng.2" },
+	{ value: 3, label: "B.Eng.3" },
+	{ value: 4, label: "M.Eng.1" },
+	{ value: 5, label: "M.Eng.2" }
+];
 
 function Notes() {
 	/* ---- States ---------------------------------- */
-	const messages = useMessage();
 	const { user } = useAuth();
-
-	const [notes, setNotes] = useState([]);
-
-	//const [totalEcts, setTotalEcts] = useState(65);
-
-	const [selectedYear, setSelectedYear] = useState(4);
-
-	useEffect(() => {
-		let fetching = false;
-		if(!fetching){
-			fetching = true;
-			API.notes.getAllOfUser.fetch({ userID: user.user_id })
-				.then(response => setNotes(response.notes))
-				.catch(err => messages.add("error", err.error));
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
+	
+	const [selectedYears] = useState(user.study ? [yearsOptions[user.study.current_level - 1]] : []);
+	const form = useForm({ defaultValues: { years: selectedYears.map(y => y.value) }});
+	const filters = form.watch();
+	const ects = { current: 0, total: 0 };
+	
+	const notes = useNotesOfUser({ userID: user.user_id, years: filters.years });
+	
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Notes">
-			<h2>Notes de {user.first_name} {user.last_name}</h2>
-			<h3>Campus de {user.campus}</h3>
-			<div>
-				<select value={selectedYear} onChange={(e) => setSelectedYear(parseInt(e.target.value, 10))}>
-					<option value="1">A.Sc.1</option>
-					<option value="2">A.Sc.2</option>
-					<option value="3">B.Sc.1</option>
-					<option value="4">M.Eng.1</option>
-					<option value="5">M.Eng.2</option>
-				</select>
+			<h2 className="page_title">Notes de {user.first_name} {user.last_name}</h2>
+			<h3>Campus de {user.campus.name}</h3>
+			
+			{(!notes.isUsable()) ? (notes.isLoading && <Loader/>) : (
+				<>
+					<TableFilters>
+						<FormProvider {...form}>
+							<form>
+								<Inputs.Select name="years" options={user.study ? yearsOptions.filter(o => o.value <= user.study.current_level) : yearsOptions} multiple>
+									Promo
+								</Inputs.Select>
+							</form>
+						</FormProvider>
+					</TableFilters>
 
-				{notes.filter((n) => n.module.year === selectedYear).map((note, index) => {
-					return (
-						<Collapsible key={`module-${index}-note`} title={note.module.name}>
-							<p>{note.note}</p>
-						</Collapsible>
-					);
-				})}
-			</div>
-			<p>ECTS totaux : {notes.filter((n) => (n.module.year === selectedYear) && (n.note >= 10)).reduce((acc, note) => acc + note.module.ects, 0)}/60</p>
+					<div className="notes_main">
+						{notes.data.map(module => {
+							ects.total += module.ects;
+							ects.current += calcECTS(module).ects;
+							return (
+								<ModuleNotes key={`notes-list-module-${module.module_id}`} module={module}/>
+							);
+						})}
+					</div>
+				</>
+			)}
+			
+			<p className="total_ects" >ECTS totaux : {ects.current}/{ects.total}</p>
 		</div>
 	);
 }

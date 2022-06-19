@@ -48,13 +48,13 @@ class Endpoint {
 	async fetch(uri, options) {
 		const opts = {
 			method: options.method,
-			headers: { ...this.getHeaders(), ...options.headers },
+			headers: Object.fromEntries(Object.entries({ ...options.headers, ...this.getHeaders() }).filter(([, v]) => v != null)),
 			mode: "cors",
 			credentials: "include",
 		};
 
 		if (options.body) {
-			opts.body = JSON.stringify(options.body);
+			opts.body = options.body;
 		}
 
 		return new Promise((resolve, reject) => {
@@ -102,7 +102,7 @@ class BodyPayload extends Endpoint {
 			? this.#bodyBuilder
 				? this.#bodyBuilder.call(this, ...args)
 				: args.reduce((acc, value) => ({ ...acc, ...value }), {})
-			: args;
+			: args.length === 1 ? args[0] : args;
 	}
 
 	willStringify() { return this.#stringify; }
@@ -114,6 +114,10 @@ class BodyPayload extends Endpoint {
 			headers: this.#verbHeaders,
 			body: this.getBody(...args)
 		};
+
+		if (this.willStringify()) {
+			options.body = JSON.stringify(options.body);
+		}
 
 		return super.fetch(this.getURL(), options);
 	}

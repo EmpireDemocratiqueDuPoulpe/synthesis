@@ -1,0 +1,170 @@
+/* ---- UserByUUID ------------------------------ */
+/* -- Profile */
+.UsersByUUID .profile {
+	display: grid;
+	grid-template-columns: 2.5fr 1fr 1fr;
+	grid-gap: 15px;
+}
+
+/* -- Profile boxes */
+.UsersByUUID .profile .profile-box:not(.no-decoration) {
+	padding: 20px;
+	background: #FFFFFF;
+	-moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	-webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+.App.dark .profile-box {
+	background-color: var(--dark-primary-color-darker) !important;
+}
+
+.UsersByUUID .profile .profile-box h2,
+.UsersByUUID .profile .profile-box h3 { margin-top: 0; }
+
+.UsersByUUID .profile .profile-box .info-label { font-weight: bold; }
+
+/* - Row 1 */
+.UsersByUUID .profile .profile-box.buttons-box { grid-row: 1; grid-column: 1 / -1; }
+
+/* - Row 2 */
+.UsersByUUID .profile .profile-box.base-infos-box { grid-row: 2; grid-column: 1 / span 2; }
+.UsersByUUID .profile .profile-box.campus-box { grid-row: 2; grid-column: 3 / span 1; }
+
+.UsersByUUID .profile:not(.has-campus) .profile-box.base-infos-box { grid-column: 1 / span 3; }
+
+/* - Row 3 */
+.UsersByUUID .profile .profile-box.study-box { grid-row: 3; grid-column: 1 / span 1; }
+.UsersByUUID .profile .profile-box.jobs-box { grid-row: 3; grid-column: 2 / span 1; }
+.UsersByUUID .profile .profile-box.compta-box { grid-row: 3; grid-column: 3 / span 1; }
+
+.UsersByUUID .profile:not(.has-jobs) .profile-box.study-box { grid-column: 1 / span 2; }
+
+/* -- Base infos box */
+.UsersByUUID .profile .profile-box.base-infos-box h2 { margin-bottom: 0; }
+
+.UsersByUUID .profile .profile-box.base-infos-box .user-position {
+	font-size: 0.7em;
+	font-weight: normal;
+	color: var(--primary-color-light);
+}
+
+.UsersByUUID .profile .profile-box.base-infos-box h2 + a {
+	display: inline-block;
+	margin: 1em 0 1.5em 0;
+}
+
+/* -- Campus box */
+.UsersByUUID .profile .profile-box.campus-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: stretch;
+	padding: 0;
+}
+
+.UsersByUUID .profile .profile-box.campus-box .campus-infos { padding: 20px 20px 0 20px; }
+
+.UsersByUUID .profile .profile-box.campus-box .map-box {
+	flex-grow: 1;
+	position: relative;
+}
+
+.UsersByUUID .profile .profile-box.campus-box .map-box.no-map { background: rgba(0, 0, 0, 0.25); }
+.UsersByUUID .profile .profile-box.campus-box .map-box.no-map::after {
+	content: "Aucune carte n'est disponible.";
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	text-align: center;
+	font-size: 0.9em;
+	transform: translate(-50%, -50%);
+}
+
+.UsersByUUID .profile .profile-box.campus-box .map-box .copyright {
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	font-size: 0.7em;
+	padding: 0 5px;
+	background: rgba(255, 255, 255, 0.5);
+}
+
+.UsersByUUID .profile .profile-box.campus-box .map-box .copyright a {
+	text-decoration: none;
+	color: #000000;
+}
+
+/* -- Study box */
+.UsersByUUID .profile .profile-box.study-box {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: stretch;
+	gap: 30px;
+}
+
+.UsersByUUID .profile .profile-box.study-box .study-infos { flex-shrink: 0; }
+
+.UsersByUUID .profile .profile-box.study-box .module-box {
+	flex-grow: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: stretch;
+}
+
+.UsersByUUID .profile .profile-box.study-box .module-box .module-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: center;
+	width: calc(100% - 15px);
+	height: 40px;
+	line-height: 40px;
+	padding: 0 15px;
+	background: transparent;
+	transition: background 100ms ease-in;
+	cursor: default;
+}
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module:not(:last-child) { border-bottom: thin var(--border-color) solid; }
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module:hover { background-color: rgba(0, 0, 0, 0.04); }
+
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status { font-size: 1.25em; }
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status.passed { color: var(--success-color); }
+.UsersByUUID .profile .profile-box.study-box .module-box .user-module .user-module-status.not-passed { color: var(--error-color); }
+
+/* -- Jobs box */
+.UsersByUUID .profile .profile-box.jobs-box .jobs-list {
+	padding: 0;
+	list-style: none;
+}
+
+.UsersByUUID .profile .profile-box.jobs-box .user-job {
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	justify-content: stretch;
+	align-items: stretch;
+	font-size: 1em;
+	width: 100%;
+	padding: 10px 15px;
+}
+
+.UsersByUUID .profile .profile-box.jobs-box .user-job:not(:last-child) { border-bottom: thin var(--border-color) solid; }
+.UsersByUUID .profile .profile-box.jobs-box .user-job:hover { background-color: rgba(0, 0, 0, 0.04); }
+
+.UsersByUUID .profile .profile-box.jobs-box .user-job-type 		{ margin: 0 0 0.5em 0; }
+.UsersByUUID .profile .profile-box.jobs-box .user-job-company	{ margin: 0.3em 0; }
+.UsersByUUID .profile .profile-box.jobs-box .user-job-dates 	{ margin: 0; }
+
+/* -- Compta box */
+.UsersByUUID .profile .profile-box.compta-box .remaining_green { color: var(--success-color); }
+.UsersByUUID .profile .profile-box.compta-box .remaining_red { color: var(--error-color); }

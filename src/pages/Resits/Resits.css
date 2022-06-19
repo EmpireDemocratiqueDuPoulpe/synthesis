@@ -1,0 +1,5 @@
+/* ---- Resits ---------------------------------- */
+/* -- Students at resit modules */
+.resit-student-module.unknown 		{ color: #777777; }
+.resit-student-module.passed 			{ color: #5CB85C; }
+.resit-student-module.not-passed	{ color: #D3495F; }

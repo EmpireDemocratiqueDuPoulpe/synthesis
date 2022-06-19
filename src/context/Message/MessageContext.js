@@ -33,7 +33,7 @@ export function MessageProvider({ filters: defaultFilters, limit: defaultLimit, 
 	/* ---- Functions ------------------------------- */
 	const add = (type, message, onRetry = null) => {
 		if (message) {
-			setMessages(prevState => [ {type, content: message, onRetry}, ...prevState ]);
+			setMessages(prevState => [ {type: type ?? "error", content: JSON.stringify(message), onRetry}, ...prevState ]);
 		}
 	};
 

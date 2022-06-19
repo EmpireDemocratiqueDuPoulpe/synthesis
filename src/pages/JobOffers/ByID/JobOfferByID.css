@@ -1,0 +1,73 @@
+/* ---- Job offer page -------------------------- */
+/* -- Job offer */
+.JobOfferByID .job-offer-title { margin: 0; }
+
+.JobOfferByID .job-offer-type,
+.JobOfferByID .job-offer-company,
+.JobOfferByID .job-offer-location,
+.JobOfferByID .job-offer-exp-date { margin: 3px 0; }
+
+.JobOfferByID .job-info-icon {
+	width: 1em;
+	height: 1em;
+	color: var(--primary-color);
+}
+
+.JobOfferByID .job-offer-type {
+	margin-bottom: 20px;
+	text-transform: capitalize;
+}
+
+.JobOfferByID .job-offer-exp-date { margin-bottom: 20px; }
+.JobOfferByID .job-offer-exp-date.expired,
+.JobOfferByID .job-offer-exp-date.expired .job-info-icon { color: var(--error-color); }
+
+.JobOfferByID .job-offer-domains {
+	font-size: 0.8em;
+	margin: 8px 0;
+	color: #777777;
+}
+
+.JobOfferByID .job-offer-files {
+	display: flex;
+	flex-direction: row;
+	justify-content: stretch;
+	align-items: stretch;
+	border: thin #D3D3D3 solid;
+	border-radius: 5px;
+}
+
+.JobOfferByID .job-offer-files .files-label,
+.JobOfferByID .job-offer-files .files-wrapper { padding: 10px; }
+
+.JobOfferByID .job-offer-files .files-label {
+	background: #E6E6E6;
+	border-right: thin #D3D3D3 solid;
+}
+
+.JobOfferByID .job-offer-files .file {
+	color: var(--primary-color);
+	text-decoration: none;
+}
+
+.JobOfferByID .job-offer-content {
+	padding: 10px 20px;
+	text-align: justify;
+}
+
+.edit_job_offer_style {
+	display: flex;
+	flex-direction: column;
+}
+
+.edit_job_offer_style .inputs_div {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	gap: 20px;
+	margin: 10px 0;
+}
+
+.edit_job_offer_send {
+	margin-top: 20px;
+}

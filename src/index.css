@@ -1,12 +1,229 @@
 /* ---- Global ---------------------------------- */
+/* -- Colors */
+:root {
+  --bg-color: #ECEBEA;
+  --primary-color: #3D2683;
+  --primary-color-light: #604797;
+  --primary-text-color: #2E2E2E;
+  --secondary-color: #0F58A8;
+  --secondary-text-color: #012169;
+
+  --border-color: #D3D3D3;
+
+  --dark-bg-color: #302a48;
+  --dark-primary-color: #3D2683;
+  --dark-primary-color-darker: #221838;
+  --dark-primary-text-color: #EAEAEA;
+
+  --error-color: #D3495F;
+  --warning-color: #F0AD4E;
+  --info-color: #0275D8;
+  --success-color: #5CB85C;
+}
+
 /* -- Body */
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+body { margin: 0; }
+
+.normal-font {
+  font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", "Oxygen",
+  "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+  sans-serif;
+  font-weight: 400;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
+body h1, body h2, body h3, body h4, body h5, body h6 {
+  font-family: "Quicksand", sans-serif;
+  font-weight: 600;
+}
+
 /* -- Special classes */
+/* - Link */
+.primary-link {
+  color: var(--primary-color-light);
+}
+
+.secondary-link,
+.secondary-link-wrapper a {
+  position: relative;
+  color: var(--secondary-color);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.secondary-link::before,
+.secondary-link-wrapper a::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 0;
+  height: 0.104em;
+  background-color: var(--secondary-color);
+  transition: width 600ms cubic-bezier(0.25, 1, 0.5, 1);
+}
+.secondary-link:focus,
+.secondary-link-wrapper a:focus { outline: none; }
+
+@media (hover: hover) and (pointer: fine) {
+  .secondary-link:hover::before,
+  .secondary-link-wrapper a:hover::before {
+    right: auto;
+    left: 0;
+    width: 100%;
+  }
+}
+
+/* - Table */
+.TableMainWrapper {
+  border-width: thin;
+  border-style: solid;
+  border-radius: 10px;
+  overflow: hidden;
+}
+.App.light .TableMainWrapper { border-color: var(--border-color); }
+.App.dark .TableMainWrapper { border-color: var(--primary-color); }
+
+.TableMain {
+  position: relative;
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+.App.light .TableMain { background: var(--bg-color); }
+.App.dark .TableMain { background: var(--dark-bg-color); }
+
+.TableMain thead tr {
+  height: 55px;
+}
+.App.light .TableMain thead tr { background: var(--primary-color); }
+.App.dark .TableMain thead tr { background: var(--primary-color); }
+
+.TableMain thead th {
+  line-height: 1.2;
+  font-weight: unset;
+}
+.App.light .TableMain thead th { color: var(--dark-primary-text-color); }
+.App.dark .TableMain thead th { color: var(--dark-primary-text-color); }
+
+.TableMain tbody tr {
+  height: 43px;
+  font-size: 0.9em;
+  line-height: 1.2;
+  transition: background-color 150ms ease-in;
+}
+.App.light .TableMain tbody tr { color: var(--primary-text-color); }
+.App.dark .TableMain tbody tr { color: var(--dark-primary-text-color); }
+
+.TableMain td, .TableMain th {
+  text-align: left;
+  padding: 0 1.3em;
+}
+
+.App.light .TableMain tbody tr:nth-child(even) { background-color: #F3F3F3; }
+.App.dark .TableMain tbody tr:nth-child(even) { background-color: var(--dark-primary-color-darker); }
+
+.App.light .TableMain tbody tr:hover { background-color: #EDEDED; }
+.App.dark .TableMain tbody tr:hover { background-color: #433856; }
+
+.TableMain a {
+  text-decoration: none;
+}
+.App.light .TableMain a { color: var(--secondary-color); }
+.App.dark .TableMain a { color: #FFF409; }
+
+/* -- Page title */
+.App.dark .page_title { color: var(--dark-primary-text-color); background: var(--dark-primary-color-darker) }
+.App.light .page_title { background: #FFFFFF }
+
+.page_title {
+  margin-top: 0;
+  padding: 20px;
+  background: #FFFFFF;
+  -moz-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  -webkit-box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+/* -- Page filters */
+.filters-root {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin: 10px 0;
+  gap: 20px;
+  z-index: 1000;
+}
+
+.filters-root .input .input-wrapper > *:first-child {
+  z-index: 1000;
+}
+
+/* -- Styles */
+.bold { font-weight: bold; }
+
+/* -- Fonts */
+/* - Segoe UI */
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI Light"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff2) format("woff2"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.woff) format("woff"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/light/latest.ttf) format("truetype");
+  font-weight: 100;
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI Semilight"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff2) format("woff2"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.woff) format("woff"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semilight/latest.ttf) format("truetype");
+  font-weight: 200;
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff2) format("woff2"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.woff) format("woff"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/normal/latest.ttf) format("truetype");
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI Semibold"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff2) format("woff2"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.woff) format("woff"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/semibold/latest.ttf) format("truetype");
+  font-weight: 600;
+}
+
+@font-face {
+  font-family: "Segoe UI";
+  src: local("Segoe UI Bold"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff2) format("woff2"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.woff) format("woff"),
+  url(//c.s-microsoft.com/static/fonts/segoe-ui/west-european/bold/latest.ttf) format("truetype");
+  font-weight: 700;
+}
+
+/* -- MOBILE */
+@media (max-width: 1000px) {
+  .page_title {
+    font-size: 1.25em;
+  }
+  .TableMain {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  .filters-root {
+    flex-direction: column !important;
+  }
+  .filters-root .input {
+    max-width: 69vw;
+  }
+}

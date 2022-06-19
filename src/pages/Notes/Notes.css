@@ -1,0 +1,43 @@
+.notes_main {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    padding: 0 5%;
+}
+
+.years_selector {
+    margin: 0 5%;
+}
+
+.Notes h3 {
+    margin: 0 0 30px 0;
+}
+
+.total_ects {
+    font-weight: bolder;
+    text-align: center;
+}
+
+@media (max-width: 1000px) {
+    .notes_main {
+        display: flex;
+        flex-direction: column;
+        gap: 50px
+    }
+
+    .notes_main .module_box {
+        margin: 20px 0;
+    }
+
+    .notes_main .note_misc {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .notes_main .note_misc span {
+        margin: 0 !important;
+    }
+
+    .notes_main .module_box-title {
+        max-width: 15ch;
+    }
+}

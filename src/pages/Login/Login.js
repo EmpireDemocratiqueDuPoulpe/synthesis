@@ -1,60 +1,58 @@
-import { useState } from "react";
+import { useEffect } from "react";
+import { Navigate } from "react-router-dom";
+import { useForm, FormProvider } from "react-hook-form";
 import useAuth, { states } from "../../context/Auth/AuthContext.js";
+import usePageDisplay from "../../context/PageDisplay/PageDisplay.js";
+import Inputs from "../../components/Inputs/Inputs.js";
+import MicrosoftLogin from "../../components/Button/MicrosoftLogin/MicrosoftLogin.js";
+import { ReactComponent as AppLogo } from "../../assets/images/synthesis_icon/synthesis.svg";
+import "./Login.css";
 
 function Login() {
 	/* ---- States ---------------------------------- */
-	const [user, setUser] = useState({ email: "jay.rate@forni.te", password: "Mot De P4sse" });
+	const form = useForm();
 	const auth = useAuth();
+	const pageDisplay = usePageDisplay();
+	
+	/* ---- Effects --------------------------------- */
+	useEffect(() => {
+		pageDisplay.update({ header: false, navMenu: false, padding: false });
+	}, [pageDisplay]);
 
 	/* ---- Functions ------------------------------- */
-	const handleChange = (event) => {
-		const target = event.target;
-		const value = target.type === "checkbox" ? target.checked : target.value;
-		const name = target.name;
-
-		setUser(prevState => ({ ...prevState, [name]: value }));
-	};
-
-	const handleLogin = (event) => {
-		auth.login(user);
-		event.preventDefault();
-	};
-
-	const handleLogout = (event) => {
-		auth.setDisconnected();
-		event.preventDefault();
+	const handleLogin = data => {
+		auth.login(data);
 	};
 
 	/* ---- Page content ---------------------------- */
 	return (
 		<div className="Login">
-			{auth.status !== states.CONNECTED ? (
-				<>
+			{(auth.status === states.CONNECTED) ? <Navigate to="/" replace/> : (
+				<div className="login-box">
+					
+					<div className="app-logo">
+						<AppLogo/>
+					</div>
+					
 					<h1>Connexion</h1>
 
-					<form onSubmit={handleLogin}>
-						<fieldset>
-							<legend>yo</legend>
+					<FormProvider {...form}>
+						<form onSubmit={form.handleSubmit(handleLogin)}>
+							<Inputs.Email name="email" required>
+								E-mail
+							</Inputs.Email>
+							
+							<Inputs.Password name="password" required>
+								Mot de passe
+							</Inputs.Password>
+							
+							<input className="button primary-color" type="submit" value="Se connecter"/>
+						</form>
+					</FormProvider>
 
-							<label>
-								<span>E-mail</span>
-								<input type="email" name="email" value={user.email} onChange={handleChange}/>
-							</label>
-
-							<label>
-								<span>Mot de passe</span>
-								<input type="password" name="password" value={user.password} onChange={handleChange}/>
-							</label>
-
-							<input type="submit" value="Se connecter"/>
-						</fieldset>
-					</form>
-				</>
-			) : (
-				<>
-					<h1>D&eacute;connexion</h1>
-					<button onClick={handleLogout}>Se d&eacute;connecter</button>
-				</>
+					<hr className="login-sep"/>
+					<MicrosoftLogin style="light" disabled/>
+				</div>
 			)}
 		</div>
 	);

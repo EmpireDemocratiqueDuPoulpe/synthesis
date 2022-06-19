@@ -1,0 +1,120 @@
+.module_box {
+	position: relative;
+	height: 110px;
+	margin: 20px;
+}
+.module_box.show { z-index: 1000; }
+
+.module_box-title {
+	max-width: 20ch;
+	padding: 18px;
+	color: var(--secondary-text-color);
+	font-weight: bold;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	text-transform: uppercase;
+}
+
+.module_box-content {
+	position: absolute;
+	top: 110px;
+	right: 0;
+	left: 0;
+	padding: 0 18px;
+	background-color: #f9f9f9;
+	border-radius: 0 0 10px 10px;
+	-moz-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 0 5px 0 rgba(0,0,0,0.25);
+	transition: height 250ms ease-in-out, opacity 150ms ease-in-out;
+	z-index: -1;
+	overflow-y: auto;
+}
+
+.module_box.show .module_box-content{ opacity: 1; height: 300px; }
+.module_box.hide .module_box-content{ opacity: 0; height: 0; }
+
+.module_box .module_box-content p { margin: 1em 0; }
+
+.module_box .note_root {
+	display: flex;
+	flex-direction: row;
+	background-color: #f9f9f9;
+	border-radius: 10px;
+	-moz-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	-webkit-box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 3px 5px 0 rgba(0,0,0,0.25);
+	cursor: pointer;
+}
+
+.App.dark .module_box .note_root, .App.dark .module_box-content {
+	background-color: var(--dark-primary-color-darker);
+}
+
+.App.dark .module_box-title {
+	color: white;
+}
+
+.module_box.show .note_root { border-radius: 10px 10px 0 0; }
+
+.module_box .note_ects {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	padding: 0 10px;
+	white-space: pre;
+	color: var(--secondary-text-color);
+}
+
+.module_box .note_infos {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+}
+
+.module_box .note_misc {
+	font-weight: 500;
+	color: #003087;
+	margin: 15px 0 20px;
+}
+
+.module_box .note_title {
+	margin-left: 30px !important;
+}
+
+.module_box .note_misc span {
+	background-color: var(--bg-color);
+	margin: 0 10px;
+	padding: 10px;
+	border-radius: 10px;
+}
+
+.module_box .note_ects_img {
+	border-right: #B2C1C8 solid 2px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-around;
+	align-items: center;
+}
+
+.module_box .module_box_icon {
+	color: var(--secondary-color)
+}
+
+.module_box.not_selected {
+	opacity: 0.5;
+}
+
+.module_box .note_icon.passed {
+	color: var(--success-color);
+}
+
+.module_box .note_icon.failed {
+	color: var(--error-color);
+}
+
+.module_box .invisible_icon {
+	color: transparent;
+	padding: 0 10px;
+}

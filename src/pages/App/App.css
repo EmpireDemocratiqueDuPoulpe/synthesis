@@ -1,0 +1,102 @@
+/* ---- App ------------------------------------- */
+/* -- App */
+.App {
+	display: flex;
+	flex-direction: row;
+	justify-content: stretch;
+	align-items: stretch;
+	width: 100%;
+	max-width: 100vw;
+	min-height: 100vh;
+}
+.App.light  { color: var(--primary-text-color) !important; }
+.App.dark   { color: var(--dark-primary-text-color) !important; }
+
+/* -- App navigation menu */
+.App .App-nav { flex-shrink: 0; }
+
+/* -- App page */
+.App .App-page { flex-grow: 1; min-width: 0; }
+
+/* - App header */
+.App .App-page .App-header {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	align-items: stretch;
+	height: 40px;
+	padding-right: 20px;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+}
+.App.light .App-page .App-header  { border-bottom-color: darkgray; background: #F1F1F1 }
+.App.dark .App-page .App-header   { border-bottom-color: var(--dark-primary-color-darker); background: var(--dark-primary-color-darker) }
+
+.App .App-page .App-header .back-btn {
+	background: rgba(0, 0, 0, 0);
+	width: 40px;
+	background: none;
+	border: none;
+	border-right-width: thin;
+	border-right-style: solid;
+	transition: background-color 100ms ease-in-out;
+}
+.App .App-page .App-header .back-btn:disabled   { opacity: 0.5; }
+.App .App-page .App-header .back-btn:not(:disabled) { cursor: pointer; }
+
+.App.light .App-page .App-header .back-btn  { border-right-color: darkgray; color: var(--primary-text-color); }
+.App.dark .App-page .App-header .back-btn   { border-right-color: transparent; color: var(--dark-primary-text-color); }
+
+.App.light .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(0, 0, 0, 0.10); }
+.App.dark .App-page .App-header .back-btn:not(:disabled):hover { background: rgba(255, 255, 255, 0.10); }
+
+.App .App-page .App-header .app-logo { margin: 5px 0; }
+
+.App .App-page .App-header .header-settings {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 5px;
+}
+
+.App .App-page .App-header .header-settings .header-user {
+	position: relative;
+	width: 40px;
+	height: 40px;
+}
+
+.App .App-page .App-header .header-settings .header-user .user-icon {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 30px;
+	height: 30px;
+	transform: translate(-50%, -50%);
+}
+
+.App .App-page .App-header .header-settings .header-theme {
+	width: 20px;
+	height: 20px;
+	line-height: 20px;
+	cursor: pointer;
+}
+
+.App .App-page .App-header .header-settings .header-theme > * {
+	width: 100%;
+	height: 100%;
+}
+
+.App.light .App-page .App-header .header-settings .header-theme { color: var(--secondary-color); }
+.App.dark .App-page .App-header .header-settings .header-theme { color: #FFF409; }
+
+/* - App body */
+.App .App-page .App-body {
+	box-sizing: border-box;
+	width: 100%;
+	height: calc(100% - 41px); /* 41px: Height of the App-header plus its border */
+}
+.App .App-page .App-body.padding { padding: 25px 35px; }
+
+.App.light .App-page .App-body  { background: var(--bg-color); }
+.App.dark .App-page .App-body   { background: var(--dark-bg-color); }

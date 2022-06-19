@@ -1,0 +1,135 @@
+/* ---- App navigation menu --------------------- */
+/* -- Container */
+.App-nav {
+	position: relative;
+	width: 4vw;
+	transition: 250ms width ease-in-out;
+}
+.App-nav.open { width: 20vw; }
+
+.App-nav::before, .App-nav::after {
+	content: "";
+	position: fixed;
+	top: 0;
+	height: 100%;
+	z-index: -1;
+}
+.App-nav::before {
+	left: 0;
+	width: 4vw; /* Same width as closed App-nav */
+	background: var(--primary-color);
+}
+.App-nav::after {
+	left: 4vw; /* Same width as closed App-nav */
+	width: calc(100% - 4vw);
+}
+.App.light .App-nav::after  { background: #1A1038; }
+.App.dark .App-nav::after   { background: var(--dark-primary-color-darker); }
+
+.App-nav .App-nav-fixed {
+	position: sticky;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	font-size: 1.35em;
+	overflow-x: hidden;
+}
+
+/* -- App nav button */
+.App-nav .app-nav-btn {
+	width: 1.4em;
+	height: 1.4em;
+	font-size: 1.1em;
+	margin-top: 20px;
+	margin-left: calc((4vw / 2) - (1.4em / 2));
+	background: none;
+	color: #FFFFFF;
+	border: none;
+	border-radius: 50%;
+	cursor: pointer;
+}
+.App-nav .app-nav-btn:hover { background: rgba(255, 255, 255, 0.25); }
+
+/* -- Links */
+.App-nav .nav-links {
+	list-style: none;
+	margin: 100px 0 0 0;
+	/* (Close nav width / 2) - (Font size / 2) - (Link icon left padding / 1.5) */
+	padding: 0 calc((4vw / 2) - (1.35em / 2) - (10px / 1.5));
+	z-index: 10;
+}
+
+.App-nav .nav-links .nav-link {
+	height: 2em;
+	line-height: 2em;
+	white-space: nowrap;
+	text-decoration: none;
+}
+
+.App-nav .nav-links .link-label {
+	font-size: 0.75em;
+	transition: 250ms color ease-in-out;
+}
+.App-nav:not(.open) .nav-links .link-label { color: transparent; }
+
+/* - Link icon */
+.App-nav .nav-links .link-icon { color: #FFFFFF; }
+
+.App-nav .nav-links .nav-link.active .link-icon,
+.App-nav .nav-links .nav-link:hover .link-icon {
+	color: #FFFFFF !important;
+	background: rgba(255, 255, 255, 0.25);
+	border-radius: 50%;
+}
+
+/* - Link label */
+.App-nav .nav-links .nav-link .link-label { margin-left: 0.6em; padding-left: 1em; }
+.App-nav .nav-links .nav-link:hover .link-label { background: rgba(255, 255, 255, 0.20); }
+
+/* -- Logout button */
+.App-nav .logout-btn {
+	margin-top: auto;
+	margin-bottom: 20px;
+}
+
+/* -- Policies link */
+.App-nav .user-policies-link {
+	position: absolute;
+	right: 0;
+	bottom: 25px;
+	left: 4vw;
+	text-align: center;
+	font-size: 0.6em;
+	white-space: nowrap;
+	opacity: 0.65;
+}
+
+.App-nav .user-policies-link a {
+	color: #FFFFFF;
+}
+
+@media (max-width: 1000px) {
+	.App-nav li {
+		margin-left: 1vw;
+	}
+	.App-nav {
+		width: 12vw;
+	}
+	.App-nav.open {
+		width: 80vw;
+	}
+	.App-nav::before {
+		width: 12vw;
+	}
+	.App-nav::after {
+		left: 12vw;
+	}
+	.app-nav-btn {
+		margin: 20px auto !important;
+	}
+}

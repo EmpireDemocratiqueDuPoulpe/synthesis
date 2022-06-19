@@ -1,0 +1,50 @@
+/* ---- Button ---------------------------------- */
+/* -- Container */
+.button {
+	display: inline-block;
+	font-size: 0.9em;
+	margin: 0 1em 1em 0;
+	padding: 0.6em 0.8em;
+	border-width: 2px;
+	border-style: solid;
+	text-decoration: none;
+	transition: background-color 100ms ease-in, border-color 100ms ease-in, color 100ms ease-in;
+	cursor: pointer;
+}
+
+.button.disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* -- Idle color */
+.button.primary-color	{ background: var(--primary-color); border-color: var(--primary-color); color: #FFFFFF; }
+.button.green-color 	{ background: var(--success-color); border-color: var(--success-color); color: #FFFFFF; }
+.button.red-color 		{ background: var(--error-color); border-color: var(--error-color); color: #FFFFFF; }
+
+.button.outlined.primary-color	{ background: none; color: var(--primary-color); }
+.button.outlined.green-color 	{ background: none; color: var(--success-color); }
+.button.outlined.red-color 		{ background: none; color: var(--error-color); }
+
+/* -- Hover color */
+.button.primary-color:not(.disabled):hover	{  background: var(--primary-color-light); border-color: var(--primary-color-light); }
+.button.green-color:not(.disabled):hover 		{  background: #439A43; border-color:  #439A43; }
+.button.red-color:not(.disabled):hover 			{  background: #B72C42; border-color: #B72C42; }
+
+.button.outlined.primary-color:not(.disabled):hover	{ background: var(--primary-color); border-color: var(--primary-color); color: #FFFFFF; }
+.button.outlined.green-color:not(.disabled):hover 	{ background: var(--success-color); border-color: var(--success-color); color: #FFFFFF; }
+.button.outlined.red-color:not(.disabled):hover 		{ background: var(--error-color); border-color: var(--error-color); color: #FFFFFF; }
+
+/* -- Icon */
+.button .button-icon {
+	display: inline-block;
+	max-width: 1em;
+	width: 100%;
+	max-height: 1em;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.button .button-icon img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}

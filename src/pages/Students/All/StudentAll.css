@@ -1,0 +1,5 @@
+/* ---- StudentAll ------------------------------ */
+/* -- Student modules */
+.student-module.unknown 		{ color: #777777; }
+.student-module.passed 			{ color: #5CB85C; }
+.student-module.not-passed	{ color: #D3495F; }

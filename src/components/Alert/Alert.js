@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import useClassName from "../../hooks/ClassName/useClassName.js";
+import useClassName from "../../hooks/className/useClassName.js";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { regular } from "@fortawesome/fontawesome-svg-core/import.macro.js";
+import { regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import { clickOnEnter } from "../../global/Functions.js";
 import "./Alert.css";
 
@@ -47,12 +47,12 @@ function Alert({ type, message, onRetry, onClose }) {
 				{onRetry && (
 					<>
 						&nbsp;
-						<span className="alert-retry" onClick={handleRetry} onKeyPress={e => clickOnEnter(e, handleRetry)} role="button" tabIndex={0}>Appuyez ici pour réessayer.</span>
+						<span className="alert-retry" onClick={handleRetry} onKeyDown={e => clickOnEnter(e, handleRetry)} role="button" tabIndex={0}>Appuyez ici pour réessayer.</span>
 					</>
 				)}
 			</span>
 
-			<span className="alert-close" onClick={handleClose} onKeyPress={e => clickOnEnter(e, handleClose)} role="button" tabIndex={0}>
+			<span className="alert-close" onClick={handleClose} onKeyDown={e => clickOnEnter(e, handleClose)} role="button" tabIndex={0}>
 				<FontAwesomeIcon icon={regular("window-minimize")} size="xs" pull="right"/>
 			</span>
 		</div>
