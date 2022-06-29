@@ -40,6 +40,9 @@
 
 .UsersByUUID .profile:not(.has-jobs) .profile-box.study-box { grid-column: 1 / span 2; }
 
+/* -- Button box */
+.App.dark .UsersByUUID .profile .profile-box.buttons-box { background: transparent !important; }
+
 /* -- Base infos box */
 .UsersByUUID .profile .profile-box.base-infos-box h2 { margin-bottom: 0; }
 

@@ -8,7 +8,7 @@ import Inputs from "../../../components/Inputs/Inputs.js";
 import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import Table from "../../../components/Table/Table.js";
 import TableFilters from "../../../components/Table/TableFilters/TableFilters.js";
-import { filterObj, sortObjectArr } from "../../../global/Functions.js";
+import {filterObj, isoStrToDate, sortObjectArr} from "../../../global/Functions.js";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "email", "campus.name", "region"];
 
@@ -79,7 +79,7 @@ function SCTsAll() {
 								<td className="sct-first-name">{row.first_name}</td>
 								<td className="sct-last-name">{row.last_name}</td>
 								<td className="sct-email">{row.email}</td>
-								<td className="sct-birth-date">{row.birth_date}</td>
+								<td className="sct-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 								{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{row.campus?.name}</td>}
 								<td className="sct-region">{row.region}</td>
 								{hasPermission(permissions.READ_MODULES) && (
@@ -111,7 +111,7 @@ function SCTsAll() {
 										<td className="sct-first-name">{row.first_name}</td>
 										<td className="sct-last-name">{row.last_name}</td>
 										<td className="sct-email">{row.email}</td>
-										<td className="sct-birth-date">{row.birth_date}</td>
+										<td className="sct-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 										{hasPermission(permissions.READ_CAMPUS) && <td className="sct-campus">{row.campus.name}</td>}
 										<td className="sct-region">{row.region}</td>
 										<td className="sct-action"><Link to={`/user/${row.uuid}`}>Vers le profil</Link></td>
