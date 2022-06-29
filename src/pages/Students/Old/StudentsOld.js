@@ -7,7 +7,7 @@ import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
 import Table from "../../../components/Table/Table.js";
 import TableFilters from "../../../components/Table/TableFilters/TableFilters.js";
-import { sortObjectArr, filterObj } from "../../../global/Functions.js";
+import {sortObjectArr, filterObj, isoStrToDate} from "../../../global/Functions.js";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "study.exit_level", "study.exit_date", "email", "campus.name", "region"];
 
@@ -76,9 +76,9 @@ function StudentsOld() {
 						<td className="student-old-first-name">{row.first_name}</td>
 						<td className="student-old-last-name">{row.last_name}</td>
 						<td className="student-old-email">{row.email}</td>
-						<td className="student-old-birth-date">{row.birth_date}</td>
+						<td className="student-old-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 						<td className="student-old-exit-level">{row.study.exit_level}</td>
-						<td className="student-old-exit-date">{row.study.exit_date}</td>
+						<td className="student-old-exit-date">{isoStrToDate(row.study.exit_date).toLocaleDateString()}</td>
 						{hasPermission(permissions.READ_CAMPUS) && <td className="student-old-campus">{row.campus.name}</td>}
 						<td className="student-old-region">{row.region}</td>
 						<td className="student-old-action"><Link to={`/user/${row.uuid}`}>Vers le profil</Link></td>

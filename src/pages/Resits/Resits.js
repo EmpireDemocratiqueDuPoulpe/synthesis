@@ -8,7 +8,7 @@ import Loader from "../../components/Loader/Loader.js";
 import Inputs from "../../components/Inputs/Inputs.js";
 import Table from "../../components/Table/Table.js";
 import TableFilters from "../../components/Table/TableFilters/TableFilters.js";
-import { hasPassed, sortStudentsByPassed, sortObjectArr, filterObj } from "../../global/Functions.js";
+import {hasPassed, sortStudentsByPassed, sortObjectArr, filterObj, isoStrToDate} from "../../global/Functions.js";
 import "./Resits.css";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "study.current_level", "email", "campus.name", "region"];
@@ -79,7 +79,7 @@ function Resits() {
 								<td className="resit-student-first-name">{row.first_name}</td>
 								<td className="resit-student-last-name">{row.last_name}</td>
 								<td className="resit-student-email">{row.email}</td>
-								<td className="resit-student-birth-date">{row.birth_date}</td>
+								<td className="resit-student-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 								<td className="resit-student-current-level">{row.study.current_level}</td>
 								{hasPermission(permissions.READ_CAMPUS) && <td className="resit-student-campus">{row.campus.name}</td>}
 								<td className="resit-student-region">{row.region}</td>
@@ -126,7 +126,7 @@ function Resits() {
 										<td className="resit-student-first-name">{row.first_name}</td>
 										<td className="resit-student-last-name">{row.last_name}</td>
 										<td className="resit-student-email">{row.email}</td>
-										<td className="resit-student-birth-date">{row.birth_date}</td>
+										<td className="resit-student-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 										<td className="resit-student-current-level">{row.study.current_level}</td>
 										{hasPermission(permissions.READ_CAMPUS) && <td className="resit-student-campus">{row.campus.name}</td>}
 										<td className="resit-student-region">{row.region}</td>

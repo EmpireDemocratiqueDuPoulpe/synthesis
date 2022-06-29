@@ -8,7 +8,7 @@ import SearchBar from "../../../components/SearchBar/SearchBar.js";
 import Inputs from "../../../components/Inputs/Inputs.js";
 import Table from "../../../components/Table/Table.js";
 import TableFilters from "../../../components/Table/TableFilters/TableFilters.js";
-import { hasPassed, sortStudentsByPassed, sortObjectArr, filterObj } from "../../../global/Functions.js";
+import { isoStrToDate, hasPassed, sortStudentsByPassed, sortObjectArr, filterObj } from "../../../global/Functions.js";
 import "./StudentAll.css";
 
 const searchableColumns = ["first_name", "last_name", "birth_date", "study.current_level", "email", "campus.name", "region"];
@@ -81,7 +81,7 @@ function StudentsAll() {
 								<td className="student-first-name">{row.first_name}</td>
 								<td className="student-last-name">{row.last_name}</td>
 								<td className="student-email">{row.email}</td>
-								<td className="student-birth-date">{row.birth_date}</td>
+								<td className="student-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 								<td className="student-current-level">{row.study.current_level}</td>
 								{hasPermission(permissions.READ_CAMPUS) && <td className="student-campus">{row.campus.name}</td>}
 								<td className="student-region">{row.region}</td>
@@ -134,7 +134,7 @@ function StudentsAll() {
 										<td className="student-first-name">{row.first_name}</td>
 										<td className="student-last-name">{row.last_name}</td>
 										<td className="student-email">{row.email}</td>
-										<td className="student-birth-date">{row.birth_date}</td>
+										<td className="student-birth-date">{isoStrToDate(row.birth_date).toLocaleDateString()}</td>
 										<td className="student-current-level">{row.study.current_level}</td>
 										{hasPermission(permissions.READ_CAMPUS) && <td className="student-campus">{row.campus.name}</td>}
 										<td className="student-region">{row.region}</td>

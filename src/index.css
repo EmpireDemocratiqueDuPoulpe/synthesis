@@ -227,3 +227,60 @@ body h1, body h2, body h3, body h4, body h5, body h6 {
     max-width: 69vw;
   }
 }
+
+@media (max-width: 1000px){
+  .App .table-wrapper {
+    overflow: auto !important;
+  }
+
+  .App .table-filters {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .App .table-filters .search-bar, .App .table-filters .input {
+    width: initial;
+    margin: 0 20px 0;
+  }
+
+  .App .table-filters input[name="search-bar"]{
+    width: 100px;
+  }
+
+  .App .table-filters .input-wrapper select{
+    width: 100px;
+  }
+
+  .App .table-pagination {
+    margin-left: 0 !important;
+  }
+
+  .App .table-widgets {
+    display: flex;
+    flex-direction: column !important;
+  }
+
+  .App .profile {
+    display: flex !important;
+    flex-direction: column;
+  }
+
+  .App .map-box {
+    width: initial;
+    height: 250px;
+  }
+
+  .App .dashboard {
+    display: flex;
+    flex-direction: column;
+    margin: initial;
+  }
+
+  .App .dashboard_card {
+    width: initial;
+  }
+
+  .App .card_body {
+    gap: 30px;
+  }
+}
